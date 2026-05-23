@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jumuika – Screenshot Generator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LOADING OVERLAY -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">Generating Screenshots…</div>
+  <div class="loading-sub" id="loadingSubText">Preparing platform assets</div>
+</div>
+
+<!-- HEADER -->
+<header class="dashboard-header">
+  <div class="header-brand">
+    <img src="assets/app-icon.png" alt="Jumuika Icon" onerror="this.style.display='none'">
+    <h1>Jumuika <span>Screenshot Studio</span></h1>
+  </div>
+  <div style="display:flex;gap:10px;align-items:center;">
+    <span class="header-badge">Kenya × East Africa</span>
+    <button class="ctrl-btn ctrl-btn-primary" id="exportAllBtn" onclick="triggerExportAll()">
+      ⬇ Export All Platforms
+    </button>
+  </div>
+</header>
+
+<div class="dashboard-body">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div>
+      <div class="sidebar-section-label">Platform</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <button class="platform-tab-btn active" onclick="setPlatform(this,'phone')" data-platform="phone">📱 Android Phone (1080×1920)</button>
+        <button class="platform-tab-btn" onclick="setPlatform(this,'tablet7')" data-platform="tablet7">📟 7" Tablet (1200×1920)</button>
+        <button class="platform-tab-btn" onclick="setPlatform(this,'tablet10')" data-platform="tablet10">🖥 10" Tablet (1600×2560)</button>
+        <button class="platform-tab-btn" onclick="setPlatform(this,'iphone')" data-platform="iphone">🍎 iPhone 6.5" (1284×2778)</button>
+        <button class="platform-tab-btn" onclick="setPlatform(this,'ipad')" data-platform="ipad">📒 iPad 13" (2048×2732)</button>
+        <button class="platform-tab-btn" onclick="setPlatform(this,'watch')" data-platform="watch">⌚ Apple Watch (410×502)</button>
+      </div>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div>
+      <div class="sidebar-section-label">Screenshots (8 Screens)</div>
+      <div id="screenTabsList" style="display:flex;flex-direction:column;gap:6px;"></div>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div>
+      <div class="sidebar-section-label">Single Export</div>
+      <button class="ctrl-btn ctrl-btn-secondary" style="width:100%;justify-content:center;" onclick="exportCurrent()">
+        📸 Export Current View
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- MAIN CANVAS -->
+  <main class="main-canvas" id="mainCanvas">
+
+    <div class="canvas-controls">
+      <div class="info-panel" id="infoPanel">
+        <div class="info-item">
+          <span class="info-label">Platform</span>
+          <span class="info-value" id="infoPlatform">Android Phone</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Dimensions</span>
+          <span class="info-value" id="infoDims">1080 × 1920 px</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Aspect Ratio</span>
+          <span class="info-value" id="infoRatio">9:16</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Screen</span>
+          <span class="info-value" id="infoScreen">1 / 8</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- THE SCREENSHOT CANVAS — rendered at 1:1 resolution, then CSS-scaled -->
+    <div class="screenshot-preview-wrap" id="screenshotPreviewWrap">
+      <div class="screenshot-scale-wrapper" id="screenshotScaleWrapper">
+        <div class="screenshot-canvas bg-burgundy-gold" id="screenshotCanvas">
+          <!-- Dynamic content injected by script.js -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Export progress bar (used by generate.js callback) -->
+    <div class="export-progress" id="exportProgress">
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+      </div>
+      <span class="progress-text" id="progressText">0 / 0 exported</span>
+    </div>
+
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

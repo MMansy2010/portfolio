@@ -1,0 +1,14 @@
+{
+  "name": "jumuika-screenshot-generator",
+  "version": "1.0.0",
+  "description": "Premium App Store & Google Play screenshot generator for Jumuika Property App",
+  "main": "generate.js",
+  "scripts": {
+    "generate": "node generate.js",
+    "start": "node generate.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "puppeteer": "^22.0.0"
+  }
+}
