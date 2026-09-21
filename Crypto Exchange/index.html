@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quantum Crypto & Financial Market Exchange</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #060913;
+      --bg-card: rgba(15, 23, 42, 0.7);
+      --border: rgba(255, 255, 255, 0.08);
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --accent-cyan: #00f3ff;
+      --accent-purple: #a855f7;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg-dark); color: var(--text-main); font-family: 'Inter', sans-serif; min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+
+    /* Top Ticker Bar */
+    .ticker-bar { background: #02040a; border-bottom: 1px solid var(--border); padding: 0.5rem 1.5rem; display: flex; gap: 2rem; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
+    .ticker-item { display: flex; align-items: center; gap: 0.5rem; white-space: nowrap; }
+    .up { color: var(--accent-green); }
+    .down { color: var(--accent-red); }
+
+    /* Navbar */
+    header { background: rgba(6, 9, 19, 0.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 900; font-size: 1.3rem; display: flex; align-items: center; gap: 0.5rem; }
+    .logo span { color: var(--accent-cyan); }
+    
+    .wallet-btn { background: linear-gradient(135deg, #00f3ff 0%, #a855f7 100%); color: #000; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; padding: 0.65rem 1.4rem; border-radius: 99px; border: none; cursor: pointer; transition: all 0.2s; box-shadow: 0 0 20px rgba(0, 243, 255, 0.3); }
+    .wallet-btn:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(0, 243, 255, 0.5); }
+
+    /* Main Dashboard Layout */
+    .dashboard-grid { padding: 1.5rem; display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; max-width: 1440px; margin: 0 auto; width: 100%; flex-grow: 1; }
+
+    /* Glass Cards */
+    .glass-card { background: var(--bg-card); backdrop-filter: blur(16px); border: 1px solid var(--border); border-radius: 20px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1.25rem; }
+
+    /* Chart Container */
+    .chart-header { display: flex; align-items: center; justify-content: space-between; }
+    .pair-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.4rem; font-weight: 800; display: flex; align-items: center; gap: 0.6rem; }
+    .pair-price { font-family: 'JetBrains Mono', monospace; font-size: 1.8rem; font-weight: 700; color: var(--accent-green); }
+
+    .chart-canvas-box { width: 100%; height: 380px; position: relative; }
+    #candlestickCanvas { width: 100%; height: 100%; }
+
+    /* Order Book & Stats */
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .stat-box { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; }
+    .stat-label { font-size: 0.8rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+    .stat-val { font-size: 1.1rem; font-weight: 700; margin-top: 0.2rem; font-family: 'JetBrains Mono', monospace; }
+
+    /* Trade Panel */
+    .trade-tabs { display: flex; border-bottom: 1px solid var(--border); }
+    .tab { flex: 1; padding: 0.75rem; text-align: center; font-weight: 700; cursor: pointer; color: var(--text-muted); }
+    .tab.active-buy { color: var(--accent-green); border-bottom: 2px solid var(--accent-green); }
+
+    .input-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .input-group label { font-size: 0.8rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+    .input-group input { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); border-radius: 10px; padding: 0.8rem; color: #fff; font-family: 'JetBrains Mono', monospace; font-size: 1rem; outline: none; }
+
+    .btn-trade { background: var(--accent-green); color: #000; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; padding: 1rem; border-radius: 12px; border: none; font-size: 1rem; cursor: pointer; transition: all 0.2s; margin-top: 0.5rem; }
+    .btn-trade:hover { opacity: 0.9; box-shadow: 0 0 20px rgba(16, 185, 129, 0.4); }
+
+    /* Recent Assets List */
+    .asset-row { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid var(--border); }
+    .asset-info { display: flex; align-items: center; gap: 0.75rem; }
+    .asset-icon { width: 36px; height: 36px; background: rgba(255, 255, 255, 0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+  </style>
+</head>
+
+<body>
+
+  <!-- Live Ticker Bar -->
+  <div class="ticker-bar">
+    <div class="ticker-item"><span>BTC/USD:</span> <span class="up">$96,480.50 +3.4% ▲</span></div>
+    <div class="ticker-item"><span>ETH/USD:</span> <span class="up">$3,840.20 +2.1% ▲</span></div>
+    <div class="ticker-item"><span>SOL/USD:</span> <span class="down">$214.80 -0.8% ▼</span></div>
+    <div class="ticker-item"><span>NVDA:</span> <span class="up">$138.90 +4.2% ▲</span></div>
+    <div class="ticker-item"><span>AAPL:</span> <span class="up">$232.10 +1.0% ▲</span></div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <span>🌐</span> QUANTUM <span>EXCHANGE</span>
+    </div>
+    <button class="wallet-btn" id="connectBtn">Connect Web3 Wallet</button>
+  </header>
+
+  <!-- Dashboard -->
+  <div class="dashboard-grid">
+    <!-- Left Main Chart Panel -->
+    <div class="glass-card">
+      <div class="chart-header">
+        <div class="pair-title">
+          <span>⚡ BTC / USD</span>
+          <span style="font-size: 0.8rem; font-weight: 500; color: var(--text-muted); font-family: 'JetBrains Mono';">Bitcoin Spot</span>
+        </div>
+        <div class="pair-price" id="livePrice">$96,480.50</div>
+      </div>
+
+      <div class="chart-canvas-box">
+        <canvas id="candlestickCanvas"></canvas>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-label">24h High</div>
+          <div class="stat-val up">$97,800.00</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">24h Low</div>
+          <div class="stat-val down">$94,120.00</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">24h Volume</div>
+          <div class="stat-val">$42.8B</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Trade & Portfolio Panel -->
+    <div class="glass-card">
+      <h3>Quick Trade Engine</h3>
+
+      <div class="trade-tabs">
+        <div class="tab active-buy">BUY</div>
+        <div class="tab">SELL</div>
+      </div>
+
+      <div class="input-group">
+        <label>Amount (BTC)</label>
+        <input type="number" id="tradeAmount" value="0.1" step="0.05">
+      </div>
+
+      <div class="input-group">
+        <label>Limit Price (USD)</label>
+        <input type="text" id="tradePrice" value="96,480.50" readonly>
+      </div>
+
+      <div class="input-group">
+        <label>Estimated Total</label>
+        <input type="text" id="tradeTotal" value="$9,648.05" readonly>
+      </div>
+
+      <button class="btn-trade" id="btnExecuteTrade">Place Market Order →</button>
+
+      <h3 style="margin-top: 1rem;">Top Assets</h3>
+      <div class="asset-list">
+        <div class="asset-row">
+          <div class="asset-info">
+            <div class="asset-icon">₿</div>
+            <div>
+              <div style="font-weight: 700;">Bitcoin</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">BTC</div>
+            </div>
+          </div>
+          <div style="text-align: right; font-family: 'JetBrains Mono';">
+            <div>$96,480.50</div>
+            <div class="up" style="font-size: 0.75rem;">+3.4%</div>
+          </div>
+        </div>
+
+        <div class="asset-row">
+          <div class="asset-info">
+            <div class="asset-icon">Ξ</div>
+            <div>
+              <div style="font-weight: 700;">Ethereum</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">ETH</div>
+            </div>
+          </div>
+          <div style="text-align: right; font-family: 'JetBrains Mono';">
+            <div>$3,840.20</div>
+            <div class="up" style="font-size: 0.75rem;">+2.1%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Canvas Candlestick Animation
+    const canvas = document.getElementById('candlestickCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+      drawChart();
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    // Generate random candlestick data
+    const candles = [];
+    let price = 95000;
+    for (let i = 0; i < 40; i++) {
+      let change = (Math.random() - 0.48) * 600;
+      let open = price;
+      let close = open + change;
+      let high = Math.max(open, close) + Math.random() * 300;
+      let low = Math.min(open, close) - Math.random() * 300;
+      candles.push({ open, close, high, low });
+      price = close;
+    }
+
+    function drawChart() {
+      if (!canvas.width) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const w = canvas.width;
+      const h = canvas.height;
+      const candleWidth = w / candles.length - 6;
+
+      let minP = Math.min(...candles.map(c => c.low));
+      let maxP = Math.max(...candles.map(c => c.high));
+
+      const getY = (val) => h - ((val - minP) / (maxP - minP)) * (h - 40) - 20;
+
+      // Draw Gridlines
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+      ctx.lineWidth = 1;
+      for (let y = 50; y < h; y += 60) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(w, y);
+        ctx.stroke();
+      }
+
+      // Draw Candles
+      candles.forEach((c, i) => {
+        let x = i * (candleWidth + 6) + 3;
+        let isGreen = c.close >= c.open;
+        let color = isGreen ? '#10b981' : '#ef4444';
+
+        // High-Low Wick line
+        ctx.strokeStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(x + candleWidth / 2, getY(c.high));
+        ctx.lineTo(x + candleWidth / 2, getY(c.low));
+        ctx.stroke();
+
+        // Body rectangle
+        ctx.fillStyle = color;
+        let topY = getY(Math.max(c.open, c.close));
+        let botY = getY(Math.min(c.open, c.close));
+        let bodyH = Math.max(2, botY - topY);
+        ctx.fillRect(x, topY, candleWidth, bodyH);
+      });
+    }
+
+    setTimeout(resizeCanvas, 100);
+
+    // Trade Amount Calculator
+    document.getElementById('tradeAmount').addEventListener('input', (e) => {
+      let amt = parseFloat(e.target.value) || 0;
+      let total = amt * 96480.50;
+      document.getElementById('tradeTotal').value = '$' + total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    });
+
+    document.getElementById('btnExecuteTrade').addEventListener('click', () => {
+      alert('Order Placed Successfully! 🚀\nPosition executed on simulated Web3 Exchange.');
+    });
+
+    document.getElementById('connectBtn').addEventListener('click', () => {
+      alert('MetaMask / Web3 Wallet Connected Successfully!');
+    });
+  </script>
+</body>
+
+</html>
