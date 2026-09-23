@@ -4,142 +4,185 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mohamed Mansy — Front End Developer</title>
+  <title>Mohamed Mansy — 3D Cybernetic Portfolio & Full-Stack Developer</title>
+  <meta name="description" content="Mohamed Mansy - 15-Year-Old Front End & Full Stack Web Developer based in Egypt. Specializing in 3D WebGL Web Experiences, React, Python, Godot, and Modern UI/UX." />
 
-  <!-- Premium Fonts: Plus Jakarta Sans for headings, Inter for body text, JetBrains Mono for accents -->
+  <!-- Premium Web Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@700;800&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
 
+  <!-- Three.js Library for 3D Graphics -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 
 <body>
 
-  <!-- Ambient Background -->
+  <!-- Three.js 3D WebGL Canvas Container -->
+  <div id="three-canvas-container"></div>
+
+  <!-- Ambient Glow Elements -->
   <div class="bg-glow-1"></div>
   <div class="bg-glow-2"></div>
   <div id="cursor-blob"></div>
 
-  <!-- Navbar -->
-  <nav>
-    <div class="nav-logo">M<span>.</span>Mansy</div>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#certifications">Certs</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+  <!-- Header & Navigation -->
+  <header>
+    <div class="container">
+      <nav>
+        <a href="#home" class="nav-logo">M<span>.</span>MANSY</a>
+        <ul class="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#certifications">Certs</a></li>
+          <li><a href="#projects">Showcase</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <button id="audio-toggle" class="icon-btn" title="Enable Cyber Sound FX">
+            <span>🔊</span>
+          </button>
+          <a href="#contact" class="btn btn-primary btn-sm">Let's Connect</a>
+        </div>
+      </nav>
+    </div>
+  </header>
 
   <!-- Hero Section -->
   <section id="home" class="hero container">
     <div class="hero-content">
-      <div class="section-label reveal">Available for opportunities</div>
-      <h1 class="hero-title reveal" style="transition-delay: 100ms;">
-        Mohamed <br /><span class="highlight">Mansy</span>
+      <div class="section-label reveal">⚡ Next-Gen 3D Web Experience</div>
+      <h1 class="hero-title reveal">
+        MOHAMED <br /><span class="highlight">MANSY</span>
       </h1>
-      <p class="hero-desc reveal" style="transition-delay: 200ms;">
-        Front End Developer from Egypt — crafting premium, functional, and deeply thoughtful web experiences.
+      <p class="hero-desc reveal">
+        15-Year-Old Front-End & Full-Stack Developer from Egypt crafting <strong>ultra-immersive 3D web applications</strong>, high-performance interfaces, and full-stack software solutions.
       </p>
 
-      <div class="badges reveal" style="transition-delay: 300ms;">
+      <div class="badges reveal">
+        <span class="badge">Three.js / WebGL</span>
         <span class="badge">React.js</span>
         <span class="badge">JavaScript (ES6+)</span>
         <span class="badge">Python</span>
-        <span class="badge">UI/UX Design</span>
+        <span class="badge">PHP & SQL</span>
+        <span class="badge">Godot Engine</span>
       </div>
 
-      <div class="cta-group reveal" style="transition-delay: 400ms;">
-        <a href="#projects" class="btn btn-primary">View Projects</a>
-        <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+      <div class="cta-group reveal">
+        <a href="#projects" class="btn btn-primary">
+          <span>Explore 15+ Projects</span>
+          <span>→</span>
+        </a>
+        <a href="#contact" class="btn btn-secondary">Get In Touch</a>
       </div>
     </div>
   </section>
 
   <!-- About Section -->
   <section id="about" class="section-container">
-    <div class="section-label reveal">01 — About</div>
-    <h2 class="section-title reveal">Designing at the Intersection of Logic & Art</h2>
+    <div class="section-label reveal">01 — Profile</div>
+    <h2 class="section-title reveal">Engineering the Future of Web Experiences</h2>
 
     <div class="about-grid">
       <div class="about-text reveal">
-        <p>I'm <strong>Mohamed Ahmed Mansy</strong>, a passionate 15-year-old Front End Developer based in Egypt. I've
-          been cultivating my knowledge in programming from a very young age.</p>
-        <p>I specialize in translating ideas into highly responsive, interactive interfaces. From raw HTML & CSS to
-          advanced interactive systems using Javascript, Python, PHP, and SQL, I believe in robust architecture wrapped
-          in beautiful design.</p>
-        <p>Currently in my third year of middle school (Prep 3), I balance my academic journey with a deep drive to
-          innovate in tech. I am fluent in English (B2 level) and approach every challenge with strategic
-          problem-solving.</p>
+        <p>I am <strong>Mohamed Ahmed Mansy</strong>, a passionate 15-year-old developer based in Egypt. I began my coding journey early, transforming complex ideas into intuitive, high-performance digital products.</p>
+        <p>My skill set spans raw WebGL 3D math and interactive front-ends to robust backend architectures utilizing PHP, MySQL, Python, and Firebase. I believe that extraordinary software is born when code precision meets aesthetic perfection.</p>
+        <p>Currently balancing my academic achievements in middle school (Prep 3) with continuous technical mastery, I am certified by global leaders including <strong>Huawei</strong>, <strong>Udacity</strong>, and <strong>ITIDA/EYOUTH</strong>, and hold B2 English proficiency.</p>
       </div>
 
-      <div class="stats-grid reveal" style="transition-delay: 200ms;">
-        <div class="glass-panel stat-card">
+      <div class="stats-grid reveal">
+        <div class="glass-panel tilt-card stat-card">
+          <div class="card-glare"></div>
+          <div class="stat-num">15+</div>
+          <div class="stat-label">Projects Built</div>
+        </div>
+        <div class="glass-panel tilt-card stat-card">
+          <div class="card-glare"></div>
           <div class="stat-num">13+</div>
           <div class="stat-label">Technologies Mastered</div>
         </div>
-        <div class="glass-panel stat-card">
+        <div class="glass-panel tilt-card stat-card">
+          <div class="card-glare"></div>
           <div class="stat-num">EG</div>
-          <div class="stat-label">Based in Egypt</div>
+          <div class="stat-label">Based in Egypt 🇪🇬</div>
         </div>
-        <div class="glass-panel stat-card">
+        <div class="glass-panel tilt-card stat-card">
+          <div class="card-glare"></div>
           <div class="stat-num">B2</div>
-          <div class="stat-label">English English Level</div>
-        </div>
-        <div class="glass-panel stat-card">
-          <div class="stat-num">🚀</div>
-          <div class="stat-label">Always Learning</div>
+          <div class="stat-label">English Fluent</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Skills Section -->
+  <!-- Skills Arsenal Section -->
   <section id="skills" class="section-container">
     <div class="section-label reveal">02 — Expertise</div>
-    <h2 class="section-title reveal">My Arsenal</h2>
+    <h2 class="section-title reveal">Technical Arsenal</h2>
 
     <div class="skills-grid reveal">
-      <div class="glass-panel skill-card">
-        <div class="skill-icon">🌐</div>
-        <div class="skill-name">HTML & CSS</div>
+      <div class="glass-panel tilt-card skill-card">
+        <div class="card-glare"></div>
+        <div class="skill-icon">🔮</div>
+        <div class="skill-name">Three.js / WebGL</div>
       </div>
-      <div class="glass-panel skill-card">
-        <div class="skill-icon">⚡</div>
-        <div class="skill-name">JavaScript</div>
-      </div>
-      <div class="glass-panel skill-card">
+      <div class="glass-panel tilt-card skill-card">
+        <div class="card-glare"></div>
         <div class="skill-icon">⚛️</div>
         <div class="skill-name">React.js</div>
       </div>
-      <div class="glass-panel skill-card">
+      <div class="glass-panel tilt-card skill-card">
+        <div class="card-glare"></div>
+        <div class="skill-icon">⚡</div>
+        <div class="skill-name">JavaScript ES6+</div>
+      </div>
+      <div class="glass-panel tilt-card skill-card">
+        <div class="card-glare"></div>
+        <div class="skill-icon">🎨</div>
+        <div class="skill-name">HTML5 & CSS3 3D</div>
+      </div>
+      <div class="glass-panel tilt-card skill-card">
+        <div class="card-glare"></div>
         <div class="skill-icon">🐍</div>
         <div class="skill-name">Python</div>
       </div>
-      <div class="glass-panel skill-card">
+      <div class="glass-panel tilt-card skill-card">
+        <div class="card-glare"></div>
         <div class="skill-icon">🐘</div>
         <div class="skill-name">PHP</div>
       </div>
-      <div class="glass-panel skill-card">
+      <div class="glass-panel tilt-card skill-card">
+        <div class="card-glare"></div>
         <div class="skill-icon">🗄️</div>
-        <div class="skill-name">SQL</div>
+        <div class="skill-name">MySQL / SQL</div>
       </div>
-      <div class="glass-panel skill-card">
-        <div class="skill-icon">🔀</div>
-        <div class="skill-name">Git / GitHub</div>
+      <div class="glass-panel tilt-card skill-card">
+        <div class="card-glare"></div>
+        <div class="skill-icon">🔥</div>
+        <div class="skill-name">Firebase</div>
       </div>
-      <div class="glass-panel skill-card">
-        <div class="skill-icon">🎨</div>
-        <div class="skill-name">Figma</div>
-      </div>
-      <div class="glass-panel skill-card">
+      <div class="glass-panel tilt-card skill-card">
+        <div class="card-glare"></div>
         <div class="skill-icon">🎮</div>
-        <div class="skill-name">Godot & GDScript</div>
+        <div class="skill-name">Godot Engine</div>
+      </div>
+      <div class="glass-panel tilt-card skill-card">
+        <div class="card-glare"></div>
+        <div class="skill-icon">🔀</div>
+        <div class="skill-name">Git & GitHub</div>
+      </div>
+      <div class="glass-panel tilt-card skill-card">
+        <div class="card-glare"></div>
+        <div class="skill-icon">📐</div>
+        <div class="skill-name">Figma UI/UX</div>
+      </div>
+      <div class="glass-panel tilt-card skill-card">
+        <div class="card-glare"></div>
+        <div class="skill-icon">📦</div>
+        <div class="skill-name">Vite / Webpack</div>
       </div>
     </div>
   </section>
@@ -147,10 +190,11 @@
   <!-- Certifications Section -->
   <section id="certifications" class="section-container">
     <div class="section-label reveal">03 — Credentials</div>
-    <h2 class="section-title reveal">Achievements & Certifications</h2>
+    <h2 class="section-title reveal">Certifications & Distinctions</h2>
 
     <div class="cert-list reveal">
-      <div class="glass-panel cert-card">
+      <div class="glass-panel tilt-card cert-card">
+        <div class="card-glare"></div>
         <div class="cert-info">
           <div class="cert-icon">🏆</div>
           <div>
@@ -161,18 +205,20 @@
         <div class="cert-badge-tag">Certified</div>
       </div>
 
-      <div class="glass-panel cert-card">
+      <div class="glass-panel tilt-card cert-card">
+        <div class="card-glare"></div>
         <div class="cert-info">
           <div class="cert-icon">🎖️</div>
           <div>
             <h3 class="cert-name">Level 1 — Almentor</h3>
-            <p class="cert-issuer">Almentor × Digital Egypt Cubs Initiative</p>
+            <p class="cert-issuer">Almentor × Digital Egypt Cubs Initiative (DECI)</p>
           </div>
         </div>
         <div class="cert-badge-tag">Level 1</div>
       </div>
 
-      <div class="glass-panel cert-card">
+      <div class="glass-panel tilt-card cert-card">
+        <div class="card-glare"></div>
         <div class="cert-info">
           <div class="cert-icon">🚀</div>
           <div>
@@ -183,29 +229,32 @@
         <div class="cert-badge-tag">Level 2</div>
       </div>
 
-      <div class="glass-panel cert-card">
+      <div class="glass-panel tilt-card cert-card">
+        <div class="card-glare"></div>
         <div class="cert-info">
           <div class="cert-icon">💼</div>
           <div>
             <h3 class="cert-name">EYOUTH × ITIDA GIGS</h3>
-            <p class="cert-issuer">EYOUTH — ITIDA</p>
+            <p class="cert-issuer">EYOUTH — ITIDA Egypt</p>
           </div>
         </div>
         <div class="cert-badge-tag">Certified</div>
       </div>
 
-      <div class="glass-panel cert-card">
+      <div class="glass-panel tilt-card cert-card">
+        <div class="card-glare"></div>
         <div class="cert-info">
           <div class="cert-icon">🎓</div>
           <div>
-            <h3 class="cert-name">Programming Course</h3>
+            <h3 class="cert-name">Programming Diploma</h3>
             <p class="cert-issuer">iSchool</p>
           </div>
         </div>
         <div class="cert-badge-tag">Completed</div>
       </div>
 
-      <div class="glass-panel cert-card">
+      <div class="glass-panel tilt-card cert-card">
+        <div class="card-glare"></div>
         <div class="cert-info">
           <div class="cert-icon">🏅</div>
           <div>
@@ -216,11 +265,12 @@
         <div class="cert-badge-tag">Participant</div>
       </div>
 
-      <div class="glass-panel cert-card">
+      <div class="glass-panel tilt-card cert-card">
+        <div class="card-glare"></div>
         <div class="cert-info">
           <div class="cert-icon">💻</div>
           <div>
-            <h3 class="cert-name">Backend PHP & SQL</h3>
+            <h3 class="cert-name">Backend PHP & SQL Mastery</h3>
             <p class="cert-issuer">CodeSpark</p>
           </div>
         </div>
@@ -229,180 +279,412 @@
     </div>
   </section>
 
-  <!-- Projects Placeholder -->
+  <!-- Showcase Section -->
   <section id="projects" class="section-container">
-    <div class="section-label reveal">04 — Selected Works</div>
-    <h2 class="section-title reveal">Featured Projects</h2>
+    <div class="section-label reveal">04 — Portfolio</div>
+    <h2 class="section-title reveal">Selected Featured Works</h2>
 
+    <!-- Interactive Filters -->
+    <div class="filter-tabs reveal">
+      <button class="filter-btn active" data-filter="all">All Projects (17)</button>
+      <button class="filter-btn" data-filter="3d">3D & Games</button>
+      <button class="filter-btn" data-filter="fullstack">Full Stack & E-Commerce</button>
+      <button class="filter-btn" data-filter="dashboard">Systems & Dashboards</button>
+      <button class="filter-btn" data-filter="webapp">Web Applications</button>
+    </div>
+
+    <!-- Projects Grid -->
     <div class="projects-grid reveal">
 
-      <!-- Project 1 -->
-      <div class="glass-panel project-card">
+      <!-- Project 0: AI & STEM Competition Dashboard -->
+      <div class="glass-panel tilt-card project-card" data-category="dashboard webapp">
+        <div class="card-glare"></div>
+        <div class="project-img-wrapper">
+          <img src="Screenshotss/competition_dashboard.png" alt="AI & STEM Competition Tracker" />
+          <span class="project-badge-tag">AI Competition Hub</span>
+        </div>
+        <div class="project-content">
+          <h3 class="project-title">AI & STEM Global Competition Dashboard</h3>
+          <p class="project-desc">Interactive competition tracker & strategic roadmap dashboard featuring live countdown timers, task checklists, and AI strategy pivots.</p>
+          <div class="project-tech">
+            <span>JavaScript ES6</span>
+            <span>LocalStorage</span>
+            <span>CSS Glassmorphism</span>
+            <span>UI Strategy</span>
+          </div>
+          <div class="project-links">
+            <button class="btn btn-primary btn-sm open-preview-btn" data-url="../../competition-dashboard/index.html" data-title="AI & STEM Competition Dashboard">👁️ Quick Preview</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 0A: CyberAI Code Studio -->
+      <div class="glass-panel tilt-card project-card" data-category="dashboard webapp">
+        <div class="card-glare"></div>
+        <div class="project-img-wrapper">
+          <img src="Screenshotss/ai_code_studio.jpg" alt="CyberAI Code Studio" />
+          <span class="project-badge-tag">AI Dev Studio</span>
+        </div>
+        <div class="project-content">
+          <h3 class="project-title">CyberAI Code Studio & Playground</h3>
+          <p class="project-desc">Web-based IDE & AI Developer Assistant playground featuring multi-language snippets, AST compiler console, and syntax formatting.</p>
+          <div class="project-tech">
+            <span>JavaScript</span>
+            <span>React / Python AST</span>
+            <span>Web Terminal</span>
+            <span>CSS Grid</span>
+          </div>
+          <div class="project-links">
+            <button class="btn btn-primary btn-sm open-preview-btn" data-url="../../AI Code Studio/index.html" data-title="CyberAI Code Studio">👁️ Quick Preview</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 0B: Quantum Crypto Exchange -->
+      <div class="glass-panel tilt-card project-card" data-category="dashboard fullstack">
+        <div class="card-glare"></div>
+        <div class="project-img-wrapper">
+          <img src="Screenshotss/crypto_exchange.jpg" alt="Quantum Crypto Exchange" />
+          <span class="project-badge-tag">Crypto Exchange</span>
+        </div>
+        <div class="project-content">
+          <h3 class="project-title">Quantum Crypto & Market Exchange</h3>
+          <p class="project-desc">Real-time financial market exchange dashboard featuring animated HTML5 Canvas Candlestick charts, tickers, and Web3 order execution.</p>
+          <div class="project-tech">
+            <span>JavaScript ES6</span>
+            <span>Canvas Charts</span>
+            <span>Web3 Sandbox</span>
+            <span>Glass UI</span>
+          </div>
+          <div class="project-links">
+            <button class="btn btn-primary btn-sm open-preview-btn" data-url="../../Crypto Exchange/index.html" data-title="Quantum Crypto Exchange">👁️ Quick Preview</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 1: Eclipse 3D Apparel -->
+      <div class="glass-panel tilt-card project-card" data-category="3d webapp">
+        <div class="card-glare"></div>
+        <div class="project-img-wrapper">
+          <img src="../../Eclipse/black cap.png" alt="Eclipse 3D Cap Configurator" />
+          <span class="project-badge-tag">3D Configurator</span>
+        </div>
+        <div class="project-content">
+          <h3 class="project-title">Eclipse 3D Apparel Configurator</h3>
+          <p class="project-desc">Interactive 3D GLTF Cap customizer enabling real-time 360° rotation, lighting, and apparel style switching.</p>
+          <div class="project-tech">
+            <span>Three.js</span>
+            <span>WebGL / GLTF</span>
+            <span>JavaScript</span>
+            <span>HTML5/CSS3</span>
+          </div>
+          <div class="project-links">
+            <button class="btn btn-primary btn-sm open-preview-btn" data-url="../../Eclipse/index.html" data-title="Eclipse 3D Configurator">👁️ Quick Preview</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 2: Device Tracking System -->
+      <div class="glass-panel tilt-card project-card" data-category="dashboard webapp">
+        <div class="card-glare"></div>
+        <div class="project-img-wrapper">
+          <img src="../../Device Tracking/Cartoonic level device.png" alt="Device Tracking System" />
+          <span class="project-badge-tag">Survey Dashboard</span>
+        </div>
+        <div class="project-content">
+          <h3 class="project-title">Device Tracking & Surveying Suite</h3>
+          <p class="project-desc">Comprehensive device tracking platform featuring Excel data parsing, Leaflet mapping visuals, and status reporting.</p>
+          <div class="project-tech">
+            <span>JavaScript</span>
+            <span>SheetJS / Excel</span>
+            <span>Leaflet Maps</span>
+            <span>CSS Grid</span>
+          </div>
+          <div class="project-links">
+            <button class="btn btn-primary btn-sm open-preview-btn" data-url="../../Device Tracking/index.html" data-title="Device Tracking System">👁️ Quick Preview</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 3: AlSariqa Cipher Mystery Game -->
+      <div class="glass-panel tilt-card project-card" data-category="3d webapp">
+        <div class="card-glare"></div>
+        <div class="project-img-wrapper">
+          <img src="../../AlSariqa/Le3bt Al3eed QR templete.png" alt="AlSariqa Mystery Game" />
+          <span class="project-badge-tag">Interactive Cipher</span>
+        </div>
+        <div class="project-content">
+          <h3 class="project-title">AlSariqa — The Great Escape</h3>
+          <p class="project-desc">Interactive mystery riddle game with secret Game Master manual, QR decoder, and multi-stage puzzle logic.</p>
+          <div class="project-tech">
+            <span>JavaScript ES6</span>
+            <span>HTML5 Canvas</span>
+            <span>CSS3 FX</span>
+          </div>
+          <div class="project-links">
+            <button class="btn btn-primary btn-sm open-preview-btn" data-url="../../AlSariqa/index.html" data-title="AlSariqa Puzzle System">👁️ Quick Preview</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 4: Online Booking Portal -->
+      <div class="glass-panel tilt-card project-card" data-category="fullstack webapp">
+        <div class="card-glare"></div>
+        <div class="project-img-wrapper">
+          <img src="Screenshotss/screenHelp.png" alt="Online Booking Website" />
+          <span class="project-badge-tag">Booking Engine</span>
+        </div>
+        <div class="project-content">
+          <h3 class="project-title">Online Flight & Hotel Booking Engine</h3>
+          <p class="project-desc">Feature-rich travel portal interface with seat selection, date pickers, dynamic search, and booking management.</p>
+          <div class="project-tech">
+            <span>HTML5</span>
+            <span>CSS3</span>
+            <span>JavaScript</span>
+            <span>UI Components</span>
+          </div>
+          <div class="project-links">
+            <button class="btn btn-primary btn-sm open-preview-btn" data-url="../../Online Booking Website/index.html" data-title="Online Booking Engine">👁️ Quick Preview</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 5: VisionX Productivity Workspace -->
+      <div class="glass-panel tilt-card project-card" data-category="dashboard webapp">
+        <div class="card-glare"></div>
+        <div class="project-img-wrapper">
+          <img src="Screenshotss/Screen_To-Do-app.png" alt="VisionX Task Manager" />
+          <span class="project-badge-tag">Productivity Suite</span>
+        </div>
+        <div class="project-content">
+          <h3 class="project-title">VisionX Workspace & Task Engine</h3>
+          <p class="project-desc">Glassmorphic workspace management system featuring task tagging, local persistence, progress analytics, and themes.</p>
+          <div class="project-tech">
+            <span>JavaScript ES6</span>
+            <span>LocalStorage</span>
+            <span>CSS Glassmorphism</span>
+          </div>
+          <div class="project-links">
+            <button class="btn btn-primary btn-sm open-preview-btn" data-url="../../VisionX To Do list/index.html" data-title="VisionX Productivity Suite">👁️ Quick Preview</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 6: Escape the Grove Game -->
+      <div class="glass-panel tilt-card project-card" data-category="3d">
+        <div class="card-glare"></div>
         <div class="project-img-wrapper">
           <img src="Screenshotss/Game.png" alt="Escape the Grove" />
+          <span class="project-badge-tag">Godot Game</span>
         </div>
         <div class="project-content">
           <h3 class="project-title">Escape the Grove</h3>
+          <p class="project-desc">Atmospheric action game developed in Godot featuring custom GDScript player physics, enemy AI, and level mechanics.</p>
           <div class="project-tech">
-            <span>Godot</span>
+            <span>Godot 4</span>
             <span>GDScript</span>
+            <span>2D/3D Physics</span>
           </div>
           <div class="project-links">
-            <a href="https://mohamedmansy.itch.io/escape-the-grove" target="_blank">↗ Live Demo</a>
+            <a href="https://mohamedmansy.itch.io/escape-the-grove" target="_blank" class="btn btn-primary btn-sm">↗ Play on Itch.io</a>
           </div>
         </div>
       </div>
 
-      <!-- Project 2 -->
-      <div class="glass-panel project-card">
+      <!-- Project 7: Goha Restaurant -->
+      <div class="glass-panel tilt-card project-card" data-category="webapp">
+        <div class="card-glare"></div>
         <div class="project-img-wrapper">
           <img src="Screenshotss/Goha_rest_Screen.png" alt="Goha Restaurant" />
+          <span class="project-badge-tag">Dining Web App</span>
         </div>
         <div class="project-content">
-          <h3 class="project-title">Goha Restaurant</h3>
+          <h3 class="project-title">Goha Cultural Restaurant</h3>
+          <p class="project-desc">Interactive culinary web platform featuring animated menu filtering, cart calculation, and responsive layout.</p>
           <div class="project-tech">
-            <span>HTML</span>
-            <span>CSS</span>
+            <span>HTML5</span>
+            <span>CSS3</span>
             <span>JavaScript</span>
           </div>
           <div class="project-links">
-            <a href="https://mmansy2010.github.io/Goha-Restaurant" target="_blank">↗ Live Demo</a>
-            <a href="https://github.com/MMansy2010/Goha-Restaurant" target="_blank">⌨ Source Code</a>
+            <button class="btn btn-primary btn-sm open-preview-btn" data-url="../../Goha Restaurant/index.html" data-title="Goha Restaurant">👁️ Quick Preview</button>
+            <a href="https://github.com/MMansy2010/Goha-Restaurant" target="_blank" class="btn btn-secondary btn-sm">⌨ Source</a>
           </div>
         </div>
       </div>
 
-      <!-- Project 3 -->
-      <div class="glass-panel project-card">
-        <div class="project-img-wrapper">
-          <img src="Screenshotss/Screen_To-Do-app.png" alt="To-Do App" />
-        </div>
-        <div class="project-content">
-          <h3 class="project-title">To-Do-App</h3>
-          <div class="project-tech">
-            <span>HTML</span>
-            <span>CSS</span>
-            <span>JavaScript</span>
-          </div>
-          <div class="project-links">
-            <a href="https://mmansy2010.github.io/To-Do-App" target="_blank">↗ Live Demo</a>
-            <a href="https://github.com/MMansy2010/To-Do-App" target="_blank">⌨ Source Code</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Project 4 -->
-      <div class="glass-panel project-card">
+      <!-- Project 8: Weather API Portal -->
+      <div class="glass-panel tilt-card project-card" data-category="webapp">
+        <div class="card-glare"></div>
         <div class="project-img-wrapper">
           <img src="Screenshotss/Screen_Weather-API.png" alt="Weather API" />
+          <span class="project-badge-tag">Climate API</span>
         </div>
         <div class="project-content">
-          <h3 class="project-title">Weather API</h3>
+          <h3 class="project-title">Weather API Live Tracker</h3>
+          <p class="project-desc">Real-time weather application connecting to live REST APIs, displaying forecasts, humidity, wind velocity, and dynamic backgrounds.</p>
           <div class="project-tech">
-            <span>HTML</span>
-            <span>CSS</span>
-            <span>JavaScript</span>
-            <span>API</span>
+            <span>JavaScript API</span>
+            <span>REST Fetch</span>
+            <span>Dynamic CSS</span>
           </div>
           <div class="project-links">
-            <a href="https://mmansy2010.github.io/Weather-API" target="_blank">↗ Live Demo</a>
-            <a href="https://github.com/MMansy2010/Weather-API" target="_blank">⌨ Source Code</a>
+            <button class="btn btn-primary btn-sm open-preview-btn" data-url="../../Weather API/index.html" data-title="Weather API Portal">👁️ Quick Preview</button>
+            <a href="https://github.com/MMansy2010/Weather-API" target="_blank" class="btn btn-secondary btn-sm">⌨ Source</a>
           </div>
         </div>
       </div>
 
-      <!-- Project 5 -->
-      <div class="glass-panel project-card">
+      <!-- Project 9: E-Shop Full Stack -->
+      <div class="glass-panel tilt-card project-card" data-category="fullstack">
+        <div class="card-glare"></div>
         <div class="project-img-wrapper">
-          <img src="Screenshotss/screenAbout.png" alt="About Page" />
+          <img src="Screenshotss/e-commerce.png" alt="E-Shop" />
+          <span class="project-badge-tag">Full Stack PHP</span>
         </div>
         <div class="project-content">
-          <h3 class="project-title">About Page</h3>
-          <div class="project-tech">
-            <span>HTML</span>
-            <span>CSS</span>
-            <span>JavaScript</span>
-          </div>
-          <div class="project-links">
-            <a href="https://mmansy2010.github.io/About-Us" target="_blank">↗ Live Demo</a>
-            <a href="https://github.com/MMansy2010/About-Us" target="_blank">⌨ Source Code</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Project 6 -->
-      <div class="glass-panel project-card">
-        <div class="project-img-wrapper">
-          <img src="Screenshotss/screenCalc.png" alt="Calculator" />
-        </div>
-        <div class="project-content">
-          <h3 class="project-title">Calculator</h3>
-          <div class="project-tech">
-            <span>React</span>
-          </div>
-          <div class="project-links">
-            <a href="https://mmansy2010.github.io/calculator" target="_blank">↗ Live Demo</a>
-            <a href="https://github.com/MMansy2010/calculator" target="_blank">⌨ Source Code</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Project 7 -->
-      <div class="glass-panel project-card">
-        <div class="project-img-wrapper">
-          <img src="Screenshotss/screenHelp.png" alt="Help Page" />
-        </div>
-        <div class="project-content">
-          <h3 class="project-title">Help Page</h3>
-          <div class="project-tech">
-            <span>HTML</span>
-            <span>CSS</span>
-            <span>JavaScript</span>
-          </div>
-          <div class="project-links">
-            <a href="https://mmansy2010.github.io/Help-Page" target="_blank">↗ Live Demo</a>
-            <a href="https://github.com/MMansy2010/Help-Page" target="_blank">⌨ Source Code</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Project 8 -->
-      <div class="glass-panel project-card">
-        <div class="project-img-wrapper">
-          <img src="Screenshotss/restaurant app.jpeg" alt="Restaurant App" />
-        </div>
-        <div class="project-content">
-          <h3 class="project-title">Restaurant App</h3>
-          <div class="project-tech">
-            <span>HTML</span>
-            <span>CSS</span>
-            <span>JavaScript</span>
-            <span>Firebase</span>
-          </div>
-          <div class="project-links">
-            <a href="https://mmansy2010.github.io/restaurant-app" target="_blank">↗ Live Demo</a>
-            <a href="https://github.com/MMansy2010/restaurant-app" target="_blank">⌨ Source Code</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Project 9 -->
-      <div class="glass-panel project-card">
-        <div class="project-img-wrapper">
-          <img src="Screenshotss/e-commerce.png" alt="E-Commerce" />
-        </div>
-        <div class="project-content">
-          <h3 class="project-title">E-Shop</h3>
+          <h3 class="project-title">E-Shop E-Commerce System</h3>
+          <p class="project-desc">Full stack online store built with PHP & SQL featuring session authentication, catalog browsing, cart management, and admin dashboard.</p>
           <div class="project-tech">
             <span>PHP</span>
-            <span>SQL</span>
-            <span>HTML</span>
-            <span>CSS</span>
+            <span>MySQL</span>
+            <span>HTML / CSS</span>
             <span>JavaScript</span>
           </div>
           <div class="project-links">
-            <a href="https://e-shop-mmansy.42web.io/?i=1" target="_blank">↗ Live Demo</a>
-            <a href="https://github.com/MMansy2010/E-Commerce" target="_blank">⌨ Source Code</a>
+            <a href="https://e-shop-mmansy.42web.io/?i=1" target="_blank" class="btn btn-primary btn-sm">↗ Live Demo</a>
+            <a href="https://github.com/MMansy2010/E-Commerce" target="_blank" class="btn btn-secondary btn-sm">⌨ Source</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 10: Restaurant App Firebase -->
+      <div class="glass-panel tilt-card project-card" data-category="fullstack webapp">
+        <div class="card-glare"></div>
+        <div class="project-img-wrapper">
+          <img src="Screenshotss/restaurant app.jpeg" alt="Restaurant App Firebase" />
+          <span class="project-badge-tag">Firebase DB</span>
+        </div>
+        <div class="project-content">
+          <h3 class="project-title">Restaurant App (Realtime Firebase)</h3>
+          <p class="project-desc">Web application integrating Firebase Realtime Database for ordering, live status sync, and table reservation management.</p>
+          <div class="project-tech">
+            <span>Firebase DB</span>
+            <span>JavaScript ES6</span>
+            <span>CSS3</span>
+          </div>
+          <div class="project-links">
+            <button class="btn btn-primary btn-sm open-preview-btn" data-url="../../restaurant-app/index.html" data-title="Restaurant Firebase App">👁️ Quick Preview</button>
+            <a href="https://github.com/MMansy2010/restaurant-app" target="_blank" class="btn btn-secondary btn-sm">⌨ Source</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 11: Australia Portal -->
+      <div class="glass-panel tilt-card project-card" data-category="webapp">
+        <div class="card-glare"></div>
+        <div class="project-img-wrapper">
+          <img src="../../Australia/screenshots/Screenshot 2026-05-23 202656.png" alt="Australia Portal" />
+          <span class="project-badge-tag">Vite App</span>
+        </div>
+        <div class="project-content">
+          <h3 class="project-title">Australia Exploration Portal</h3>
+          <p class="project-desc">Modern interactive web portal exploring Australian landmarks, study opportunities, and tourism guides.</p>
+          <div class="project-tech">
+            <span>Vite</span>
+            <span>JavaScript</span>
+            <span>CSS Modules</span>
+          </div>
+          <div class="project-links">
+            <button class="btn btn-primary btn-sm open-preview-btn" data-url="../../Australia/index.html" data-title="Australia Portal">👁️ Quick Preview</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 12: React Calculator -->
+      <div class="glass-panel tilt-card project-card" data-category="webapp">
+        <div class="card-glare"></div>
+        <div class="project-img-wrapper">
+          <img src="Screenshotss/screenCalc.png" alt="React Calculator" />
+          <span class="project-badge-tag">React.js</span>
+        </div>
+        <div class="project-content">
+          <h3 class="project-title">React Component Calculator</h3>
+          <p class="project-desc">Precision calculator application engineered with React state hooks, modular component architecture, and keyboard support.</p>
+          <div class="project-tech">
+            <span>React.js</span>
+            <span>JSX</span>
+            <span>CSS Flexbox</span>
+          </div>
+          <div class="project-links">
+            <button class="btn btn-primary btn-sm open-preview-btn" data-url="../../calculator/index.html" data-title="React Calculator">👁️ Quick Preview</button>
+            <a href="https://github.com/MMansy2010/calculator" target="_blank" class="btn btn-secondary btn-sm">⌨ Source</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 13: Corporate About Page -->
+      <div class="glass-panel tilt-card project-card" data-category="webapp">
+        <div class="card-glare"></div>
+        <div class="project-img-wrapper">
+          <img src="Screenshotss/screenAbout.png" alt="About Page" />
+          <span class="project-badge-tag">Landing Page</span>
+        </div>
+        <div class="project-content">
+          <h3 class="project-title">Corporate Landing & Story Page</h3>
+          <p class="project-desc">Sleek corporate about page showcasing brand vision, timeline milestones, and interactive team cards.</p>
+          <div class="project-tech">
+            <span>HTML5</span>
+            <span>CSS3 Animations</span>
+            <span>JS Scrolls</span>
+          </div>
+          <div class="project-links">
+            <button class="btn btn-primary btn-sm open-preview-btn" data-url="../../About Us/index.html" data-title="About Us Landing Page">👁️ Quick Preview</button>
+            <a href="https://github.com/MMansy2010/About-Us" target="_blank" class="btn btn-secondary btn-sm">⌨ Source</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 14: Help & Support Center -->
+      <div class="glass-panel tilt-card project-card" data-category="webapp">
+        <div class="card-glare"></div>
+        <div class="project-img-wrapper">
+          <img src="Screenshotss/screenHelp.png" alt="Help Page" />
+          <span class="project-badge-tag">Help Center</span>
+        </div>
+        <div class="project-content">
+          <h3 class="project-title">Interactive Help & FAQ Portal</h3>
+          <p class="project-desc">Comprehensive customer support interface with live search filtering, accordion FAQs, and ticket submission forms.</p>
+          <div class="project-tech">
+            <span>JavaScript</span>
+            <span>DOM Manipulations</span>
+            <span>CSS Grid</span>
+          </div>
+          <div class="project-links">
+            <button class="btn btn-primary btn-sm open-preview-btn" data-url="../../Help Page/index.html" data-title="Help Center Portal">👁️ Quick Preview</button>
+            <a href="https://github.com/MMansy2010/Help-Page" target="_blank" class="btn btn-secondary btn-sm">⌨ Source</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 15: Minimalist To-Do App -->
+      <div class="glass-panel tilt-card project-card" data-category="webapp">
+        <div class="card-glare"></div>
+        <div class="project-img-wrapper">
+          <img src="Screenshotss/Screen_To-Do-app.png" alt="To Do App" />
+          <span class="project-badge-tag">Task Manager</span>
+        </div>
+        <div class="project-content">
+          <h3 class="project-title">Minimalist Task Manager</h3>
+          <p class="project-desc">High-performance task manager with persistent local storage, item filters, priority tags, and clean transitions.</p>
+          <div class="project-tech">
+            <span>HTML5</span>
+            <span>CSS3</span>
+            <span>JavaScript</span>
+          </div>
+          <div class="project-links">
+            <button class="btn btn-primary btn-sm open-preview-btn" data-url="../../To Do App/index.html" data-title="Minimalist Task Manager">👁️ Quick Preview</button>
+            <a href="https://github.com/MMansy2010/To-Do-App" target="_blank" class="btn btn-secondary btn-sm">⌨ Source</a>
           </div>
         </div>
       </div>
@@ -413,37 +695,41 @@
   <!-- Contact Section -->
   <section id="contact" class="section-container">
     <div class="section-label reveal">05 — Contact</div>
-    <h2 class="section-title reveal">Initiate Connection</h2>
+    <h2 class="section-title reveal">Initiate Direct Connection</h2>
 
     <div class="contact-grid reveal">
-      <a href="mailto:mohamed.a.mansy7@gmail.com" class="glass-panel contact-card">
+      <a href="mailto:mohamed.a.mansy7@gmail.com" class="glass-panel tilt-card contact-card">
+        <div class="card-glare"></div>
         <div class="contact-icon">✉️</div>
         <div>
-          <div class="contact-label">Email</div>
-          <div class="contact-value">mohamed.a.mansy7@...</div>
+          <div class="contact-label">Direct Email</div>
+          <div class="contact-value">mohamed.a.mansy7@gmail.com</div>
         </div>
       </a>
 
-      <a href="https://github.com/MMansy2010" target="_blank" class="glass-panel contact-card">
+      <a href="https://github.com/MMansy2010" target="_blank" class="glass-panel tilt-card contact-card">
+        <div class="card-glare"></div>
         <div class="contact-icon">🐙</div>
         <div>
-          <div class="contact-label">GitHub</div>
+          <div class="contact-label">GitHub Workspace</div>
           <div class="contact-value">MMansy2010</div>
         </div>
       </a>
 
-      <a href="https://www.linkedin.com/in/mohamed-mansy-6aa453381/" target="_blank" class="glass-panel contact-card">
+      <a href="https://www.linkedin.com/in/mohamed-mansy-6aa453381/" target="_blank" class="glass-panel tilt-card contact-card">
+        <div class="card-glare"></div>
         <div class="contact-icon">💼</div>
         <div>
-          <div class="contact-label">LinkedIn</div>
+          <div class="contact-label">LinkedIn Profile</div>
           <div class="contact-value">Mohamed Mansy</div>
         </div>
       </a>
 
-      <div class="glass-panel contact-card" style="cursor: default;">
+      <div class="glass-panel tilt-card contact-card" style="cursor: default;">
+        <div class="card-glare"></div>
         <div class="contact-icon">📍</div>
         <div>
-          <div class="contact-label">Location</div>
+          <div class="contact-label">Location Base</div>
           <div class="contact-value">Egypt 🇪🇬</div>
         </div>
       </div>
@@ -452,53 +738,33 @@
 
   <!-- Footer -->
   <footer>
-    <p>© 2026 <span class="footer-accent">Mohamed Mansy</span>. Decoding the web.</p>
-    <p>Designed & Built with precision</p>
+    <div class="container">
+      <p>© 2026 <span class="footer-accent">Mohamed Mansy</span>. Engineered with Three.js & Cyberpunk Aesthetic.</p>
+      <p style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--text-dim);">Designed & Built with 3D Precision</p>
+    </div>
   </footer>
 
-  <script>
-    // Smooth reveal animation
-    const reveals = document.querySelectorAll('.reveal');
-    const callback = (entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-          observer.unobserve(entry.target);
-        }
-      });
-    };
-    const observer = new IntersectionObserver(callback, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-    reveals.forEach(reveal => observer.observe(reveal));
+  <!-- Live Project Modal Preview Overlay -->
+  <div id="preview-modal" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-header-title">
+          <span style="color: var(--accent-cyan);">🌐</span>
+          <span id="modal-title">Live Project Preview</span>
+        </div>
+        <div class="modal-header-actions">
+          <a id="modal-external-link" href="#" target="_blank" class="btn btn-secondary btn-sm">Open Fullscreen ↗</a>
+          <button id="modal-close" class="icon-btn" title="Close Modal">✕</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <iframe id="modal-iframe" src="about:blank"></iframe>
+      </div>
+    </div>
+  </div>
 
-    // Dynamic Cursor Blob Follower
-    const blob = document.getElementById("cursor-blob");
-    window.onpointermove = event => {
-      const { clientX, clientY } = event;
-      blob.animate({
-        left: `${clientX}px`,
-        top: `${clientY + window.scrollY}px`
-      }, { duration: 3000, fill: "forwards" });
-    }
-
-    // Active link highlighting on scroll
-    const sections = document.querySelectorAll("section");
-    const navLinks = document.querySelectorAll(".nav-links a");
-    window.addEventListener("scroll", () => {
-      let current = "";
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        if (pageYOffset >= sectionTop - 200) {
-          current = section.getAttribute("id");
-        }
-      });
-      navLinks.forEach(link => {
-        link.classList.remove("active");
-        if (link.getAttribute("href").includes(current) && current !== "") {
-          link.classList.add("active");
-        }
-      });
-    });
-  </script>
+  <!-- Main 3D Engine & Interactive Logic -->
+  <script src="app3d.js"></script>
 </body>
 
 </html>
