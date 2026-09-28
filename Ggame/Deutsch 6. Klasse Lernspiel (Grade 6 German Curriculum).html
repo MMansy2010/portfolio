@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<!-- saved from url=(0031)file:///E:/Ggame/index%202.html -->
+<html lang="de" dir="ltr" data-theme="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deutsch 6. Klasse Lernspiel (Grade 6 German Curriculum)</title>
+    <meta name="description" content="Interaktives Lernspiel für die 6. Klasse Deutsch: Artikel, Plural, Negation, Pronomen, Kuckucksei und Verbkonjugation in 40 spannenden Leveln.">
+    <link rel="icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;%F0%9F%8E%92&lt;/text&gt;&lt;/svg&gt;">
+    <link rel="stylesheet" href="./Deutsch 6. Klasse Lernspiel (Grade 6 German Curriculum)_files/style.css">
+</head>
+
+<body>
+
+    <!-- Top Navigation & Global Header -->
+    <header class="top-header">
+        <div class="brand">
+            <span class="brand-icon">🎒</span>
+            <h1 class="brand-title">Deutsch 6. Klasse</h1>
+        </div>
+
+        <div class="user-stats">
+            <div class="stat-badge gold" title="Gesammelte Sterne / Total Stars">
+                <span>⭐</span>
+                <span id="stars-display">0</span>
+            </div>
+            <div class="stat-badge xp" title="Erfahrungspunkte / XP">
+                <span>⚡</span>
+                <span id="xp-display">0</span> XP
+            </div>
+
+            <button id="sound-toggle-btn" class="icon-btn" title="Ton ein / aus">🔊</button>
+            <button id="theme-toggle-btn" class="icon-btn" title="Design wechseln">🌙</button>
+            <button id="reset-progress-btn" class="icon-btn" title="Fortschritt zurücksetzen">🔄</button>
+        </div>
+    </header>
+
+    <!-- Main App Container -->
+    <main id="app-container">
+
+        <!-- Screen 1: Level Progression Map (Duolingo Style) -->
+        <section id="screen-map" class="screen active">
+
+            <!-- World Navigation Tabs -->
+            <nav id="world-tabs-container" class="world-tabs"><button class="world-tab-btn active"><span>🏫</span> <span>الوحدة 1</span></button><button class="world-tab-btn "><span>🎒</span> <span>الوحدة 2</span></button><button class="world-tab-btn "><span>✏️</span> <span>الوحدة 3</span></button><button class="world-tab-btn "><span>👤</span> <span>الوحدة 4</span></button><button class="world-tab-btn "><span>🔍</span> <span>الوحدة 5</span></button><button class="world-tab-btn "><span>👑</span> <span>الوحدة 6</span></button></nav>
+
+            <!-- World Section Banner -->
+            <div class="world-section-header">
+                <div class="world-title-badge">
+                    <span>🎮</span>
+                    <span>Levelkarte</span>
+                </div>
+                <h2 id="world-map-title" class="world-title">الوحدة 1: الأدوات المدرسية والأدوات الأصلية</h2>
+                <p id="world-map-subtitle" class="world-subtitle">Der / Das / Die</p>
+            </div>
+
+            <!-- Serpentine Map Level Path -->
+            <div id="map-path" class="map-path"><div class="level-node-wrapper"><button class="level-node-btn current">
+        <span>1</span>
+        
+      </button><div class="node-title-label">مستوى 1</div></div><div class="level-node-wrapper"><button class="level-node-btn unlocked">
+        <span>2</span>
+        
+      </button><div class="node-title-label">مستوى 2</div></div><div class="level-node-wrapper"><button class="level-node-btn unlocked">
+        <span>3</span>
+        
+      </button><div class="node-title-label">مستوى 3</div></div><div class="level-node-wrapper"><button class="level-node-btn unlocked">
+        <span>4</span>
+        
+      </button><div class="node-title-label">مستوى 4</div></div><div class="level-node-wrapper"><button class="level-node-btn unlocked">
+        <span>5</span>
+        
+      </button><div class="node-title-label">مستوى 5</div></div><div class="level-node-wrapper"><button class="level-node-btn unlocked">
+        <span>6</span>
+        
+      </button><div class="node-title-label">مستوى 6</div></div><div class="level-node-wrapper"><button class="level-node-btn boss">
+        <span>7</span>
+        
+      </button><div class="node-title-label">👑 Boss Level 7</div></div></div>
+
+        </section>
+
+        <!-- Screen 2: Interactive Quiz Screen -->
+        <section id="screen-quiz" class="screen">
+
+            <header class="quiz-header">
+                <button id="back-to-map-btn" class="icon-btn" title="Zurück zur Levelkarte">⬅️</button>
+
+                <div class="progress-bar-container">
+                    <div id="quiz-progress-fill" class="progress-bar-fill"></div>
+                </div>
+
+                <span id="quiz-level-title" class="quiz-level-title"></span>
+            </header>
+
+            <article class="question-card">
+                <div id="question-type-badge" class="question-type-badge">Multiple-Choice-Frage</div>
+
+                <!-- SVG Vector Graphic Container -->
+                <div id="question-svg-container" class="svg-display"></div>
+
+                <h3 id="question-title" class="question-title">Was ist der richtige bestimmte Artikel?</h3>
+                <div id="question-text" class="question-text">Bleistift</div>
+            </article>
+
+            <!-- Options Buttons Grid -->
+            <div id="options-grid" class="options-grid">
+                <!-- Will be populated dynamically by JS -->
+            </div>
+
+            <!-- Feedback & Explanation Box -->
+            <div id="feedback-box" class="feedback-box">
+                <div id="feedback-title" class="feedback-header">Richtig! 🎉</div>
+                <div id="feedback-text" class="feedback-text">💡 Explanation: Bleistift is masculine and takes the
+                    article
+                    'der'.</div>
+                <button id="next-question-btn" class="next-btn" style="display: none;">
+                    <span>Weiter</span>
+                    <span>➔</span>
+                </button>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Level Clear / Victory Modal Overlay -->
+    <div id="modal-overlay" class="modal-overlay">
+        <div class="modal-content">
+            <div id="modal-icon" class="modal-icon">🏆</div>
+            <h2 id="modal-title" class="modal-title">Glückwunsch! Level abgeschlossen</h2>
+
+            <div id="modal-stars" class="modal-stars">
+                <span class="star active">★</span>
+                <span class="star active">★</span>
+                <span class="star active">★</span>
+            </div>
+
+            <div class="modal-stats">
+                <div class="modal-stat-card">
+                    <div id="modal-accuracy" class="modal-stat-val">100%</div>
+                    <div class="modal-stat-lbl">Genauigkeit / Accuracy</div>
+                </div>
+                <div class="modal-stat-card">
+                    <div id="modal-xp-earned" class="modal-stat-val">+45 XP</div>
+                    <div class="modal-stat-lbl">Erfahrungspunkte / XP</div>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button id="modal-map-btn" class="btn-secondary">Karte 🗺️</button>
+                <button id="modal-replay-btn" class="btn-secondary">Wiederholen 🔄</button>
+                <button id="modal-next-btn" class="btn-primary">Weiter ➔</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="./Deutsch 6. Klasse Lernspiel (Grade 6 German Curriculum)_files/svgs.js"></script>
+    <script src="./Deutsch 6. Klasse Lernspiel (Grade 6 German Curriculum)_files/audio.js"></script>
+    <script src="./Deutsch 6. Klasse Lernspiel (Grade 6 German Curriculum)_files/questions.js"></script>
+    <script src="./Deutsch 6. Klasse Lernspiel (Grade 6 German Curriculum)_files/app.js"></script>
+
+
+</body></html>
