@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>صفحة الموظف</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="staff.css">
+</head>
+<body>
+
+  <!-- شاشة اختيار الدور -->
+  <div id="role-screen">
+    <div id="role-card">
+      <h1>👋 أنت مين؟</h1>
+      <p>اختار دورك عشان تشوف مهامك</p>
+      <div id="role-buttons">
+        <button id="btn-chef">👨‍🍳 طباخ</button>
+        <button id="btn-delivery">🛵 مندوب توصيل</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- شاشة المهام -->
+  <div id="tasks-screen" class="hidden">
+    <header>
+      <div>
+        <h1 id="role-title"></h1>
+        <p id="role-subtitle"></p>
+      </div>
+      <button id="btn-logout">تغيير الدور</button>
+    </header>
+
+    <section id="tasks-section">
+      <h2 id="tasks-heading"></h2>
+      <div id="tasks-container">
+        <p id="loading-msg">جاري التحميل...</p>
+      </div>
+    </section>
+  </div>
+
+  <script type="module" src="staff.js"></script>
+</body>
+</html>

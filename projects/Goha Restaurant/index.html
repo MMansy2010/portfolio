@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مطعم جحا</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --terracotta: #C94F1E;
+    --saffron: #F5A623;
+    --charcoal: #1C1C1C;
+    --cream: #FDF6EC;
+    --dark-brown: #2E1A0E;
+    --light-terracotta: #F2E0D5;
+    --muted: #8B7355;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    direction: rtl;
+  }
+
+  /* ─── NAVBAR ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(28, 28, 28, 0.95);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    height: 64px;
+  }
+
+  .nav-logo {
+    font-family: 'Amiri', serif;
+    font-size: 1.6rem;
+    color: var(--saffron);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--saffron); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    background:
+      linear-gradient(160deg, rgba(28,28,28,0.85) 0%, rgba(201,79,30,0.6) 60%, rgba(28,28,28,0.9) 100%),
+      url('https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=1600&q=80') center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 5% 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--cream));
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: var(--saffron);
+    color: var(--dark-brown);
+    padding: 6px 20px;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .hero h1 {
+    font-family: 'Amiri', serif;
+    font-size: clamp(3rem, 10vw, 7rem);
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  }
+
+  .hero-tagline {
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: rgba(255,255,255,0.85);
+    font-weight: 300;
+    margin-bottom: 2.5rem;
+    max-width: 500px;
+  }
+
+  .hero-tagline span {
+    color: var(--saffron);
+    font-weight: 700;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn-primary {
+    background: var(--terracotta);
+    color: #fff;
+    border: none;
+    padding: 14px 36px;
+    border-radius: 8px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-primary:hover { background: #b04318; transform: translateY(-2px); }
+
+  .btn-outline {
+    background: transparent;
+    color: #fff;
+    border: 2px solid rgba(255,255,255,0.6);
+    padding: 12px 36px;
+    border-radius: 8px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .btn-outline:hover { border-color: var(--saffron); color: var(--saffron); }
+
+  /* ─── BANNER ─── */
+  .banner {
+    background: var(--terracotta);
+    color: #fff;
+    text-align: center;
+    padding: 16px 5%;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+
+  .banner span { font-size: 1.1rem; margin-left: 6px; }
+
+  /* ─── SECTION STYLES ─── */
+  section { padding: 80px 5%; }
+
+  .section-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--terracotta);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-family: 'Amiri', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--charcoal);
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .section-sub {
+    color: var(--muted);
+    font-size: 1rem;
+    font-weight: 400;
+    max-width: 500px;
+    line-height: 1.7;
+  }
+
+  /* ─── WHY SECTION ─── */
+  .why {
+    background: var(--dark-brown);
+    color: #fff;
+  }
+
+  .why .section-title { color: #fff; }
+  .why .section-sub { color: rgba(255,255,255,0.65); }
+  .why .section-label { color: var(--saffron); }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+    margin-top: 48px;
+  }
+
+  .why-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 32px 24px;
+    transition: background 0.2s;
+  }
+
+  .why-card:hover { background: rgba(245,166,35,0.12); }
+
+  .why-icon {
+    width: 52px;
+    height: 52px;
+    background: var(--terracotta);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+  }
+
+  .why-card h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--saffron);
+  }
+
+  .why-card p {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.7;
+  }
+
+  /* ─── MENU ─── */
+  .menu { background: var(--cream); }
+
+  .menu-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .menu-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+
+  .tab {
+    background: transparent;
+    border: 1.5px solid var(--terracotta);
+    color: var(--terracotta);
+    padding: 8px 22px;
+    border-radius: 100px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .tab.active, .tab:hover {
+    background: var(--terracotta);
+    color: #fff;
+  }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .menu-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.07);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .menu-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(201,79,30,0.15);
+  }
+
+  .menu-card-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    background: var(--light-terracotta);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+  }
+
+  .menu-card-body { padding: 20px; }
+
+  .menu-card-body h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--charcoal);
+  }
+
+  .menu-card-body p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+
+  .menu-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .price {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--terracotta);
+  }
+
+  .star-badge {
+    background: var(--saffron);
+    color: var(--dark-brown);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+
+  /* ─── REVIEWS ─── */
+  .reviews { background: var(--light-terracotta); }
+
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 48px;
+  }
+
+  .review-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .stars {
+    color: var(--saffron);
+    font-size: 1rem;
+    margin-bottom: 12px;
+  }
+
+  .review-text {
+    font-size: 0.95rem;
+    color: var(--charcoal);
+    line-height: 1.75;
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+
+  .reviewer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .reviewer-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--terracotta);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  .reviewer-name { font-weight: 700; font-size: 0.9rem; }
+  .reviewer-meta { font-size: 0.78rem; color: var(--muted); }
+
+  /* ─── BRANCHES ─── */
+  .branches { background: #fff; }
+
+  .branches-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+    margin-top: 48px;
+  }
+
+  .branch-card {
+    border: 1.5px solid var(--light-terracotta);
+    border-radius: 16px;
+    padding: 28px 24px;
+    position: relative;
+  }
+
+  .branch-card.main { border-color: var(--terracotta); }
+
+  .branch-main-badge {
+    position: absolute;
+    top: -12px;
+    right: 20px;
+    background: var(--terracotta);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 100px;
+  }
+
+  .branch-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--charcoal);
+  }
+
+  .branch-info {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .branch-info strong { color: var(--charcoal); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--dark-brown);
+    color: rgba(255,255,255,0.7);
+    padding: 48px 5% 32px;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Amiri', serif;
+    font-size: 2.2rem;
+    color: var(--saffron);
+    margin-bottom: 12px;
+  }
+
+  .footer-tagline {
+    font-size: 0.9rem;
+    margin-bottom: 28px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+
+  .footer-links a {
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--saffron); }
+
+  .footer-divider {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin: 20px 0;
+  }
+
+  .footer-copy {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.35);
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-badge { animation: fadeUp 0.5s ease both; }
+  .hero h1 { animation: fadeUp 0.6s ease 0.1s both; }
+  .hero-tagline { animation: fadeUp 0.6s ease 0.2s both; }
+  .hero-ctas { animation: fadeUp 0.6s ease 0.35s both; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    section { padding: 60px 6%; }
+    .menu-header { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <span class="nav-logo">جـحا</span>
+  <ul class="nav-links">
+    <li><a href="#why">ليه جحا؟</a></li>
+    <li><a href="#menu">المنيو</a></li>
+    <li><a href="#reviews">آراء العملاء</a></li>
+    <li><a href="#branches">الفروع</a></li>
+  </ul>
+  <a href="#branches" class="btn-primary" style="padding: 10px 24px; font-size: 0.9rem;">اطلب دلوقتي</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">🔥 الفطير لازم يوصل ساخن</div>
+  <h1>مطعم جحا</h1>
+  <p class="hero-tagline">
+    أكل بيتي أصيل من قلب أكتوبر —
+    <span>فطاير، بيتزا، كشري، وأكتر</span>
+  </p>
+  <div class="hero-ctas">
+    <a href="#menu" class="btn-primary">شوف المنيو</a>
+    <a href="#branches" class="btn-outline">اعرف الفروع</a>
+  </div>
+</section>
+
+<!-- HOT DELIVERY BANNER -->
+<div class="banner">
+  <span>🔥</span> نضمن وصول أكلك طازج وساخن — التوصيل السريع أولويتنا
+</div>
+
+<!-- WHY SECTION -->
+<section class="why" id="why">
+  <div class="section-label">ليه تختارنا؟</div>
+  <h2 class="section-title">غير عن أي مطعم تاني</h2>
+  <p class="section-sub">من أول يوم افتتحنا وإحنا بنقدم أكل بيتي حقيقي بأسعار في متناول الجميع.</p>
+
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon">🫓</div>
+      <h3>فطير على أصله</h3>
+      <p>الفطير المشلتت اللي اتعلمناه من أجدادنا — هشّ من جوه، بني ذهبي من بره، وطازج على طول.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">💰</div>
+      <h3>أسعار في المتناول</h3>
+      <p>وجبة كاملة بـ 200 لـ 600 جنيه — لأن الأكل الكويس مش لازم يكون غالي.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🍽️</div>
+      <h3>تنوع يرضي الجميع</h3>
+      <p>من الكشري والكبدة لحد البيتزا والأسماك — منيو متنوع يناسب كل أفراد العيلة.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">✨</div>
+      <h3>نظافة ومكان مريح</h3>
+      <p>مكان نظيف وأنيق مناسب للعيلة والأصحاب — مع كراسي لذوي الاحتياجات الخاصة.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MENU SECTION -->
+<section class="menu" id="menu">
+  <div class="menu-header">
+    <div>
+      <div class="section-label">المنيو</div>
+      <h2 class="section-title">اختار أكلتك المفضلة</h2>
+    </div>
+  </div>
+
+  <div class="menu-tabs">
+    <button class="tab active">الكل</button>
+    <button class="tab">فطاير ⭐</button>
+    <button class="tab">بيتزا</button>
+    <button class="tab">كشري</button>
+    <button class="tab">كبدة ومخ</button>
+    <button class="tab">أسماك</button>
+    <button class="tab">طواجن</button>
+  </div>
+
+  <div class="menu-grid" style="margin-top: 32px;">
+
+    <div class="menu-card">
+      <div class="menu-card-img">🫓</div>
+      <div class="menu-card-body">
+        <h3>فطير مكس لحوم</h3>
+        <p>فطير مشلتت بحشوة لحمة وفراخ — الأكلة الأشهر عندنا والأكتر طلبًا.</p>
+        <div class="menu-footer">
+          <span class="price">من ١٨٠ ج</span>
+          <span class="star-badge">⭐ الأشهر</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <div class="menu-card-img">🍄</div>
+      <div class="menu-card-body">
+        <h3>فطير مشروم</h3>
+        <p>فطير بمشروم فريش — بنستخدم مشروم طازج دايمًا لضمان أحسن طعم.</p>
+        <div class="menu-footer">
+          <span class="price">من ١٤٠ ج</span>
+          <span class="star-badge">نباتي</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <div class="menu-card-img">🍕</div>
+      <div class="menu-card-body">
+        <h3>بيتزا مارجريتا</h3>
+        <p>بيتزا بعجينة طازجة وصوص طماطم ومشروم فريش — بتتحسن على طول.</p>
+        <div class="menu-footer">
+          <span class="price">من ١٢٠ ج</span>
+          <span class="star-badge">نباتي</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <div class="menu-card-img">🍚</div>
+      <div class="menu-card-body">
+        <h3>كشري جحا</h3>
+        <p>كشري مصري أصيل بصوص الطماطم الحار والبصل المقلي — طبق من كلاسيكيات المطعم.</p>
+        <div class="menu-footer">
+          <span class="price">من ٤٥ ج</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <div class="menu-card-img">🫀</div>
+      <div class="menu-card-body">
+        <h3>كبدة إسكندراني</h3>
+        <p>كبدة بالفلفل الحار والبهارات — طازجة وطرية على الوجه.</p>
+        <div class="menu-footer">
+          <span class="price">من ٩٠ ج</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <div class="menu-card-img">🐟</div>
+      <div class="menu-card-body">
+        <h3>أسماك متنوعة</h3>
+        <p>قائمة الأسماك بتتغير حسب الموسم — دايمًا طازجة ومتبّلة بطريقتنا الخاصة.</p>
+        <div class="menu-footer">
+          <span class="price">السعر حسب النوع</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <div class="menu-card-img">🥘</div>
+      <div class="menu-card-body">
+        <h3>طاجن لحمة</h3>
+        <p>طاجن لحمة بالخضار على أصله — أكلة العيلة اللي بتجمع الكل على مائدة واحدة.</p>
+        <div class="menu-footer">
+          <span class="price">من ١٦٠ ج</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <div class="menu-card-img">🧠</div>
+      <div class="menu-card-body">
+        <h3>مخ مشوي</h3>
+        <p>مخ مشوي بالتوابل — من أكلات جحا المميزة اللي مش هتلاقيها في كل مكان.</p>
+        <div class="menu-footer">
+          <span class="price">من ٨٠ ج</span>
+          <span class="star-badge">مميز</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- REVIEWS SECTION -->
+<section class="reviews" id="reviews">
+  <div style="text-align: center;">
+    <div class="section-label">آراء العملاء</div>
+    <h2 class="section-title">بيقولوا عننا إيه؟</h2>
+    <p class="section-sub" style="margin: 0 auto;">آراء حقيقية من زباينا الكرام.</p>
+  </div>
+
+  <div class="reviews-grid">
+
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">"جحا غني عن التعريف — كل المنيو جميل بالأخص وجبة جحا بشوربة السي فود."</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">ك</div>
+        <div>
+          <div class="reviewer-name">كريم — Local Guide</div>
+          <div class="reviewer-meta">منذ سنة</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <div class="stars">★★★★☆</div>
+      <p class="review-text">"مطعم ممتاز وأكله مميز — أول مطعم أقابله بيعمل أصناف كتير كلها بجودة كويسة جداً وأسعاره كمان زي الفل."</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">ك</div>
+        <div>
+          <div class="reviewer-name">كريم حمدي — Local Guide</div>
+          <div class="reviewer-meta">منذ سنة</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <div class="stars">★★★★☆</div>
+      <p class="review-text">"Acceptable quality, nice taste and good service with regular prices."</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">م</div>
+        <div>
+          <div class="reviewer-name">Mohamed Sami — Local Guide</div>
+          <div class="reviewer-meta">منذ 6 أشهر</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">"يعجبني الفطاير عنده — من الأماكن اللي بترجعلها."</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">ع</div>
+        <div>
+          <div class="reviewer-name">عمر غريب — Local Guide</div>
+          <div class="reviewer-meta">منذ 9 أشهر</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <div class="stars">★★★★☆</div>
+      <p class="review-text">"تجربة جميلة جداً، محل نظيف ورائع والأسعار في المتناول."</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">س</div>
+        <div>
+          <div class="reviewer-name">صالح عمر — Local Guide</div>
+          <div class="reviewer-meta">منذ سنتين</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <div class="stars">★★★★☆</div>
+      <p class="review-text">"Tasty food with affordable prices — good place for the family."</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">ر</div>
+        <div>
+          <div class="reviewer-name">Rana Hany</div>
+          <div class="reviewer-meta">منذ 8 أشهر</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- BRANCHES SECTION -->
+<section class="branches" id="branches">
+  <div class="section-label">الفروع</div>
+  <h2 class="section-title">لاقينا في أكتوبر</h2>
+  <p class="section-sub">فروع متعددة لتقديم أقرب تجربة ممكنة ليك.</p>
+
+  <div class="branches-grid">
+
+    <div class="branch-card main">
+      <div class="branch-main-badge">الفرع الرئيسي</div>
+      <h3>ميدان النجدة</h3>
+      <div class="branch-info">
+        <p>📍 ميدان النجدة، مدينة أكتوبر</p>
+        <p>📞 اتصل بنا للحجز</p>
+        <p>🕐 يومياً: <strong>12 ظهراً — 1 صباحاً</strong></p>
+        <p>🚗 <strong>مواقف مجانية متاحة</strong></p>
+        <p>♿ مناسب لذوي الاحتياجات الخاصة</p>
+      </div>
+    </div>
+
+    <div class="branch-card">
+      <h3>فرع الخير الرابع</h3>
+      <div class="branch-info">
+        <p>📍 الخير الرابع، مدينة أكتوبر</p>
+        <p>🕐 يومياً: <strong>12 ظهراً — 12 منتصف الليل</strong></p>
+        <p>🚗 مواقف مجانية</p>
+        <p>🛵 توصيل متاح</p>
+      </div>
+    </div>
+
+    <div class="branch-card" style="background: var(--dark-brown); border-color: var(--dark-brown);">
+      <h3 style="color: var(--saffron);">اطلب أونلاين</h3>
+      <div class="branch-info" style="color: rgba(255,255,255,0.7);">
+        <p style="margin-bottom: 16px;">توصيل لحد بيتك من أقرب فرع ليك — بنضمن الأكل يوصل ساخن.</p>
+        <p style="color: var(--saffron); font-weight: 700; font-size: 1rem;">وقت التوصيل: 30–60 دقيقة</p>
+        <p style="margin-top: 8px;">متوفر على منصات التوصيل الإلكتروني</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">جـحا</div>
+  <p class="footer-tagline">أكل بيتي أصيل من قلب مدينة أكتوبر</p>
+  <div class="footer-links">
+    <a href="#why">ليه جحا؟</a>
+    <a href="#menu">المنيو</a>
+    <a href="#reviews">آراء العملاء</a>
+    <a href="#branches">الفروع</a>
+  </div>
+  <hr class="footer-divider">
+  <p class="footer-copy">© 2024 مطعم جحا — جميع الحقوق محفوظة</p>
+</footer>
+
+<script>
+  // Tab filtering (visual only for demo)
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.why-card, .menu-card, .review-card, .branch-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>

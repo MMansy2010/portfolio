@@ -1,0 +1,92 @@
+** start of index.html **
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Weather App</title>
+  </head>
+
+  <body>
+    <button id="get-weather-btn">Get Weather</button>
+    
+    <select>
+      <option value=""></option>
+      
+      <option value="paris">Paris</option>
+      <option value="london">London</option>
+      <option value="tokyo">Tokyo</option>
+      <option value="los angeles">Los Angeles</option>
+      <option value="chicago">Chicago</option>
+      <option value="new york">New York</option>
+    </select>
+    <img id="weather-icon">
+    <h3 id ="main-temperature"></h3>
+    <h4 id = "feels-like"></h4>
+    <h5 id="humidity"></h5>
+    <h5 id = "wind"></h5>
+    <h5 id="wind-gust"></h5>
+    <h5 id="weather-main"></h5>
+    <h5 id="location"></h5>
+
+    <script src="script.js"></script>
+  </body>
+</html>
+
+** end of index.html **
+
+** start of styles.css **
+
+
+
+** end of styles.css **
+
+** start of script.js **
+
+// 14 & 15: getWeather function
+const getWeather = async (city) => {
+  try {
+    // Note: the URL uses /city/ not ?city=
+    const response = await fetch(`https://weather-proxy.freecodecamp.rocks/api/city/${city}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    // 23: Log error to console
+    console.error(error);
+  }
+};
+
+// 13: showWeather function
+const showWeather = async (city) => {
+  const data = await getWeather(city);
+
+  // 17 & 24: Handle errors/undefined
+  if (!data) {
+    alert("Something went wrong, please try again later.");
+    return;
+  }
+
+  // Helper to handle the "N/A" requirement
+  const getValue = (val) => (val === undefined || val === null ? "N/A" : val);
+
+  // 18-22: Update UI
+  document.getElementById("weather-icon").src = data.weather[0].icon;
+  document.getElementById("main-temperature").textContent = getValue(data.main.temp);
+  document.getElementById("feels-like").textContent = getValue(data.main.feels_like);
+  document.getElementById("humidity").textContent = getValue(data.main.humidity);
+  document.getElementById("wind").textContent = getValue(data.wind.speed);
+  document.getElementById("wind-gust").textContent = getValue(data.wind.gust);
+  document.getElementById("weather-main").textContent = getValue(data.weather[0].main);
+  document.getElementById("location").textContent = getValue(data.name);
+};
+
+// Click Event Listener
+document.getElementById("get-weather-btn").addEventListener("click", () => {
+  const city = document.querySelector("select").value;
+  if (city) {
+    showWeather(city);
+  }
+  });
+
+** end of script.js **
+
