@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECLIPSE | تجربة تفاعلية فاخرة</title>
+    <!-- مكتبة Google لعرض ملفات الـ 3D وتدويرها -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+    <!-- خطوط عربية وإنجليزية فاخرة -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050608;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --accent-color: #ffffff;
+            --accent-glow: rgba(255, 255, 255, 0.15);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a5b5;
+            --btn-bg: #ffffff;
+            --btn-text: #000000;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Interactive Follow-Mouse Glow Background */
+        .interactive-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+            background: 
+                radial-gradient(circle 500px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.05), transparent 80%),
+                radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.02) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 255, 255, 0.01) 0%, transparent 50%);
+            transition: background 0.05s linear;
+        }
+
+        /* custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050608;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #222;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #444;
+        }
+
+        /* Sticky Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            z-index: 100;
+            background: rgba(5, 6, 8, 0.7);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 4px;
+            background: linear-gradient(180deg, #ffffff 0%, #a0a0a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--text-primary);
+            transform: translateY(-1px);
+        }
+
+        .cta-nav-btn {
+            padding: 8px 18px;
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            background: var(--card-bg);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            color: #fff;
+            text-decoration: none;
+        }
+        .cta-nav-btn:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        /* LANDING VIEW WRAPPER */
+        #landing-view {
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        /* Hero Brand Welcome Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 1rem;
+            position: relative;
+        }
+
+        .hero-title {
+            font-size: clamp(3.5rem, 8vw, 7.5rem);
+            font-weight: 900;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 12px;
+            line-height: 1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(180deg, #ffffff 30%, #444444 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+            font-weight: 400;
+            color: var(--text-secondary);
+            max-width: 800px;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards 0.5s;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-decoration: none;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-hint span {
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .mouse-icon {
+            width: 24px;
+            height: 40px;
+            border: 2px solid var(--text-secondary);
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .mouse-icon::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 8px;
+            background-color: var(--text-primary);
+            border-radius: 2px;
+            animation: scrollWheel 1.5s infinite;
+        }
+
+        /* 3D Centered Playground Section */
+        .playground-section {
+            padding: 6rem 5%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .playground-title {
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .playground-subtitle {
+            font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        /* First 3D Model Container: Transparent, No border, No BG */
+        .centered-viewer-container {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            height: 650px;
+            background: transparent;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: visible;
+            margin-bottom: 2rem;
+        }
+
+        .centered-viewer-container model-viewer {
+            width: 100%;
+            height: 100%;
+        }
+
+        .interactive-badge {
+            position: absolute;
+            top: 0;
+            right: 50%;
+            transform: translateX(50%);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(10px);
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .interactive-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background-color: #00ff88;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 10px #00ff88;
+        }
+
+        .btn-order-now {
+            padding: 1.3rem 4.5rem;
+            background: var(--btn-bg);
+            color: var(--btn-text);
+            border: none;
+            border-radius: 50px;
+            font-size: 1.25rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.15);
+        }
+
+        .btn-order-now:hover {
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255,255,255,0.25);
+            background: #f5f5f5;
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 8rem 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(2rem, 3.5vw, 3rem);
+            font-weight: 900;
+            margin-bottom: 4rem;
+            letter-spacing: 1px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 3rem 2.5rem;
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255,255,255,0.15);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        .feature-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .feature-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* PURCHASE VIEW WRAPPER */
+        #purchase-view {
+            /* Fix offset model-viewer issue: Use visibility/opacity instead of display:none */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            overflow: hidden;
+            visibility: hidden;
+            opacity: 0;
+            transform: scale(0.98);
+            transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s ease;
+            padding-top: 6rem;
+            z-index: 10;
+        }
+
+        #purchase-view.active {
+            position: relative;
+            height: auto;
+            min-height: 100vh;
+            overflow: visible;
+            visibility: visible;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .purchase-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: calc(100vh - 6rem);
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 5%;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        /* Right Side: 3D Model Configurator (On right under RTL) */
+        .purchase-right {
+            position: relative;
+            width: 100%;
+            height: 800px; /* increased height to avoid clipping */
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 32px;
+            backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: visible; /* allow model to extend beyond container */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        }
+
+        .purchase-right model-viewer {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Left Side: Details & Form (On left under RTL) */
+        .purchase-left {
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s;
+            font-size: 1rem;
+        }
+
+        .back-link:hover {
+            color: var(--text-primary);
+        }
+
+        .purchase-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .purchase-title {
+            font-size: clamp(2rem, 3vw, 2.8rem);
+            font-weight: 900;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .purchase-price {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .color-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .color-picker {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .color-opt {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .color-opt.white { background-color: #ffffff; }
+        .color-opt.black { background-color: #15161a; border: 1px solid #333; }
+
+        .color-opt.active {
+            border-color: #ffffff;
+            transform: scale(1.15);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Purchase Form */
+        .order-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            background: rgba(255,255,255,0.01);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            border-radius: 24px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .form-control {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+            text-align: right;
+        }
+
+        .form-control:focus {
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn-submit {
+            margin-top: 1rem;
+            padding: 1.1rem;
+            background: #ffffff;
+            color: #000000;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-submit:hover {
+            background: #e5e5e5;
+            transform: translateY(-2px);
+        }
+
+        /* Success Panel */
+        .success-panel {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 1.5rem;
+            padding: 3rem 1.5rem;
+            background: rgba(0, 255, 136, 0.02);
+            border: 1px solid rgba(0, 255, 136, 0.15);
+            border-radius: 24px;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid #00ff88;
+            color: #00ff88;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            animation: pulseSuccess 2s infinite;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 5%;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @keyframes scrollWheel {
+            0% { opacity: 1; top: 8px; }
+            50% { opacity: 0.5; top: 18px; }
+            100% { opacity: 0; top: 22px; }
+        }
+
+        @keyframes pulseSuccess {
+            0% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 255, 136, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .purchase-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            .purchase-right {
+                height: 400px;
+                order: -1; /* Cap first on mobile */
+            }
+            .centered-viewer-container {
+                height: 450px;
+            }
+            header {
+                padding: 1.2rem 5%;
+            }
+            nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Interactive Glowing Background -->
+    <div class="interactive-glow"></div>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="logo">ECLIPSE</div>
+        <nav id="header-nav">
+            <a href="#welcome" onclick="showLandingView()">الرئيسية</a>
+            <a href="#playground" onclick="showLandingView()">تفاعل 3D</a>
+            <a href="#features" onclick="showLandingView()">المميزات</a>
+            <a href="javascript:void(0)" onclick="showPurchaseView()" class="cta-nav-btn">🛒 اطلب الآن</a>
+        </nav>
+    </header>
+
+    <!-- LANDING/STORY VIEW -->
+    <div id="landing-view">
+        <!-- Hero Welcome Section -->
+        <section id="welcome" class="hero">
+            <h1 class="hero-title">ECLIPSE</h1>
+            <p class="hero-subtitle">تفرّد في الحضور، وتميّز في التفاصيل. خط موضة فريد يُعيد صياغة أناقتك اليومية بلمسات مبتكرة تعبر عن هويتك الحرة.</p>
+            <a href="#playground" class="scroll-hint">
+                <span>استكشف المجموعة</span>
+                <div class="mouse-icon"></div>
+            </a>
+        </section>
+
+        <!-- 3D Centered Playground (Defaulting to Black Cap) -->
+        <section id="playground" class="playground-section">
+            <h2 class="playground-title">فن التصميم التفاعلي</h2>
+            <p class="playground-subtitle">استكشف أدق التفاصيل وتفاعل مع التصميم الفاخر للكاب من زوايا متعددة. تدوير حر بالكامل 360 درجة.</p>
+            
+            <div class="centered-viewer-container">
+                <div class="interactive-badge">تفاعل بحرية 360°</div>
+                <model-viewer 
+                    id="playground-viewer"
+                    src="black-cap.glb"
+                    alt="Eclipse Trucker Cap 3D Model Playground"
+                    auto-rotate
+                    camera-controls
+                    shadow-intensity="1.5"
+                    camera-orbit="0deg 70deg 3.5m"
+                    camera-target="0m 0m 0m"
+                    exposure="1"
+                    style="background:none;">
+                </model-viewer>
+            </div>
+
+            <button class="btn-order-now" onclick="showPurchaseView()">اطلب الآن</button>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features-section">
+            <h2 class="section-title">إبداع متكامل في كل تفصيل</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">✨</span>
+                    <h3 class="feature-title">تطريز بارز ثلاثي الأبعاد</h3>
+                    <p class="feature-desc">تطريز بارز عالي الكثافة مصمم بدقة ليمنح الكاب حضوراً قوياً وتصميماً ملهماً يدوم طويلاً.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">💨</span>
+                    <h3 class="feature-title">شبكة تهوية فائقة</h3>
+                    <p class="feature-desc">شبكة خلفية ممتازة مصممة خصيصاً لتوفير تهوية كاملة والحفاظ على برودة الرأس طوال اليوم.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">📐</span>
+                    <h3 class="feature-title">مقاس مريح وعملي</h3>
+                    <p class="feature-desc">حزام خلفي مرن وقابل للتعديل بسهولة ليناسب جميع المقاسات ويوفر ملاءمة مريحة وآمنة.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2026 ECLIPSE BRAND. جميع الحقوق محفوظة.</p>
+        </footer>
+    </div>
+
+    <!-- PURCHASE/SHOP VIEW (3D Right on screen under RTL, Form Left) -->
+    <div id="purchase-view">
+        <div class="purchase-container">
+            <!-- 3D Model Display Window (First in HTML for RTL rendering on the right) -->
+            <div class="purchase-right">
+                <div class="interactive-badge">تخصيص 3D تفاعلي</div>
+                <model-viewer 
+                     id="purchase-viewer"
+                     src="black-cap.glb"
+                     alt="Eclipse Trucker Cap 3D Model Configurator"
+                     auto-rotate
+                     camera-controls
+                     shadow-intensity="1.5"
+                     camera-orbit="0deg 70deg 3.5m"
+                     camera-target="0m 0m 0m"
+                     exposure="1"
+                     style="background:none;">
+                </model-viewer>
+            </div>
+
+            <!-- Order Details & Form (Second in HTML for RTL rendering on the left) -->
+            <div class="purchase-left" id="order-left-panel">
+                <a class="back-link" onclick="showLandingView()">← العودة للرئيسية</a>
+                
+                <div class="purchase-title-row">
+                    <h2 class="purchase-title">ECLIPSE TRUCKER CAP</h2>
+                    <div class="purchase-price">450 EGP</div>
+                </div>
+
+                <p class="product-desc" style="margin-top: -0.5rem;">
+                    كاب بتصميم عصري وفريد من براند ECLIPSE. يتميز بتطريز بارز وشبكة خلفية عالية الجودة لتهوية مثالية وراحة طوال اليوم. اختر اللون الذي يناسبك وأكمل بيانات طلبك لتأكيد الشحن فوراً.
+                </p>
+
+                <div class="color-selector">
+                    <span style="color: var(--text-secondary); font-size: 0.95rem; font-weight: 600;">اختر اللون:</span>
+                    <div class="color-picker">
+                        <div class="color-opt white" onclick="switchPurchaseColor('white')" title="أبيض"></div>
+                        <div class="color-opt black active" onclick="switchPurchaseColor('black')" title="أسود"></div>
+                    </div>
+                </div>
+
+                <form class="order-form" id="purchase-form" onsubmit="handleOrderFormSubmit(event)">
+                    <div class="form-group">
+                        <label for="full-name">الاسم بالكامل</label>
+                        <input type="text" id="full-name" class="form-control" placeholder="أدخل اسمك ثلاثي" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone-number">رقم الهاتف</label>
+                        <input type="tel" id="phone-number" class="form-control" placeholder="01xxxxxxxxx" required pattern="[0-9]{11}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="delivery-address">عنوان التوصيل بالتفصيل</label>
+                        <input type="text" id="delivery-address" class="form-control" placeholder="المحافظة، المدينة، الشارع، رقم العقار" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cap-color">اللون المختار</label>
+                            <select id="cap-color" class="form-control" disabled>
+                                <option value="white">أبيض</option>
+                                <option value="black">أسود</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="qty">الكمية</label>
+                            <input type="number" id="qty" class="form-control" value="1" min="1" max="5">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit">تأكيد طلب الشراء</button>
+                </form>
+            </div>
+
+            <!-- Success Panel (Inside Left Column on completion) -->
+            <div id="success-panel" class="success-panel">
+                <div class="success-icon">✓</div>
+                <h2>تم طلبك بنجاح!</h2>
+                <p style="color: var(--text-secondary); line-height: 1.6;">شكراً لطلبك من ECLIPSE. سنقوم بالتواصل معك عبر الهاتف قريباً لتأكيد الشحن.</p>
+                <button class="btn-submit" onclick="showLandingView()" style="width: 200px;">العودة للرئيسية</button>
+            </div>
+        </div>
+
+        <!-- Footer inside purchase page -->
+        <footer>
+            <p>&copy; 2026 ECLIPSE BRAND. جميع الحقوق محفوظة.</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript Interaction -->
+    <script>
+        const playgroundViewer = document.getElementById('playground-viewer');
+        const purchaseViewer = document.getElementById('purchase-viewer');
+
+        // Mouse coordinates listener for interactive glowing background
+        document.addEventListener('mousemove', (e) => {
+            document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+            document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+        });
+
+        // مسارات مجسمات الـ 3D
+        const models = {
+            white: 'white-cap.glb',
+            black: 'black-cap.glb'
+        };
+
+        // Navigation Views Toggle
+        function showPurchaseView() {
+            const landingView = document.getElementById('landing-view');
+            const purchaseView = document.getElementById('purchase-view');
+            const headerNav = document.getElementById('header-nav');
+
+            landingView.style.opacity = '0';
+            setTimeout(() => {
+                landingView.style.display = 'none';
+                purchaseView.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'instant' });
+                // Hide header anchors that scroll, only show logo/back
+                headerNav.style.display = 'none';
+
+                // CRITICAL FIX: Trigger model-viewer layout update after making it visible
+                setTimeout(() => {
+                    purchaseViewer.updateFraming();
+                }, 50);
+            }, 450);
+        }
+
+        function showLandingView() {
+            const landingView = document.getElementById('landing-view');
+            const purchaseView = document.getElementById('purchase-view');
+            const headerNav = document.getElementById('header-nav');
+
+            purchaseView.classList.remove('active');
+            setTimeout(() => {
+                landingView.style.display = 'block';
+                setTimeout(() => {
+                    landingView.style.opacity = '1';
+                    // Trigger playground model layout refresh
+                    playgroundViewer.updateFraming();
+                }, 50);
+                headerNav.style.display = 'flex';
+                // Reset order form/view
+                document.getElementById('order-left-panel').style.display = 'flex';
+                document.getElementById('success-panel').style.display = 'none';
+                document.getElementById('purchase-form').reset();
+            }, 450);
+        }
+
+        // Color Switching Logic on Purchase view
+        function switchPurchaseColor(color) {
+            document.querySelectorAll('.color-opt').forEach(opt => opt.classList.remove('active'));
+            if (color === 'white') {
+                document.querySelector('.color-opt.white').classList.add('active');
+                document.getElementById('cap-color').value = 'white';
+            } else {
+                document.querySelector('.color-opt.black').classList.add('active');
+                document.getElementById('cap-color').value = 'black';
+            }
+
+            if (models[color]) {
+                purchaseViewer.src = models[color];
+            }
+        }
+
+        // Handle order form submit
+        function handleOrderFormSubmit(event) {
+            event.preventDefault();
+            
+            // Hide the form panel and display success confirmation
+            document.getElementById('order-left-panel').style.display = 'none';
+            document.getElementById('success-panel').style.display = 'flex';
+        }
+
+        // Initial setup for layout triggers on window load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                playgroundViewer.updateFraming();
+                purchaseViewer.updateFraming();
+            }, 100);
+        });
+    </script>
+</body>
+</html>

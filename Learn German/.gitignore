@@ -1,0 +1,6 @@
+# Ignore secrets & credentials
+client_secret*.json
+*.json.secret
+
+# Scratch & temporary development files
+scratch/

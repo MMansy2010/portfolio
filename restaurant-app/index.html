@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مطعمنا</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>🍽️ مطعمنا</h1>
+    </header>
+
+    <!-- المنيو -->
+    <section id="menu-section">
+        <h2>المنيو</h2>
+        <div id="menu-container">
+            <!-- الأكل هيتحط هنا من JS -->
+        </div>
+    </section>
+
+    <!-- الكارت -->
+    <section id="cart-section">
+        <h2>🛒 طلبك</h2>
+        <div id="cart-items"></div>
+        <div class="cart-total-container">
+            الإجمالي: <span id="cart-total">0</span> جنيه
+        </div>
+    </section>
+
+    <!-- بيانات العميل -->
+    <section id="order-section">
+        <h2>بيانات الطلب</h2>
+        <input type="text" id="customer-name" placeholder="اسمك">
+        <input type="text" id="customer-phone" placeholder="رقم تليفونك">
+        <input type="text" id="customer-address" placeholder="عنوانك">
+        <button id="submit-order">✅ اطلب دلوقتي</button>
+    </section>
+
+    <script type="module" src="customer.js"></script>
+</body>
+
+</html>

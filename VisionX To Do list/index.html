@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisionX — خطة المشروع</title>
+    <meta name="description" content="VisionX Smart Glasses Project — Interactive To-Do List & Phase Tracker">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Animated Background Particles -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Glow Orbs -->
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+    <div class="glow-orb glow-orb-3"></div>
+
+    <!-- Header -->
+    <header class="hero" id="hero">
+        <div class="hero-content">
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="logoGrad" x1="0" y1="0" x2="80" y2="80">
+                                <stop offset="0%" stop-color="#00f0ff"/>
+                                <stop offset="50%" stop-color="#7c3aed"/>
+                                <stop offset="100%" stop-color="#f472b6"/>
+                            </linearGradient>
+                        </defs>
+                        <circle cx="40" cy="40" r="36" stroke="url(#logoGrad)" stroke-width="3" fill="none" opacity="0.3"/>
+                        <circle cx="40" cy="40" r="24" stroke="url(#logoGrad)" stroke-width="2" fill="none" opacity="0.5"/>
+                        <circle cx="40" cy="40" r="8" fill="url(#logoGrad)"/>
+                        <path d="M10 40 Q25 20 40 40 Q55 60 70 40" stroke="url(#logoGrad)" stroke-width="2.5" fill="none"/>
+                        <path d="M10 40 Q25 60 40 40 Q55 20 70 40" stroke="url(#logoGrad)" stroke-width="2.5" fill="none"/>
+                    </svg>
+                </div>
+                <h1 class="logo-text">VisionX</h1>
+            </div>
+            <p class="hero-subtitle">نظارة ذكية — خطة التطوير الكاملة</p>
+            
+            <!-- Stats Bar -->
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <span class="stat-number" id="totalPhases">15</span>
+                    <span class="stat-label">مرحلة</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-number" id="completedCount">0</span>
+                    <span class="stat-label">مكتملة</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-number" id="progressPercent">0%</span>
+                    <span class="stat-label">التقدم</span>
+                </div>
+            </div>
+
+            <!-- Master Progress Bar -->
+            <div class="master-progress">
+                <div class="master-progress-track">
+                    <div class="master-progress-fill" id="masterProgressFill"></div>
+                    <div class="master-progress-glow" id="masterProgressGlow"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Timeline -->
+    <main class="timeline-container">
+        <div class="timeline-line" id="timelineLine"></div>
+
+        <!-- Phase 0 -->
+        <section class="phase-card completed" data-phase="0">
+            <div class="phase-connector">
+                <div class="connector-dot completed">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+            </div>
+            <div class="phase-content">
+                <div class="phase-header">
+                    <div class="phase-badge completed">المرحلة 0</div>
+                    <div class="phase-status completed">✅ انتهت</div>
+                </div>
+                <h2 class="phase-title">الإعداد المبدئي</h2>
+                <p class="phase-desc">شراء المكونات وتجهيز البيئة الأساسية</p>
+                <div class="tasks-list">
+                    <label class="task-item">
+                        <input type="checkbox" checked disabled>
+                        <span class="checkmark completed-mark"></span>
+                        <span class="task-text">شراء المكونات</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" checked disabled>
+                        <span class="checkmark completed-mark"></span>
+                        <span class="task-text">تثبيت Raspberry Pi OS</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" checked disabled>
+                        <span class="checkmark completed-mark"></span>
+                        <span class="task-text">تشغيل الـ Raspberry Pi</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" checked disabled>
+                        <span class="checkmark completed-mark"></span>
+                        <span class="task-text">إعداد SSH</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" checked disabled>
+                        <span class="checkmark completed-mark"></span>
+                        <span class="task-text">الاتصال بالراسبيري من اللاب</span>
+                    </label>
+                </div>
+                <div class="phase-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 100%"></div>
+                    </div>
+                    <span class="progress-text">5/5</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 1 -->
+        <section class="phase-card" data-phase="1">
+            <div class="phase-connector">
+                <div class="connector-dot">
+                    <span class="dot-number">1</span>
+                </div>
+            </div>
+            <div class="phase-content">
+                <div class="phase-header">
+                    <div class="phase-badge">المرحلة 1</div>
+                    <div class="phase-duration"><svg viewBox="0 0 24 24" fill="none" width="14" height="14"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> يوم واحد</div>
+                </div>
+                <h2 class="phase-title">تأسيس المشروع</h2>
+                <p class="phase-desc">تحديث النظام وتثبيت الأدوات وإنشاء هيكل المشروع</p>
+                <div class="tasks-list">
+                    <label class="task-item">
+                        <input type="checkbox" data-task="1-1">
+                        <span class="checkmark"></span>
+                        <span class="task-text">تحديث النظام — <code>sudo apt update && full-upgrade</code></span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="1-2">
+                        <span class="checkmark"></span>
+                        <span class="task-text">تثبيت Git</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="1-3">
+                        <span class="checkmark"></span>
+                        <span class="task-text">تثبيت Python + pip + venv</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="1-4">
+                        <span class="checkmark"></span>
+                        <span class="task-text">تثبيت ffmpeg</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="1-5">
+                        <span class="checkmark"></span>
+                        <span class="task-text">تثبيت espeak</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="1-6">
+                        <span class="checkmark"></span>
+                        <span class="task-text">تثبيت mpg123</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="1-7">
+                        <span class="checkmark"></span>
+                        <span class="task-text">تثبيت الأدوات الأساسية الأخرى</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="1-8">
+                        <span class="checkmark"></span>
+                        <span class="task-text">إنشاء هيكل المجلدات — <code>VISION-X/</code></span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="1-9">
+                        <span class="checkmark"></span>
+                        <span class="task-text">إنشاء الملفات: <code>main.py, config.py, requirements.txt, README.md</code></span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="1-10">
+                        <span class="checkmark"></span>
+                        <span class="task-text">إنشاء المجلدات: <code>ai/ camera/ audio/ gpio/ display/ utils/ assets/ logs/ tests/</code></span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="1-11">
+                        <span class="checkmark"></span>
+                        <span class="task-text">إنشاء Git Repository وأول Commit</span>
+                    </label>
+                </div>
+                <div class="phase-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text">0/11</span>
+                </div>
+
+                <!-- Folder Structure Visual -->
+                <div class="folder-tree">
+                    <div class="folder-tree-title">📁 هيكل المشروع</div>
+                    <pre class="tree-content">VISION-X/
+├── main.py
+├── config.py
+├── requirements.txt
+├── README.md
+│
+├── ai/
+├── camera/
+├── audio/
+├── gpio/
+├── display/
+├── utils/
+├── assets/
+├── logs/
+└── tests/</pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 2 -->
+        <section class="phase-card" data-phase="2">
+            <div class="phase-connector">
+                <div class="connector-dot">
+                    <span class="dot-number">2</span>
+                </div>
+            </div>
+            <div class="phase-content">
+                <div class="phase-header">
+                    <div class="phase-badge">المرحلة 2</div>
+                    <div class="phase-duration"><svg viewBox="0 0 24 24" fill="none" width="14" height="14"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> يومين</div>
+                </div>
+                <h2 class="phase-title">نظام التشغيل الأساسي</h2>
+                <p class="phase-desc">البرنامج الرئيسي — مع Simulation بدل الكاميرا</p>
+
+                <!-- Flow Diagram -->
+                <div class="flow-diagram">
+                    <div class="flow-step">🚀 تشغيل</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">⏳ انتظار الزر</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">📸 التقاط صورة</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">🤖 AI</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">🔊 صوت</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step loop">🔁 انتظار مرة أخرى</div>
+                </div>
+
+                <div class="tasks-list">
+                    <label class="task-item">
+                        <input type="checkbox" data-task="2-1">
+                        <span class="checkmark"></span>
+                        <span class="task-text">إنشاء <code>main.py</code> مع الـ Main Loop</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="2-2">
+                        <span class="checkmark"></span>
+                        <span class="task-text">Simulation للكاميرا (صورة ثابتة)</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="2-3">
+                        <span class="checkmark"></span>
+                        <span class="task-text">Simulation للزر (Keyboard Input)</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="2-4">
+                        <span class="checkmark"></span>
+                        <span class="task-text">ربط الـ Modules ببعض</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="2-5">
+                        <span class="checkmark"></span>
+                        <span class="task-text">تجربة الدورة كاملة (End-to-End Test)</span>
+                    </label>
+                </div>
+                <div class="phase-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text">0/5</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 3 -->
+        <section class="phase-card" data-phase="3">
+            <div class="phase-connector">
+                <div class="connector-dot">
+                    <span class="dot-number">3</span>
+                </div>
+            </div>
+            <div class="phase-content">
+                <div class="phase-header">
+                    <div class="phase-badge accent">المرحلة 3</div>
+                    <div class="phase-duration"><svg viewBox="0 0 24 24" fill="none" width="14" height="14"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 3 أيام</div>
+                </div>
+                <h2 class="phase-title">الذكاء الاصطناعي 🧠</h2>
+                <p class="phase-desc">تحويل كود الـ AI إلى Module مستقل بدل Flask</p>
+
+                <div class="flow-diagram mini">
+                    <div class="flow-step accent">🤖 AI Module</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step accent"><code>analyze()</code></div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step accent">📝 يرجع Text</div>
+                </div>
+
+                <div class="tasks-list">
+                    <label class="task-item">
+                        <input type="checkbox" data-task="3-1">
+                        <span class="checkmark"></span>
+                        <span class="task-text">نقل كود الـ AI الموجود</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="3-2">
+                        <span class="checkmark"></span>
+                        <span class="task-text">تحويله إلى Module مستقل</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="3-3">
+                        <span class="checkmark"></span>
+                        <span class="task-text">إضافة أكثر من API Key (Rotation)</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="3-4">
+                        <span class="checkmark"></span>
+                        <span class="task-text">إضافة Retry Logic</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="3-5">
+                        <span class="checkmark"></span>
+                        <span class="task-text">إضافة Timeout</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="3-6">
+                        <span class="checkmark"></span>
+                        <span class="task-text">إضافة Logs</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="3-7">
+                        <span class="checkmark"></span>
+                        <span class="task-text">إضافة Error Handling شامل</span>
+                    </label>
+                </div>
+                <div class="phase-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text">0/7</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 4 -->
+        <section class="phase-card" data-phase="4">
+            <div class="phase-connector">
+                <div class="connector-dot">
+                    <span class="dot-number">4</span>
+                </div>
+            </div>
+            <div class="phase-content">
+                <div class="phase-header">
+                    <div class="phase-badge">المرحلة 4</div>
+                    <div class="phase-duration"><svg viewBox="0 0 24 24" fill="none" width="14" height="14"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 3 أيام</div>
+                </div>
+                <h2 class="phase-title">نظام الصوت 🔊</h2>
+                <p class="phase-desc">تحويل النص إلى كلام وتشغيله على السماعة</p>
+
+                <div class="flow-diagram mini">
+                    <div class="flow-step">📝 Text</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">🗣️ Speech</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">🔈 Speaker</div>
+                </div>
+
+                <div class="tasks-list">
+                    <label class="task-item">
+                        <input type="checkbox" data-task="4-1">
+                        <span class="checkmark"></span>
+                        <span class="task-text">تجربة Piper TTS</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="4-2">
+                        <span class="checkmark"></span>
+                        <span class="task-text">تجربة espeak</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="4-3">
+                        <span class="checkmark"></span>
+                        <span class="task-text">تجربة ElevenLabs (اختياري)</span>
+                        <span class="task-tag optional">اختياري</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="4-4">
+                        <span class="checkmark"></span>
+                        <span class="task-text">اختيار أفضل جودة صوت</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="4-5">
+                        <span class="checkmark"></span>
+                        <span class="task-text">إنشاء Audio Module</span>
+                    </label>
+                </div>
+                <div class="phase-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text">0/5</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 5 -->
+        <section class="phase-card" data-phase="5">
+            <div class="phase-connector">
+                <div class="connector-dot">
+                    <span class="dot-number">5</span>
+                </div>
+            </div>
+            <div class="phase-content">
+                <div class="phase-header">
+                    <div class="phase-badge">المرحلة 5</div>
+                    <div class="phase-duration"><svg viewBox="0 0 24 24" fill="none" width="14" height="14"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> يوم واحد</div>
+                </div>
+                <h2 class="phase-title">الزر (GPIO) 🔘</h2>
+                <p class="phase-desc">ربط الزر الفيزيائي بالبرنامج الرئيسي</p>
+
+                <div class="flow-diagram mini">
+                    <div class="flow-step">🔘 GPIO Button</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">⚡ main.py</div>
+                </div>
+
+                <div class="tasks-list">
+                    <label class="task-item">
+                        <input type="checkbox" data-task="5-1">
+                        <span class="checkmark"></span>
+                        <span class="task-text">توصيل الزر بـ GPIO</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="5-2">
+                        <span class="checkmark"></span>
+                        <span class="task-text">كتابة GPIO Module</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="5-3">
+                        <span class="checkmark"></span>
+                        <span class="task-text">ربط الزر بـ main.py</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="5-4">
+                        <span class="checkmark"></span>
+                        <span class="task-text">تجربة الضغطة</span>
+                    </label>
+                </div>
+                <div class="phase-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text">0/4</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 6 -->
+        <section class="phase-card" data-phase="6">
+            <div class="phase-connector">
+                <div class="connector-dot">
+                    <span class="dot-number">6</span>
+                </div>
+            </div>
+            <div class="phase-content">
+                <div class="phase-header">
+                    <div class="phase-badge">المرحلة 6</div>
+                    <div class="phase-duration"><svg viewBox="0 0 24 24" fill="none" width="14" height="14"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> يوم واحد</div>
+                </div>
+                <h2 class="phase-title">البطارية 🔋</h2>
+                <p class="phase-desc">توصيل وتشغيل نظام الطاقة</p>
+
+                <div class="flow-diagram mini">
+                    <div class="flow-step">🔋 Battery</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">⚡ TP4056</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">🔺 MT3608</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">🍓 Raspberry Pi</div>
+                </div>
+
+                <div class="tasks-list">
+                    <label class="task-item">
+                        <input type="checkbox" data-task="6-1">
+                        <span class="checkmark"></span>
+                        <span class="task-text">توصيل البطارية بـ TP4056</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="6-2">
+                        <span class="checkmark"></span>
+                        <span class="task-text">توصيل MT3608 (Step-Up)</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="6-3">
+                        <span class="checkmark"></span>
+                        <span class="task-text">ضبط الفولت على 5V</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="6-4">
+                        <span class="checkmark"></span>
+                        <span class="task-text">توصيل بـ Raspberry Pi</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="6-5">
+                        <span class="checkmark"></span>
+                        <span class="task-text">قياس الفولت والتأكد من الاستقرار</span>
+                    </label>
+                </div>
+                <div class="phase-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text">0/5</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 7 -->
+        <section class="phase-card" data-phase="7">
+            <div class="phase-connector">
+                <div class="connector-dot">
+                    <span class="dot-number">7</span>
+                </div>
+            </div>
+            <div class="phase-content">
+                <div class="phase-header">
+                    <div class="phase-badge accent">المرحلة 7</div>
+                    <div class="phase-duration"><svg viewBox="0 0 24 24" fill="none" width="14" height="14"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> بعد وصول الكاميرا</div>
+                </div>
+                <h2 class="phase-title">الكاميرا 📸</h2>
+                <p class="phase-desc">تشغيل الكاميرا وربطها بـ Gemini</p>
+
+                <div class="flow-diagram mini">
+                    <div class="flow-step accent">📸 Capture</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step accent">🤖 Gemini</div>
+                </div>
+
+                <div class="tasks-list">
+                    <label class="task-item">
+                        <input type="checkbox" data-task="7-1">
+                        <span class="checkmark"></span>
+                        <span class="task-text">توصيل الكاميرا بالراسبيري</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="7-2">
+                        <span class="checkmark"></span>
+                        <span class="task-text">أول صورة تجريبية</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="7-3">
+                        <span class="checkmark"></span>
+                        <span class="task-text">إنشاء Camera Module</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="7-4">
+                        <span class="checkmark"></span>
+                        <span class="task-text">ربط الـ Capture بـ Gemini AI</span>
+                    </label>
+                </div>
+                <div class="phase-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text">0/4</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 8 -->
+        <section class="phase-card" data-phase="8">
+            <div class="phase-connector">
+                <div class="connector-dot">
+                    <span class="dot-number">8</span>
+                </div>
+            </div>
+            <div class="phase-content">
+                <div class="phase-header">
+                    <div class="phase-badge">المرحلة 8</div>
+                </div>
+                <h2 class="phase-title">المايك 🎤</h2>
+                <p class="phase-desc">تشغيل Whisper للتعرف على الكلام</p>
+
+                <div class="flow-diagram mini">
+                    <div class="flow-step">🎤 قول</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">📝 Speech to Text</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">🤖 Gemini</div>
+                </div>
+
+                <div class="tasks-list">
+                    <label class="task-item">
+                        <input type="checkbox" data-task="8-1">
+                        <span class="checkmark"></span>
+                        <span class="task-text">توصيل المايك</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="8-2">
+                        <span class="checkmark"></span>
+                        <span class="task-text">تثبيت Whisper</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="8-3">
+                        <span class="checkmark"></span>
+                        <span class="task-text">تجربة Speech-to-Text</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="8-4">
+                        <span class="checkmark"></span>
+                        <span class="task-text">ربط المايك بـ Gemini</span>
+                    </label>
+                </div>
+                <div class="phase-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text">0/4</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 9 -->
+        <section class="phase-card" data-phase="9">
+            <div class="phase-connector">
+                <div class="connector-dot">
+                    <span class="dot-number">9</span>
+                </div>
+            </div>
+            <div class="phase-content">
+                <div class="phase-header">
+                    <div class="phase-badge">المرحلة 9</div>
+                </div>
+                <h2 class="phase-title">الشاشة 🖥️</h2>
+                <p class="phase-desc">عرض المعلومات الأساسية على الشاشة</p>
+                <div class="tasks-list">
+                    <label class="task-item">
+                        <input type="checkbox" data-task="9-1">
+                        <span class="checkmark"></span>
+                        <span class="task-text">عرض الوقت</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="9-2">
+                        <span class="checkmark"></span>
+                        <span class="task-text">عرض نسبة البطارية</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="9-3">
+                        <span class="checkmark"></span>
+                        <span class="task-text">عرض الحالة (Ready / Processing)</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="9-4">
+                        <span class="checkmark"></span>
+                        <span class="task-text">عرض نتيجة الذكاء الاصطناعي</span>
+                    </label>
+                </div>
+                <div class="phase-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text">0/4</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 10 -->
+        <section class="phase-card" data-phase="10">
+            <div class="phase-connector">
+                <div class="connector-dot">
+                    <span class="dot-number">10</span>
+                </div>
+            </div>
+            <div class="phase-content">
+                <div class="phase-header">
+                    <div class="phase-badge accent">المرحلة 10</div>
+                </div>
+                <h2 class="phase-title">الـ HUD 👓</h2>
+                <p class="phase-desc">عرض المعلومات على الـ Beam Splitter</p>
+
+                <div class="hud-preview">
+                    <div class="hud-frame">
+                        <div class="hud-element hud-battery">🔋 85%</div>
+                        <div class="hud-element hud-time">12:30</div>
+                        <div class="hud-element hud-object">🏷️ Object: Chair</div>
+                        <div class="hud-element hud-arrow">➡️ Direction</div>
+                        <div class="hud-element hud-warning">⚠️ Obstacle</div>
+                    </div>
+                </div>
+
+                <div class="tasks-list">
+                    <label class="task-item">
+                        <input type="checkbox" data-task="10-1">
+                        <span class="checkmark"></span>
+                        <span class="task-text">الحصول على Beam Splitter</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="10-2">
+                        <span class="checkmark"></span>
+                        <span class="task-text">عرض Battery على الـ HUD</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="10-3">
+                        <span class="checkmark"></span>
+                        <span class="task-text">عرض Time</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="10-4">
+                        <span class="checkmark"></span>
+                        <span class="task-text">عرض Object Detection</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="10-5">
+                        <span class="checkmark"></span>
+                        <span class="task-text">عرض Arrows (اتجاهات)</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="10-6">
+                        <span class="checkmark"></span>
+                        <span class="task-text">عرض Warnings</span>
+                    </label>
+                </div>
+                <div class="phase-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text">0/6</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 11 - Milestone -->
+        <section class="phase-card milestone" data-phase="11">
+            <div class="phase-connector">
+                <div class="connector-dot milestone-dot">
+                    <span class="dot-number">🚀</span>
+                </div>
+            </div>
+            <div class="phase-content">
+                <div class="phase-header">
+                    <div class="phase-badge milestone-badge">المرحلة 11</div>
+                    <div class="milestone-label">🏆 MILESTONE</div>
+                </div>
+                <h2 class="phase-title">النسخة الأولى v1.0 🎉</h2>
+                <p class="phase-desc">أول نسخة شغالة بالكامل!</p>
+
+                <div class="flow-diagram milestone-flow">
+                    <div class="flow-step milestone-step">🔘 ضغط الزر</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step milestone-step">📸 صورة</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step milestone-step">🤖 AI</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step milestone-step">📝 وصف</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step milestone-step">🔊 السماعة</div>
+                </div>
+
+                <div class="tasks-list">
+                    <label class="task-item">
+                        <input type="checkbox" data-task="11-1">
+                        <span class="checkmark"></span>
+                        <span class="task-text">تجميع كل الـ Modules</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="11-2">
+                        <span class="checkmark"></span>
+                        <span class="task-text">اختبار شامل End-to-End</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="11-3">
+                        <span class="checkmark"></span>
+                        <span class="task-text">إصلاح أي Bugs</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="11-4">
+                        <span class="checkmark"></span>
+                        <span class="task-text">إصدار النسخة v1.0 🎉</span>
+                    </label>
+                </div>
+                <div class="phase-progress">
+                    <div class="progress-bar milestone-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text">0/4</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 12 -->
+        <section class="phase-card" data-phase="12">
+            <div class="phase-connector">
+                <div class="connector-dot">
+                    <span class="dot-number">12</span>
+                </div>
+            </div>
+            <div class="phase-content">
+                <div class="phase-header">
+                    <div class="phase-badge">المرحلة 12</div>
+                </div>
+                <h2 class="phase-title">النسخة الثانية v2.0 ⚡</h2>
+                <p class="phase-desc">إضافة ميزات متقدمة</p>
+                <div class="tasks-list">
+                    <label class="task-item">
+                        <input type="checkbox" data-task="12-1">
+                        <span class="checkmark"></span>
+                        <span class="task-text">Voice Commands (أوامر صوتية)</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="12-2">
+                        <span class="checkmark"></span>
+                        <span class="task-text">OCR — قراءة النصوص</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="12-3">
+                        <span class="checkmark"></span>
+                        <span class="task-text">Translation — ترجمة</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="12-4">
+                        <span class="checkmark"></span>
+                        <span class="task-text">Face Recognition</span>
+                        <span class="task-tag optional">اختياري</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="12-5">
+                        <span class="checkmark"></span>
+                        <span class="task-text">Currency Detection — كشف العملات</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="12-6">
+                        <span class="checkmark"></span>
+                        <span class="task-text">QR Code Detection</span>
+                    </label>
+                </div>
+                <div class="phase-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text">0/6</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 13 -->
+        <section class="phase-card" data-phase="13">
+            <div class="phase-connector">
+                <div class="connector-dot">
+                    <span class="dot-number">13</span>
+                </div>
+            </div>
+            <div class="phase-content">
+                <div class="phase-header">
+                    <div class="phase-badge">المرحلة 13</div>
+                </div>
+                <h2 class="phase-title">النسخة الثالثة v3.0 🗺️</h2>
+                <p class="phase-desc">نظام التنقل والملاحة</p>
+                <div class="tasks-list">
+                    <label class="task-item">
+                        <input type="checkbox" data-task="13-1">
+                        <span class="checkmark"></span>
+                        <span class="task-text">إضافة GPS Module</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="13-2">
+                        <span class="checkmark"></span>
+                        <span class="task-text">ربط Google Maps API</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="13-3">
+                        <span class="checkmark"></span>
+                        <span class="task-text">Navigation — التنقل الصوتي</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="13-4">
+                        <span class="checkmark"></span>
+                        <span class="task-text">عرض الاتجاهات على الـ HUD</span>
+                    </label>
+                </div>
+                <div class="phase-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text">0/4</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 14 - Final -->
+        <section class="phase-card milestone final" data-phase="14">
+            <div class="phase-connector">
+                <div class="connector-dot milestone-dot final-dot">
+                    <span class="dot-number">🏁</span>
+                </div>
+            </div>
+            <div class="phase-content">
+                <div class="phase-header">
+                    <div class="phase-badge milestone-badge final-badge">المرحلة 14</div>
+                    <div class="milestone-label final-label">🏁 النسخة النهائية</div>
+                </div>
+                <h2 class="phase-title">النسخة النهائية — VisionX Complete 🎯</h2>
+                <p class="phase-desc">النظارة كلها تشتغل من البطارية — جاهزة للاستخدام!</p>
+
+                <div class="flow-diagram final-flow">
+                    <div class="flow-step final-step">⚡ Boot</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step final-step">✅ Ready</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step final-step pulse-step">👓 Waiting...</div>
+                </div>
+
+                <div class="tasks-list">
+                    <label class="task-item">
+                        <input type="checkbox" data-task="14-1">
+                        <span class="checkmark"></span>
+                        <span class="task-text">تشغيل تلقائي عند Boot</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="14-2">
+                        <span class="checkmark"></span>
+                        <span class="task-text">تشغيل كل الأنظمة من البطارية</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="14-3">
+                        <span class="checkmark"></span>
+                        <span class="task-text">اختبار شامل لكل الميزات</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="14-4">
+                        <span class="checkmark"></span>
+                        <span class="task-text">تجميع النظارة النهائية</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" data-task="14-5">
+                        <span class="checkmark"></span>
+                        <span class="task-text">أول لبسة كاملة! 🥳</span>
+                    </label>
+                </div>
+                <div class="phase-progress">
+                    <div class="progress-bar milestone-bar final-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text">0/5</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>VisionX Project — Built with ❤️</p>
+            <p class="footer-sub">نظارة ذكية لمساعدة المكفوفين</p>
+        </div>
+    </footer>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confettiCanvas"></canvas>
+
+    <script src="app.js"></script>
+</body>
+</html>

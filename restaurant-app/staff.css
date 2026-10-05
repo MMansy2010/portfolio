@@ -1,0 +1,222 @@
+/* staff.css */
+
+/* شاشة اختيار الدور */
+#role-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+#role-card {
+  background: var(--surface-color);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius);
+  padding: 50px 40px;
+  text-align: center;
+  max-width: 450px;
+  width: 100%;
+  box-shadow: var(--shadow);
+}
+
+#role-card h1 {
+  font-size: 2.5rem;
+  color: var(--secondary);
+  margin-bottom: 12px;
+}
+
+#role-card p {
+  color: var(--text-muted);
+  margin-bottom: 40px;
+  font-size: 1.1rem;
+}
+
+#role-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#btn-chef {
+  background: linear-gradient(45deg, #9b59b6, #8e44ad);
+  color: #fff;
+  padding: 18px;
+  font-size: 1.2rem;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(155, 89, 182, 0.4);
+}
+
+#btn-delivery {
+  background: linear-gradient(45deg, #3498db, #2980b9);
+  color: #fff;
+  padding: 18px;
+  font-size: 1.2rem;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+}
+
+#btn-chef:hover, #btn-delivery:hover {
+  filter: brightness(1.15);
+  transform: translateY(-3px);
+}
+
+/* شاشة المهام */
+.hidden { display: none !important; }
+
+#tasks-screen header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+}
+
+#tasks-screen header h1 {
+  font-size: 1.8rem;
+  color: var(--secondary);
+}
+
+#tasks-screen header p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+#btn-logout {
+  background: rgba(255,255,255,0.05);
+  color: var(--text-muted);
+  border: 1px solid var(--surface-border);
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 0.9rem;
+}
+
+#btn-logout:hover {
+  background: rgba(255,255,255,0.1);
+  color: var(--text-main);
+}
+
+/* كارت المهمة */
+.task-card {
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 20px;
+  transition: all 0.2s;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.task-card:hover {
+  border-color: var(--primary);
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.task-info strong {
+  font-size: 1.2rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.task-info span {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.task-time {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  background: rgba(255,255,255,0.05);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.task-address {
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+}
+
+.task-items {
+  background: rgba(0,0,0,0.2);
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+}
+
+.task-qty {
+  color: var(--secondary);
+  font-weight: 700;
+}
+
+.task-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-total {
+  color: var(--accent);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.done-btn {
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 1rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.done-btn:hover {
+  filter: brightness(1.15);
+  transform: translateY(-2px);
+}
+
+.done-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-state p {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.empty-state span {
+  color: var(--text-muted);
+}
+
+@media (max-width: 600px) {
+  #tasks-screen header { padding: 15px 20px; flex-direction: column; gap: 12px; text-align: center; }
+  .task-footer { flex-direction: column; gap: 12px; }
+  .done-btn { width: 100%; }
+}

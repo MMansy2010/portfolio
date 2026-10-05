@@ -1,0 +1,3685 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منظم الألماني الذكي - خطة التفوق A1, A2, B1</title>
+    <!-- PWA Link Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#131b2e">
+
+    <!-- Fonts: Cairo & Tajawal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-main: #090d16;
+            --bg-card: #131b2e;
+            --bg-card-hover: #1a253d;
+            --border-color: #23314d;
+            --border-highlight: #3b82f6;
+            
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            
+            /* Level Colors */
+            --level-a1: #ec4899;
+            --level-a2: #3b82f6;
+            --level-b1: #10b981;
+            --accent-gold: #f59e0b;
+            
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 22px;
+            --shadow-glow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --transition-fast: 0.2s ease;
+            --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(236, 72, 153, 0.07) 0%, transparent 45%),
+                radial-gradient(circle at 90% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 50% 85%, rgba(16, 185, 129, 0.06) 0%, transparent 50%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+            padding-bottom: 50px;
+        }
+
+        /* Header Navigation */
+        header {
+            background: rgba(19, 27, 46, 0.85);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 14px 24px;
+        }
+
+        .header-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, var(--level-a1), #8b5cf6, var(--level-a2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
+            box-shadow: 0 4px 18px rgba(236, 72, 153, 0.35);
+        }
+
+        .logo-text h1 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            background: linear-gradient(to left, #ffffff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-text p {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-dropdown-wrapper {
+            position: relative;
+        }
+
+        .user-badge-selector {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 6px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .user-badge-selector:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--border-highlight);
+        }
+
+        .user-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            width: 240px;
+            background: #131b2e;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 1000;
+        }
+
+        .user-dropdown-menu.show {
+            display: flex;
+        }
+
+        .dropdown-header {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            padding: 6px 10px;
+            font-weight: 600;
+        }
+
+        .user-dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .user-dropdown-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .user-dropdown-item.active {
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid var(--border-highlight);
+        }
+
+        .avatar-circle.sm {
+            width: 26px;
+            height: 26px;
+            font-size: 0.8rem;
+        }
+
+        .user-dropdown-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-dropdown-name {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .user-dropdown-sub {
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+        }
+
+        .user-dropdown-divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: 4px 0;
+        }
+
+        .avatar-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ec4899, #3b82f6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.85rem;
+            color: white;
+        }
+
+        .user-info-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .user-status-sub {
+            font-size: 0.7rem;
+            color: var(--level-b1);
+        }
+
+        .btn-header-action {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 8px 14px;
+            border-radius: var(--radius-md);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition-fast);
+        }
+
+        .btn-header-action:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--text-secondary);
+        }
+
+        /* Layout Grid */
+        .main-container {
+            max-width: 1280px;
+            width: 100%;
+            margin: 20px auto;
+            padding: 0 16px;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 980px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-title i {
+            color: var(--border-highlight);
+        }
+
+        /* Progress Card */
+        .progress-stat-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .progress-label-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--level-a1), var(--level-a2), var(--level-b1));
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        .stats-2x2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .stat-card-mini {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            padding: 10px;
+            text-align: center;
+        }
+
+        .stat-val-num {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .stat-val-lbl {
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        /* Level Filter Tabs */
+        .level-tabs {
+            display: flex;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 4px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            gap: 4px;
+        }
+
+        .level-tab-btn {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-weight: 700;
+            font-size: 0.85rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            text-align: center;
+        }
+
+        .level-tab-btn.active {
+            background: var(--bg-card-hover);
+            color: var(--text-primary);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .level-tab-btn.a1.active { border-bottom: 3px solid var(--level-a1); }
+        .level-tab-btn.a2.active { border-bottom: 3px solid var(--level-a2); }
+        .level-tab-btn.b1.active { border-bottom: 3px solid var(--level-b1); }
+
+        /* Main Content View */
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Today's Target Card */
+        .today-target-banner {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.12), rgba(59, 130, 246, 0.12));
+            border: 1px solid rgba(236, 72, 153, 0.3);
+            border-radius: var(--radius-lg);
+            padding: 22px;
+            box-shadow: var(--shadow-glow);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .banner-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .banner-title-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .badge-today {
+            background: var(--level-a1);
+            color: white;
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        .banner-title-area h2 {
+            font-size: 1.25rem;
+            font-weight: 800;
+        }
+
+        .target-time-chip {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .today-videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 14px;
+            margin-top: 4px;
+        }
+
+        /* Video Card */
+        .video-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+
+        .video-card:hover {
+            border-color: var(--border-highlight);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-card.completed {
+            opacity: 0.65;
+            background: rgba(16, 185, 129, 0.05);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .video-top-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+        }
+
+        .video-number-badge {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .video-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+
+        .video-duration {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .video-card-actions {
+            display: flex;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        .btn-play-video {
+            flex: 1;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            border: none;
+            padding: 8px 10px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: var(--transition-fast);
+        }
+
+        .btn-play-video:hover {
+            filter: brightness(1.1);
+        }
+
+        .btn-youtube-direct {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            padding: 8px 10px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.82rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            transition: var(--transition-fast);
+        }
+
+        .btn-youtube-direct:hover {
+            background: rgba(239, 68, 68, 0.3);
+            color: white;
+        }
+
+        .btn-check-complete {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .video-card.completed .btn-check-complete {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
+
+        /* YouTube Modal */
+        .player-modal-backdrop {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .player-modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 860px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .player-modal-header {
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .player-modal-header h3 {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .player-actions-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-close-modal {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .btn-close-modal:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .video-iframe-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            background: #000;
+        }
+
+        .video-iframe-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            border: none;
+        }
+
+        /* Onboarding / Setup Wizard Modal */
+        .wizard-backdrop {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(5, 8, 16, 0.92);
+            backdrop-filter: blur(12px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .wizard-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-highlight);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 580px;
+            max-height: 88vh;
+            overflow-y: auto;
+            padding: 24px;
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.25);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .wizard-box::-webkit-scrollbar {
+            width: 6px;
+        }
+        .wizard-box::-webkit-scrollbar-thumb {
+            background: var(--border-highlight);
+            border-radius: 4px;
+        }
+
+        .ratio-inputs-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .ratio-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .ratio-input-field {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 6px 8px;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .wizard-title {
+            text-align: center;
+        }
+
+        .wizard-title h2 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+            background: linear-gradient(to left, #ffffff, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .wizard-title p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .user-select-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .user-option-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 12px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .user-option-card:hover, .user-option-card.selected {
+            border-color: var(--border-highlight);
+            background: rgba(59, 130, 246, 0.12);
+        }
+
+        .days-checkboxes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .day-chip {
+            flex: 1;
+            min-width: 45px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 6px 0;
+            text-align: center;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            user-select: none;
+            transition: var(--transition-fast);
+        }
+
+        .day-chip.active {
+            background: var(--level-a2);
+            color: white;
+            border-color: var(--level-a2);
+        }
+
+        .form-input-number, .form-input-time {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 10px 14px;
+            color: white;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .btn-wizard-save {
+            background: linear-gradient(135deg, var(--level-a1), var(--level-a2));
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(236, 72, 153, 0.4);
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* All Lessons Grid */
+        .all-lessons-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .search-box-wrap {
+            position: relative;
+            max-width: 280px;
+            width: 100%;
+        }
+
+        .search-box-wrap input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 8px 14px 8px 36px;
+            color: white;
+            font-size: 0.85rem;
+            outline: none;
+        }
+
+        .search-box-wrap i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 12px;
+            max-height: 520px;
+            overflow-y: auto;
+            padding-left: 4px;
+        }
+
+        .lessons-grid::-webkit-scrollbar {
+            width: 6px;
+        }
+        .lessons-grid::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        /* Toast */
+        .toast-notify {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(19, 27, 46, 0.95);
+            border: 1px solid var(--border-highlight);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            border-radius: var(--radius-md);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: white;
+            z-index: 3000;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .toast-notify.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Per-Day Controls & Skills Breakdown */
+        .preset-btns-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn-preset {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .btn-preset:hover, .btn-preset.active {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: var(--border-highlight);
+            color: white;
+        }
+
+        .per-day-settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .day-setting-card {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            transition: var(--transition-fast);
+        }
+
+        .day-setting-card.active-day {
+            border-color: rgba(59, 130, 246, 0.5);
+            background: rgba(59, 130, 246, 0.06);
+        }
+
+        .day-header-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .day-toggle-checkbox {
+            accent-color: var(--level-a2);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .day-minutes-input-wrap {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .day-minutes-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 4px 8px;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .day-minutes-input:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .skill-summary-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .skill-row-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.85rem;
+        }
+
+        .skill-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 700;
+        }
+
+        .skill-time-val {
+            font-weight: 800;
+            color: var(--accent-gold);
+        }
+
+        .today-skills-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 12px;
+            margin-top: 6px;
+        }
+
+        .today-skill-card {
+            background: rgba(19, 27, 46, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-md);
+            padding: 12px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .today-skill-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .today-skill-time {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .btn-skill-check {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 6px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: var(--transition-fast);
+        }
+
+        .btn-skill-check.completed {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: #10b981;
+            color: #10b981;
+        }
+
+        .today-congrats-banner {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(59, 130, 246, 0.15));
+            border: 1px solid #10b981;
+            border-radius: var(--radius-md);
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.2);
+        }
+
+        .today-congrats-banner h3 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #10b981;
+        }
+
+        .today-congrats-banner p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="header-container">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>منظم الألماني الذكي</h1>
+                    <p>خطة التفوق A1 • A2 • B1 قبل معسكر غوته</p>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <!-- User Profile Switcher Dropdown -->
+                <div class="user-dropdown-wrapper">
+                    <div class="user-badge-selector" id="userBadgeSelector" onclick="toggleUserDropdown(event)">
+                        <div class="avatar-circle" id="userAvatarCircle">م</div>
+                        <div class="user-info-text">
+                            <span class="user-name-label" id="headerUserName">محمد أحمد</span>
+                            <span class="user-status-sub" id="headerUserStatus">مستوى A1 مخصص</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem; color: var(--text-secondary);"></i>
+                    </div>
+
+                    <div class="user-dropdown-menu" id="userDropdownMenu">
+                        <div class="dropdown-header">اختر الحساب النشط:</div>
+                        <div class="user-dropdown-item" id="item-user-mohamed" onclick="switchUser('mohamed')">
+                            <div class="avatar-circle sm" style="background: linear-gradient(135deg, #ec4899, #3b82f6);">م</div>
+                            <div class="user-dropdown-info">
+                                <span class="user-dropdown-name">محمد أحمد</span>
+                                <span class="user-dropdown-sub" id="sub-mohamed">مستوى A1</span>
+                            </div>
+                        </div>
+                        <div class="user-dropdown-item" id="item-user-assem" onclick="switchUser('assem')">
+                            <div class="avatar-circle sm" style="background: linear-gradient(135deg, #10b981, #3b82f6);">ع</div>
+                            <div class="user-dropdown-info">
+                                <span class="user-dropdown-name">عاصم أحمد</span>
+                                <span class="user-dropdown-sub" id="sub-assem">مستوى A1</span>
+                            </div>
+                        </div>
+                        <div class="user-dropdown-item" id="item-user-omar" onclick="switchUser('omar')">
+                            <div class="avatar-circle sm" style="background: linear-gradient(135deg, #f59e0b, #ec4899);">ع</div>
+                            <div class="user-dropdown-info">
+                                <span class="user-dropdown-name">عمر مهند</span>
+                                <span class="user-dropdown-sub" id="sub-omar">مستوى A1</span>
+                            </div>
+                        </div>
+                        <div class="user-dropdown-divider"></div>
+                        <div class="user-dropdown-item settings-item" onclick="openWizardModal()">
+                            <i class="fa-solid fa-sliders" style="color: var(--border-highlight); margin-left: 6px;"></i>
+                            <span>تخصيص الإعدادات والأيام</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-header-action" onclick="toggleNotificationsPermission()">
+                    <i class="fa-solid fa-bell" id="bellIcon" style="color: #10b981;"></i>
+                    <span id="bellText">التنبيهات مفعلة</span>
+                </button>
+
+                <button class="btn-header-action" onclick="openWizardModal()">
+                    <i class="fa-solid fa-sliders"></i>
+                    <span>الإعدادات</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        
+        <!-- Sidebar Controls & Stats -->
+        <aside class="sidebar">
+            
+            <!-- Level Selector Tabs -->
+            <div class="card">
+                <div class="card-title">
+                    <span><i class="fa-solid fa-layer-group"></i> مستوى الكورس</span>
+                </div>
+                <div class="level-tabs">
+                    <button class="level-tab-btn a1 active" onclick="selectLevel('A1')">A1</button>
+                    <button class="level-tab-btn a2" onclick="selectLevel('A2')">A2</button>
+                    <button class="level-tab-btn b1" onclick="selectLevel('B1')">B1</button>
+                </div>
+            </div>
+
+            <!-- Profile Progress Card -->
+            <div class="card">
+                <div class="card-title">
+                    <span><i class="fa-solid fa-chart-line"></i> نسبة الإنجاز اليومية</span>
+                    <span style="font-size: 0.8rem; color: var(--text-secondary);" id="sidebarLevelBadge">A1</span>
+                </div>
+
+                <div class="progress-stat-group">
+                    <div class="progress-label-row">
+                        <span>الدروس المكتملة</span>
+                        <span id="progressPercentText">0%</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="progressBarFill"></div>
+                    </div>
+                </div>
+
+                <div class="stats-2x2">
+                    <div class="stat-card-mini">
+                        <div class="stat-val-num" id="statCompletedCount">0</div>
+                        <div class="stat-val-lbl">فيديو مكتمل</div>
+                    </div>
+                    <div class="stat-card-mini">
+                        <div class="stat-val-num" id="statRemainingCount">0</div>
+                        <div class="stat-val-lbl">فيديو متبقي</div>
+                    </div>
+                    <div class="stat-card-mini">
+                        <div class="stat-val-num" id="statDailyTargetMin">45 م</div>
+                        <div class="stat-val-lbl">مستهدف اليوم</div>
+                    </div>
+                    <div class="stat-card-mini">
+                        <div class="stat-val-num" id="statDaysEstimate">0 يوم</div>
+                        <div class="stat-val-lbl">إنهاء المستوى</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Info & PWA Tip -->
+            <div class="card">
+                <div class="card-title">
+                    <span><i class="fa-solid fa-mobile-screen"></i> تشغيل التطبيق على الموبايل</span>
+                </div>
+                <div style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6;">
+                    📲 لتفعيل التنبيهات حتى عند إغلاق الموبايل:
+                    <ol style="margin-right: 18px; margin-top: 6px;">
+                        <li>افتح خيارات المتصفح (⋮).</li>
+                        <li>اختر <strong>"إضافة إلى الشاشة الرئيسية" (Add to Home Screen)</strong>.</li>
+                        <li>سيصبح لديك تطبيق مستقل يعمل في الخلفية!</li>
+                    </ol>
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- Main Content View -->
+        <main class="content-area">
+
+            <!-- Today's Adaptive Schedule Hero Section -->
+            <section class="today-target-banner">
+                <div class="banner-header">
+                    <div class="banner-title-area">
+                        <span class="badge-today">خطة اليوم الذكية</span>
+                        <h2 id="todayTargetHeading">دروس ومهمات اليوم المخصصة</h2>
+                    </div>
+                    <div class="target-time-chip">
+                        <i class="fa-regular fa-clock"></i>
+                        <span id="todayTotalDurationLabel">0 دقيقة</span>
+                    </div>
+                </div>
+
+                <!-- Today Skills Breakdown Cards -->
+                <div class="today-skills-cards" id="todaySkillsCardsContainer">
+                    <!-- Dynamic Today Skill Cards (Watching, Listening, Speaking) -->
+                </div>
+
+                <div style="font-size:0.9rem; font-weight:700; margin-top:8px; display:flex; align-items:center; gap:8px;">
+                    <i class="fa-solid fa-film" style="color:var(--level-a1);"></i>
+                    <span>دروس الفيديو المستهدفة لهذا اليوم:</span>
+                </div>
+
+                <!-- Today Videos Grid -->
+                <div class="today-videos-grid" id="todayVideosContainer">
+                    <!-- Dynamic Today Videos rendered here -->
+                </div>
+            </section>
+
+            <!-- All Playlist Lessons Section -->
+            <section class="card">
+                <div class="all-lessons-header">
+                    <div class="card-title" style="margin-bottom: 0;">
+                        <span><i class="fa-solid fa-list-check"></i> جميع دروس المستوى (<span id="allLessonsCountLabel">0</span>)</span>
+                    </div>
+                    <div class="search-box-wrap">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="searchInput" placeholder="بحث باسم الدرس..." oninput="filterLessons()">
+                    </div>
+                </div>
+
+                <div class="lessons-grid" id="allLessonsContainer">
+                    <!-- Dynamic All Lessons rendered here -->
+                </div>
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- Video Player Modal -->
+    <div class="player-modal-backdrop" id="playerModal">
+        <div class="player-modal-content">
+            <div class="player-modal-header">
+                <h3 id="modalVideoTitle">عنوان الدرس</h3>
+                <div class="player-actions-row">
+                    <a id="modalDirectYoutubeBtn" href="#" target="_blank" class="btn-youtube-direct">
+                        <i class="fa-brands fa-youtube"></i> فتح في يوتيوب ↗
+                    </a>
+                    <button class="btn-close-modal" onclick="closePlayerModal()"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            </div>
+            <div class="video-iframe-wrapper">
+                <iframe id="youtubeIframe" src="" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Setup Wizard Modal -->
+    <div class="wizard-backdrop" id="wizardModal">
+        <div class="wizard-box">
+            <div class="wizard-title">
+                <h2>إعداد وتخصيص جدول المذاكرة</h2>
+                <p>حدد صاحب الحساب والوقت المخصص لكل يوم منفصل مع تقسيم المهارات الذكي</p>
+            </div>
+
+            <!-- Profile Choice -->
+            <div class="form-group">
+                <label>اختر الطالب صاحب الحساب:</label>
+                <div class="user-select-grid">
+                    <div class="user-option-card selected" id="opt-mohamed" onclick="selectUserInWizard('mohamed')">
+                        <div class="avatar-circle">م</div>
+                        <span style="font-size:0.85rem; font-weight:700;">محمد أحمد</span>
+                    </div>
+                    <div class="user-option-card" id="opt-assem" onclick="selectUserInWizard('assem')">
+                        <div class="avatar-circle" style="background: linear-gradient(135deg, #10b981, #3b82f6);">ع</div>
+                        <span style="font-size:0.85rem; font-weight:700;">عاصم أحمد</span>
+                    </div>
+                    <div class="user-option-card" id="opt-omar" onclick="selectUserInWizard('omar')">
+                        <div class="avatar-circle" style="background: linear-gradient(135deg, #f59e0b, #ec4899);">ع</div>
+                        <span style="font-size:0.85rem; font-weight:700;">عمر مهند</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Per-Day Time Control Grid -->
+            <div class="form-group">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                    <label><i class="fa-solid fa-clock-rotate-left"></i> تخصيص الوقت لكل يوم منفصل:</label>
+                    <span id="wizardWeeklyTotalLabel" style="font-size:0.82rem; font-weight:800; color:var(--accent-gold);">إجمالي 3.0 ساعات أسبوعياً</span>
+                </div>
+
+                <!-- Quick Presets -->
+                <div class="preset-btns-row">
+                    <span style="font-size:0.78rem; color:var(--text-secondary); align-self:center;">قوالب سريعة:</span>
+                    <button type="button" class="btn-preset" onclick="applyPresetHours(3)">3 ساعات (180د)</button>
+                    <button type="button" class="btn-preset" onclick="applyPresetHours(4)">4 ساعات (240د)</button>
+                    <button type="button" class="btn-preset" onclick="applyPresetHours(5)">5 ساعات (300د)</button>
+                </div>
+
+                <!-- Per-Day Inputs Grid -->
+                <div class="per-day-settings-grid" id="perDayGrid">
+                    <!-- Dynamic rendering of 7 days with checkbox and minute input -->
+                </div>
+            </div>
+
+            <!-- Skills Time Breakdown Preview & Ratio Customization -->
+            <div class="form-group">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                    <label><i class="fa-solid fa-pie-chart"></i> تقسيم نسب المهارات (مستر شحاتة • سماع • تحدث):</label>
+                </div>
+
+                <!-- Skill Ratios Presets -->
+                <div class="preset-btns-row">
+                    <span style="font-size:0.78rem; color:var(--text-secondary); align-self:center;">نسب المهارات:</span>
+                    <button type="button" class="btn-preset active" id="btnRatioPresetDefault" onclick="applyRatioPreset('default')">2:45س مستر شحاتة (المفضل)</button>
+                    <button type="button" class="btn-preset" id="btnRatioPresetLegacy" onclick="applyRatioPreset('legacy')">1:45س مستر شحاتة</button>
+                    <button type="button" class="btn-preset" id="btnRatioPresetCustom" onclick="applyRatioPreset('custom')">مخصص ⚙️</button>
+                </div>
+
+                <!-- Skill Ratio Percentage Inputs -->
+                <div class="ratio-inputs-row" id="ratioInputsRow">
+                    <div class="ratio-input-group">
+                        <span>مستر شحاتة يوتيوب (%)</span>
+                        <input type="number" id="ratioWatchInput" class="ratio-input-field" value="68.75" min="10" max="90" step="0.5" oninput="onWizardRatioChange()">
+                    </div>
+                    <div class="ratio-input-group">
+                        <span>السماع (%)</span>
+                        <input type="number" id="ratioListenInput" class="ratio-input-field" value="18.75" min="5" max="60" step="0.5" oninput="onWizardRatioChange()">
+                    </div>
+                    <div class="ratio-input-group">
+                        <span>التحدث (%)</span>
+                        <input type="number" id="ratioSpeakInput" class="ratio-input-field" value="12.50" min="5" max="60" step="0.5" oninput="onWizardRatioChange()">
+                    </div>
+                </div>
+
+                <div class="skill-summary-card">
+                    <div class="skill-row-item">
+                        <span class="skill-badge" style="color: #ec4899;"><i class="fa-solid fa-file-video"></i> 1. دروس مستر شحاتة (يوتيوب)</span>
+                        <span class="skill-time-val" id="wizardWatchSkillTime">2.45 ساعة (165 د)</span>
+                    </div>
+                    <div class="skill-row-item">
+                        <span class="skill-badge" style="color: #3b82f6;"><i class="fa-solid fa-headphones"></i> 2. وقت السماع (Listening)</span>
+                        <span class="skill-time-val" id="wizardListenSkillTime">45 دقيقة</span>
+                    </div>
+                    <div class="skill-row-item">
+                        <span class="skill-badge" style="color: #10b981;"><i class="fa-solid fa-comments"></i> 3. وقت التحدث (Speaking)</span>
+                        <span class="skill-time-val" id="wizardSpeakSkillTime">30 دقيقة</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily Notification Time -->
+            <div class="form-group">
+                <label><i class="fa-regular fa-bell"></i> وقت التنبيه اليومي:</label>
+                <input type="time" id="notifyTimeInput" class="form-input-time" value="21:00">
+            </div>
+
+            <button class="btn-wizard-save" onclick="saveWizardSettings()">
+                <i class="fa-solid fa-circle-check"></i>
+                حفظ وابدأ الخطة الذكية
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast-notify" id="toastNotify">
+        <i class="fa-solid fa-circle-info" style="color: var(--level-a1);"></i>
+        <span id="toastMessage">تم الحفظ بنجاح</span>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        /* Helper Functions */
+        function generateRange(start, end) {
+            const arr = [];
+            for (let i = start; i <= end; i++) arr.push(i);
+            return arr;
+        }
+
+        function generateRangeExcept(start, end, exceptions) {
+            const arr = [];
+            for (let i = start; i <= end; i++) {
+                if (!exceptions.includes(i)) arr.push(i);
+            }
+            return arr;
+        }
+
+        /* Playlist Configurations */
+        const PLAYLISTS = {
+            A1: { id: "PLOLEcgfCxrf-_aFPd2gnBsHfA066_Ka0M", firstVideoId: "U5XK_MG2XaA", totalVideos: 100 },
+            A2: { id: "PLOLEcgfCxrf8bFnxewy5RmOH0tMXV2HdG", firstVideoId: "SAzVf3NHGnA", totalVideos: 60 },
+            B1: { id: "PLOLEcgfCxrf85Hzb1RYMXuDKhBbpNxtqF", firstVideoId: "A_nzwTvVzLY", totalVideos: 50 }
+        };
+
+        const USER_A1_MISSING_VIDEOS = {
+            mohamed: [24, 40, 41, 46, 47, 55, ...generateRange(65, 100)],
+            assem: [24, 26, 28, 29, 30, 31, 40, 41, 47, 62, ...generateRangeExcept(65, 100, [76, 77, 85, 86, 91])],
+            omar: generateRange(1, 100)
+        };
+
+        const REAL_EXACT_DETAILS = {
+  "A1": [
+    {
+      "videoId": "U5XK_MG2XaA",
+      "durationSec": 186,
+      "durationText": "3:06",
+      "title": "دليلك الأول للنجاح في دراسة الألماني واكتساب اللغة من الصفر | شحاتة ألماني"
+    },
+    {
+      "videoId": "Mr97reuPZ34",
+      "durationSec": 1490,
+      "durationText": "24:50",
+      "title": "قواعد نطق الحروف الألمانية من الألف إلى الياء (تحديث شامل) | Das Alphabet - شحاتة ألماني"
+    },
+    {
+      "videoId": "KXpMQG8rDLc",
+      "durationSec": 549,
+      "durationText": "9:09",
+      "title": "تعلم الأبجدية الألمانية والنطق الصحيح للمبتدئين A1 | Das Alphabet - شحاتة ألماني"
+    },
+    {
+      "videoId": "LQ8mF19odeY",
+      "durationSec": 504,
+      "durationText": "8:24",
+      "title": "أســـرار نطق الألمانية للمبتدئين وقواعد الحروف والمركبات A1 | شحاتة ألماني"
+    },
+    {
+      "videoId": "vwRzKasowzM",
+      "durationSec": 488,
+      "durationText": "8:08",
+      "title": "03 - A1 Deutsch lernen - (3) الأبجدية الألمانية للمبتدئين خطوة بخطوة"
+    },
+    {
+      "videoId": "PdcTJh0FpYA",
+      "durationSec": 369,
+      "durationText": "6:09",
+      "title": "تعلم كيف تقدم نفسك بالألمانية بسهولة وشكل رسمي وغير رسمي A1 | Sich vorstellen - شحاتة ألماني"
+    },
+    {
+      "videoId": "PCOqyv2UaMg",
+      "durationSec": 471,
+      "durationText": "7:51",
+      "title": "سر الضمائر الشخصية وفعل الكينونة (sein) للمبتدئين A1 | Personalpronomen - شحاتة ألماني"
+    },
+    {
+      "videoId": "jy0DJMBfAp8",
+      "durationSec": 379,
+      "durationText": "6:19",
+      "title": "شرح مفصل لفعل الملكية في اللغة الألمانية (Verb haben) للمبتدئين A1 | شحاتة ألماني"
+    },
+    {
+      "videoId": "y_1QmPiz43c",
+      "durationSec": 996,
+      "durationText": "16:36",
+      "title": "مراجعة شاملة للمبتدئين A1: الضمائر الشخصية وأفعال sein و haben | شحاتة ألماني"
+    },
+    {
+      "videoId": "CxPWSjxfpBE",
+      "durationSec": 379,
+      "durationText": "6:19",
+      "title": "تعلم تصريف الأفعال الألمانية المنتظمة بسهولة للمبتدئين A1 | Konjugation - شحاتة ألماني"
+    },
+    {
+      "videoId": "ARQgMktT6rU",
+      "durationSec": 453,
+      "durationText": "7:33",
+      "title": "تصريف الأفعال في اللغة الألمانية: الاستثناءات والحرف الحارس (e) - الجزء الثاني A1 | شحاتة ألماني"
+    },
+    {
+      "videoId": "6SJVPQ-gaSc",
+      "durationSec": 466,
+      "durationText": "7:46",
+      "title": "تصريف الأفعال الألمانية: الاستثناء الثاني للضمير du والتمارين التطبيقية - الجزء الثالث A1"
+    },
+    {
+      "videoId": "OpKWYGflOOM",
+      "durationSec": 630,
+      "durationText": "10:30",
+      "title": "أسرار تصريف الأفعال الألمانية مع الاستثناءات والتدريبات | مراجعة شاملة - شحاتة ألماني"
+    },
+    {
+      "videoId": "_bLDjA5gPdk",
+      "durationSec": 399,
+      "durationText": "6:39",
+      "title": "10 - Die Zahlen تعلم الأرقام والأعداد باللغة الالمانية"
+    },
+    {
+      "videoId": "dF05wevF-vs",
+      "durationSec": 494,
+      "durationText": "8:14",
+      "title": "11 - Wer sind Sie? البيانات الشخصية باللغة الالمانية"
+    },
+    {
+      "videoId": "T2tie68KqH8",
+      "durationSec": 451,
+      "durationText": "7:31",
+      "title": "12 - تعلم كيف تقول من أين أنت بالألمانية بسرعة"
+    },
+    {
+      "videoId": "tfX4-kOsIPU",
+      "durationSec": 491,
+      "durationText": "8:11",
+      "title": "13 - Der Beruf  السؤال عن المهنة  أو الوظيفة بـ الالمانية"
+    },
+    {
+      "videoId": "_AlyfPK64pg",
+      "durationSec": 391,
+      "durationText": "6:31",
+      "title": "14 - Wo wohnen Sie? السؤال عن العنوان باللغة الالمانية"
+    },
+    {
+      "videoId": "2qZqoCs6bmc",
+      "durationSec": 437,
+      "durationText": "7:17",
+      "title": "15 - Fragewörter ادوات الاستفهام في اللغة الالمانية"
+    },
+    {
+      "videoId": "OsA6gA7Fkps",
+      "durationSec": 400,
+      "durationText": "6:40",
+      "title": "16 - Telefongespräch محادثة تليفونية باللغة الالمانية"
+    },
+    {
+      "videoId": "CIZ8a0sdijY",
+      "durationSec": 428,
+      "durationText": "7:08",
+      "title": "17-  حوار حول البيانات الشخصية باللغة الألمانية"
+    },
+    {
+      "videoId": "OlcuTTxv_1w",
+      "durationSec": 448,
+      "durationText": "7:28",
+      "title": "18 - كيف تعرف بنفسك بـ اللغة الالمانية  في الحوارات"
+    },
+    {
+      "videoId": "48JyPZHs2fs",
+      "durationSec": 406,
+      "durationText": "6:46",
+      "title": "19 - تعلم كيف تقوم بحوار باللغة الالمانية"
+    },
+    {
+      "videoId": "-ILOIoyrnPc",
+      "durationSec": 454,
+      "durationText": "7:34",
+      "title": "20 - Der Satzbau (1) تعلم بناء وتركيب جملة باللغة الالمانية"
+    },
+    {
+      "videoId": "5954hlBSh90",
+      "durationSec": 515,
+      "durationText": "8:35",
+      "title": "21 - Der Satzbau in der deutschen Grammatik تعلم بناء وتركيب جملة باللغة الالمانية - الجزء 2"
+    },
+    {
+      "videoId": "nVEo8fBUWqI",
+      "durationSec": 1135,
+      "durationText": "18:55",
+      "title": "22 - Der Artikel  (1) الأداة في اللغة الالمانية"
+    },
+    {
+      "videoId": "5onJrdKsHJw",
+      "durationSec": 1174,
+      "durationText": "19:34",
+      "title": "23 - Der Artikel  (2) الارتكل في اللغة الالمانية"
+    },
+    {
+      "videoId": "G8q_8LqbIU8",
+      "durationSec": 1453,
+      "durationText": "24:13",
+      "title": "24 - der, die oder das?  الطريقة المبسطة لاختيار الأرتكل"
+    },
+    {
+      "videoId": "rPZgJ2E0QaE",
+      "durationSec": 1613,
+      "durationText": "26:53",
+      "title": "25 - Possessivpronomen ضمائر الملكية في اللغة الألمانية"
+    },
+    {
+      "videoId": "WpXLvCbkzqg",
+      "durationSec": 485,
+      "durationText": "8:05",
+      "title": "26 - sie, sie oder Sie استخدام هي وهم وحضرتك في الالمانية"
+    },
+    {
+      "videoId": "oX0h0seJb4o",
+      "durationSec": 233,
+      "durationText": "3:53",
+      "title": "27 - Learn German A1 -  Negation mit kein oder nicht"
+    },
+    {
+      "videoId": "VGu5DZdD1oI",
+      "durationSec": 1010,
+      "durationText": "16:50",
+      "title": "28 -  Negation in German 1 النفي في اللغة الالمانية"
+    },
+    {
+      "videoId": "AwubYxk7oBE",
+      "durationSec": 884,
+      "durationText": "14:44",
+      "title": "29 - Negation | 2  النفي في اللغة الالمانية"
+    },
+    {
+      "videoId": "iSiHUiwIkR4",
+      "durationSec": 1026,
+      "durationText": "17:06",
+      "title": "30 - Negation |  3  النفي في اللغة الالمانية"
+    },
+    {
+      "videoId": "GU7xXQ6BTME",
+      "durationSec": 571,
+      "durationText": "9:31",
+      "title": "31 - Negation (4) النفي في اللغة الالمانية"
+    },
+    {
+      "videoId": "_4DMNurhNSk",
+      "durationSec": 803,
+      "durationText": "13:23",
+      "title": "32 - Dialoge Lektion 2 حوارات باللغة الالمانية"
+    },
+    {
+      "videoId": "w1uSf4GQmhE",
+      "durationSec": 592,
+      "durationText": "9:52",
+      "title": "33 - Die Zahlen bis 1000 الارقام حتى الالف باللغة الالمانية"
+    },
+    {
+      "videoId": "JdViuk6RDCI",
+      "durationSec": 866,
+      "durationText": "14:26",
+      "title": "34 - Obst und Gemüse (1) الفاكهة والخضروات في الالمانية"
+    },
+    {
+      "videoId": "_o-ZjkMU9Io",
+      "durationSec": 569,
+      "durationText": "9:29",
+      "title": "35 - Gemüse und Gewürze (2) الخضروات والتوابل في الالمانية"
+    },
+    {
+      "videoId": "eLHulzQDQ1c",
+      "durationSec": 531,
+      "durationText": "8:51",
+      "title": "36 - Die Lebensmittel  |  المواد الغذائية بـــ اللغة الالمانية"
+    },
+    {
+      "videoId": "qBPy1wjcvJI",
+      "durationSec": 1259,
+      "durationText": "20:59",
+      "title": "37 - Was ist Nominativ ? |  النوميناتيف - الفاعل في اللغة الالمانية"
+    },
+    {
+      "videoId": "RFUTJ-KEkts",
+      "durationSec": 993,
+      "durationText": "16:33",
+      "title": "38 -  Der Akkusativ (1) الأكوزاتيف - المفعول به في الالمانية"
+    },
+    {
+      "videoId": "wJJJ06SjU_I",
+      "durationSec": 1258,
+      "durationText": "20:58",
+      "title": "39 -  Der Akkusativ (2) الأكوزاتيف - المفعول به في الالمانية"
+    },
+    {
+      "videoId": "KqjaXwROU38",
+      "durationSec": 1231,
+      "durationText": "20:31",
+      "title": "40 - Personalpronomen im Akkusativ الضمائر الشخصية في حالة المفعول به"
+    },
+    {
+      "videoId": "_7mfPOf6V1k",
+      "durationSec": 1144,
+      "durationText": "19:04",
+      "title": "41 - Possessivpronomen im Akkusativ | ضمائر الملكية في حالة المفعول به"
+    },
+    {
+      "videoId": "jPy8_W8QAcU",
+      "durationSec": 583,
+      "durationText": "9:43",
+      "title": "42 - Verben mit Akkusativ الأفعال التي تأخد أكوزاتيف"
+    },
+    {
+      "videoId": "I5tXR9KRgRc",
+      "durationSec": 1568,
+      "durationText": "26:08",
+      "title": "43 - Präpositionen mit Akkusativ / حروف الجر مع الاكوزاتيف"
+    },
+    {
+      "videoId": "WLTuB7vC_Y0",
+      "durationSec": 1232,
+      "durationText": "20:32",
+      "title": "44 - Essen, mögen, gerne, lieber"
+    },
+    {
+      "videoId": "5lykk9bxRDQ",
+      "durationSec": 988,
+      "durationText": "16:28",
+      "title": "45 - Die starken Verben الافعال الشاذة في اللغة الالمانية"
+    },
+    {
+      "videoId": "43qtdvbyEo0",
+      "durationSec": 786,
+      "durationText": "13:06",
+      "title": "46 - Das Menü + Bestellen قائمة الطعام وطلب الأكل في المطعم"
+    },
+    {
+      "videoId": "RJuPa2a-TxI",
+      "durationSec": 1521,
+      "durationText": "25:21",
+      "title": "صيغة الأمر في اللغة الألمانية (Der Imperativ) بالتفصيل والتمارين A1-A2 | شحاتة ألماني"
+    },
+    {
+      "videoId": "ikjq9jQqBMM",
+      "durationSec": 993,
+      "durationText": "16:33",
+      "title": "48 - Die trennbaren Verben (1) الافعال المنفصلة في اللغة الالمانية"
+    },
+    {
+      "videoId": "sLiDDoNPEX8",
+      "durationSec": 1108,
+      "durationText": "18:28",
+      "title": "49 - Die trennbaren Verben (2)  الافعال المنفصلة في اللغة الالمانية"
+    },
+    {
+      "videoId": "xjaMRxq9pyo",
+      "durationSec": 1076,
+      "durationText": "17:56",
+      "title": "50 - Die un-trennbaren Verben الافعال الغير منفصلة في اللغة الألمانية"
+    },
+    {
+      "videoId": "O5-AwWYBiRQ",
+      "durationSec": 820,
+      "durationText": "13:40",
+      "title": "51 - Bezahlen im Restaurant الحساب على الأكل في المطعم بالألمانية"
+    },
+    {
+      "videoId": "H_jAPCKbZ_4",
+      "durationSec": 1236,
+      "durationText": "20:36",
+      "title": "52 -  Können فعل يستطيع في اللغة الالمانية"
+    },
+    {
+      "videoId": "EAfoyO56jW4",
+      "durationSec": 381,
+      "durationText": "6:21",
+      "title": "53 - dürfen يسمح بــ في الالمانية"
+    },
+    {
+      "videoId": "YsfsG-Zee6s",
+      "durationSec": 417,
+      "durationText": "6:57",
+      "title": "54 - müssen فعل يجب في اللغة الالمانية"
+    },
+    {
+      "videoId": "oSsT6kgBtgw",
+      "durationSec": 522,
+      "durationText": "8:42",
+      "title": "55 - Sollen فعل ينبغي في اللغة الالمانية"
+    },
+    {
+      "videoId": "FNA-TfeEcrk",
+      "durationSec": 485,
+      "durationText": "8:05",
+      "title": "56 - Die Uhrzeit كيف تقرأ الساعة باللغة الالمانية"
+    },
+    {
+      "videoId": "0-ato2T61ms",
+      "durationSec": 412,
+      "durationText": "6:52",
+      "title": "57 - Freizeit in Dutschland  كلمات عن وقت الفراغ بالألمانية"
+    },
+    {
+      "videoId": "NnANE9N7xVk",
+      "durationSec": 385,
+      "durationText": "6:25",
+      "title": "58 - Zeit-Fragewörter  السؤال عن الوقت والمدة بالألمانية"
+    },
+    {
+      "videoId": "J0S37KBxqow",
+      "durationSec": 711,
+      "durationText": "11:51",
+      "title": "59 -  Zeitbegriffe جمل وتعبيرات عن الوقت باللغة الالمانية"
+    },
+    {
+      "videoId": "NTt8AJYIxGk",
+      "durationSec": 429,
+      "durationText": "7:09",
+      "title": "60 - Dialog: Wann haben Sie Zeit?"
+    },
+    {
+      "videoId": "lMkGp1kAUPU",
+      "durationSec": 567,
+      "durationText": "9:27",
+      "title": "61 - Dialog: Manfred hat nie Zeit!"
+    },
+    {
+      "videoId": "1EsD84jZbHo",
+      "durationSec": 280,
+      "durationText": "4:40",
+      "title": "62 -  gern يحب / nicht so gern  لا يحب / nie أبدا"
+    },
+    {
+      "videoId": "QlPAPA6WVC0",
+      "durationSec": 442,
+      "durationText": "7:22",
+      "title": "63 - Brief Schreiben تعلم كتابة الرسالة  أو��لخطاب بأسهل طريقة لكل المستويات"
+    },
+    {
+      "videoId": "VRNAqLupf08",
+      "durationSec": 427,
+      "durationText": "7:07",
+      "title": "64 - Modalverb mögen معاني فعل"
+    },
+    {
+      "videoId": "6CiH-RP_MtQ",
+      "durationSec": 548,
+      "durationText": "9:08",
+      "title": "65 - Modalverben  möchten - wollen"
+    },
+    {
+      "videoId": "53xZZnNWQVM",
+      "durationSec": 370,
+      "durationText": "6:10",
+      "title": "66 - es gibt  فعل يوجد واستخداماته في الالمانية"
+    },
+    {
+      "videoId": "l9U5OuKXATw",
+      "durationSec": 1121,
+      "durationText": "18:41",
+      "title": "67 - Wohnen  كلمات مهمة جدا حول موضوع السكن"
+    },
+    {
+      "videoId": "vR_3LtF0-BY",
+      "durationSec": 1094,
+      "durationText": "18:14",
+      "title": "68 - Definit und indefinitpronomen |الضمائر الغير المعرفة والضمائر المعرفة"
+    },
+    {
+      "videoId": "e1O9HdP2CSU",
+      "durationSec": 1178,
+      "durationText": "19:38",
+      "title": "69 - Das Perfekt ( Hilfsverb + Partizip II ) - درس البيرفكت"
+    },
+    {
+      "videoId": "ozYwQdP6BiY",
+      "durationSec": 745,
+      "durationText": "12:25",
+      "title": "70 - Das perfekt mit starken Verben  |  البيرفيكت مع الأفعال الشادة"
+    },
+    {
+      "videoId": "Ou5V8H_Yy14",
+      "durationSec": 928,
+      "durationText": "15:28",
+      "title": "71 - Perfekt mit sein البيرفيكت  مع الفعل المساعد"
+    },
+    {
+      "videoId": "T75R4aB4DTg",
+      "durationSec": 915,
+      "durationText": "15:15",
+      "title": "72 - Das Perfekt mit haben البيرفيكت مع الفعل"
+    },
+    {
+      "videoId": "XWpCWNqUEDI",
+      "durationSec": 537,
+      "durationText": "8:57",
+      "title": "73 - Verben bilden Perfekt mit &#39;&#39; haben &#39;&#39;الافعال التي تأخد بيرفكت مع الفعل"
+    },
+    {
+      "videoId": "GK8ILnZ8wyw",
+      "durationSec": 801,
+      "durationText": "13:21",
+      "title": "74 - Das Präteritum (Haben und Sein) تصريف الماضي والمضارع"
+    },
+    {
+      "videoId": "Rd-Uxi11X4M",
+      "durationSec": 686,
+      "durationText": "11:26",
+      "title": "75 - Der Alltag Vokabular جمل و كلمات حول الحياة اليومية"
+    },
+    {
+      "videoId": "vDbX080XF3w",
+      "durationSec": 1328,
+      "durationText": "22:08",
+      "title": "شرح حالة الداتيف (Der Dativ) والأفعال التي تأخذ المجرور - الجزء الأول A1-A2 | شحاتة ألماني"
+    },
+    {
+      "videoId": "yMu3Qy90Qmg",
+      "durationSec": 859,
+      "durationText": "14:19",
+      "title": "77 - Der Dativ  |  الداتيف في اللغة الألمانية  (الجزء الثاني)"
+    },
+    {
+      "videoId": "QsQrmw1p_1g",
+      "durationSec": 908,
+      "durationText": "15:08",
+      "title": "78 -Verben mit Akkusativ und Dativ الأفعال مع الداتيف و الأكوزاتيف"
+    },
+    {
+      "videoId": "eVnUNQpd008",
+      "durationSec": 635,
+      "durationText": "10:35",
+      "title": "79 - Personalpronomen im Dativ  الضمائر الشخصية مع الداتيف"
+    },
+    {
+      "videoId": "uJAGIQs-Hy4",
+      "durationSec": 697,
+      "durationText": "11:37",
+      "title": "80 -  Possessivpronomen im Dativ ضمائر الملكية مع الداتيف"
+    },
+    {
+      "videoId": "5mr-oFRZOhI",
+      "durationSec": 939,
+      "durationText": "15:39",
+      "title": "81 -  Präpositionen mit Dativ | الحروف مع الداتيف في اللغة الألمانية - الجزء الاول"
+    },
+    {
+      "videoId": "jJ2c67HPXlA",
+      "durationSec": 1028,
+      "durationText": "17:08",
+      "title": "82 - Präpositionen mit Dativ | الحروف مع الداتيف في اللغة الألمانية - الجزء الثاني"
+    },
+    {
+      "videoId": "wQwpOJQlpb0",
+      "durationSec": 1014,
+      "durationText": "16:54",
+      "title": "حروف الجر مع حالة المجرور (Präpositionen mit Dativ) - الجزء الثالث والأخير A1-A2 | شحاتة ألماني"
+    },
+    {
+      "videoId": "R-45YX71B0E",
+      "durationSec": 1438,
+      "durationText": "23:58",
+      "title": "84 - Körper, Gesundheit und Krankheit | الجسم والامراض باللغة الالمانية"
+    },
+    {
+      "videoId": "YjjV6_deZyQ",
+      "durationSec": 1155,
+      "durationText": "19:15",
+      "title": "85 - Beim Arzt تعلم الالمانية - الحوارات عند الطبيب الجزء الأول"
+    },
+    {
+      "videoId": "IEWgPH8xZ9A",
+      "durationSec": 1023,
+      "durationText": "17:03",
+      "title": "86 - Beim Arzt تعلم الالمانية  - الحوارات عند الطبيب الجزء الثاني"
+    },
+    {
+      "videoId": "8wUgjepvOlc",
+      "durationSec": 1467,
+      "durationText": "24:27",
+      "title": "87 - Kleider Und Farben الملابس والالوان باللغة الالمانية"
+    },
+    {
+      "videoId": "AwTjpS80NJg",
+      "durationSec": 905,
+      "durationText": "15:05",
+      "title": "88 - Sie fragen,Shehata antwortet تعليم اللغة الالمانية - انت تسأل وشحاته يجيب"
+    },
+    {
+      "videoId": "5JTQUevZiDs",
+      "durationSec": 1237,
+      "durationText": "20:37",
+      "title": "89 - Verkehrsmittel تعلم  اللغة الالمانية -كلمات ومحادثات حول وسائل النقل و المواصلات"
+    },
+    {
+      "videoId": "gZq_sC1LVxA",
+      "durationSec": 1138,
+      "durationText": "18:58",
+      "title": "90 - Was machen Sie Zu Hause تعلم اللغة الألمانية - ماذا تفعل في المنزل"
+    },
+    {
+      "videoId": "hCHmOCImgHM",
+      "durationSec": 849,
+      "durationText": "14:09",
+      "title": "91 - Das Wetter تعلم الالمانية للمبتدئين _محادثات حول الطقس و الاحوال الجوية"
+    },
+    {
+      "videoId": "tDqM3mTmUuQ",
+      "durationSec": 2102,
+      "durationText": "35:02",
+      "title": "محادثات ومصطلحات البحث عن شقة والسكن باللغة الألمانية | Wohnen &amp; Wohnungssuche - شحاتة ألماني"
+    },
+    {
+      "videoId": "-0ycHgZRTtE",
+      "durationSec": 525,
+      "durationText": "8:45",
+      "title": "93 - Das Datum كيف تتكلم عن التاريخ والاعداد الترتيبية"
+    },
+    {
+      "videoId": "WGYZtuE3uu4",
+      "durationSec": 935,
+      "durationText": "15:35",
+      "title": "94 - Wegbeschreibung  وصف الطريق باللغة الالمانية"
+    },
+    {
+      "videoId": "LTteQKxnHtQ",
+      "durationSec": 785,
+      "durationText": "13:05",
+      "title": "95 - Glückwünsche - تعلم عبارات التهنئة والمعايدة باللغة الالمانية"
+    },
+    {
+      "videoId": "z381pXVXR1g",
+      "durationSec": 1151,
+      "durationText": "19:11",
+      "title": "96 - Urlaub und Reisen تكلم عن السفر والرحلات"
+    }
+  ],
+  "A2": [
+    {
+      "videoId": "SAzVf3NHGnA",
+      "durationSec": 1507,
+      "durationText": "25:07",
+      "title": "أسهل شرح لحروف الجر الألمانية المشتركة (Wechselpräpositionen) - الجزء الأول A2 | شحاتة ألماني"
+    },
+    {
+      "videoId": "e2rhdaQ2jM8",
+      "durationSec": 1676,
+      "durationText": "27:56",
+      "title": "002 - A2 - Wechselpräpositionen تعلم حروف جر اللغة الألمانية بسهولة -  الجزء 2"
+    },
+    {
+      "videoId": "1gwm0ZU2Fx0",
+      "durationSec": 1959,
+      "durationText": "32:39",
+      "title": "03 - A2 - Der Genitiv أسهل شرح للمضاف اليه في اللغة الألمانية"
+    },
+    {
+      "videoId": "Casu9KgLY4w",
+      "durationSec": 1514,
+      "durationText": "25:14",
+      "title": "004 - A2 - Nominativ, Akkusativ, Dativ, Genitiv الحالات الاعرابية الاربع في الالمانية"
+    },
+    {
+      "videoId": "z32_w6lGQgQ",
+      "durationSec": 1357,
+      "durationText": "22:37",
+      "title": "تصريف الصفات الألمانية للمحايد (das) في كافة الحالات - الجزء الأول A2 | Adjektivdeklination"
+    },
+    {
+      "videoId": "yLr0ZHnt_nM",
+      "durationSec": 1990,
+      "durationText": "33:10",
+      "title": "تصريف الصفات الألمانية في حالتي الفاعل والمفعول (Nominativ &amp; Akkusativ) - الجزء الثاني A2"
+    },
+    {
+      "videoId": "4aPVid4j_l4",
+      "durationSec": 1178,
+      "durationText": "19:38",
+      "title": "007 - A2 - Komparation der Adjektive مقارنة الصفات في اللغة الألمانية"
+    },
+    {
+      "videoId": "YNPIll5O848",
+      "durationSec": 681,
+      "durationText": "11:21",
+      "title": "008 - A2 - Charakter-Eigenschaften كيف تتحدث عن الصفات الشخصية للبشر"
+    },
+    {
+      "videoId": "hy3Rzl3LXxA",
+      "durationSec": 485,
+      "durationText": "8:05",
+      "title": "009 - A2 - Charakter-Eigenschaften كيف تصف اصدقائك او زملاؤك في العمل"
+    },
+    {
+      "videoId": "jrzTIId6_zs",
+      "durationSec": 519,
+      "durationText": "8:39",
+      "title": "010 - A2 - Aussehen – كيف تصف الوجه والعينين والأنف والفم"
+    },
+    {
+      "videoId": "-Io4MQ0tIcM",
+      "durationSec": 359,
+      "durationText": "5:59",
+      "title": "011 - A2 – Aussehen - Lesetext كيف تصف شكلك الخارجي"
+    },
+    {
+      "videoId": "NUjsYYcoM4s",
+      "durationSec": 658,
+      "durationText": "10:58",
+      "title": "012 - A2 - Fotobeschreibung طريقة وصف الأشخاص في الصورة"
+    },
+    {
+      "videoId": "7bHp4WALBwY",
+      "durationSec": 484,
+      "durationText": "8:04",
+      "title": "013 - A2 - Stadt vs. Land تكلم عن الفوارق بين المدينة والريف"
+    },
+    {
+      "videoId": "aYIefhaI-EE",
+      "durationSec": 750,
+      "durationText": "12:30",
+      "title": "014 - A2 - Die Schule كلمات مهمة عن المدرسة والمواد الدراسية"
+    },
+    {
+      "videoId": "laj4LvXtuYM",
+      "durationSec": 685,
+      "durationText": "11:25",
+      "title": "015 - A2 - Das Schulsystem معلومات مهمة جدا عن نظام التعليم في ألمانيا"
+    },
+    {
+      "videoId": "TQl4BmglJBE",
+      "durationSec": 1251,
+      "durationText": "20:51",
+      "title": "016 - A2 - Die Berufe الوظائف والمهن باللغة الألمانية"
+    },
+    {
+      "videoId": "QbaryoTIZxE",
+      "durationSec": 1309,
+      "durationText": "21:49",
+      "title": "017 - A2 - Arbeit und Studium كيف تعبر عن رأيك في الدراسة والعمل"
+    },
+    {
+      "videoId": "AXlwsTE_7kc",
+      "durationSec": 1031,
+      "durationText": "17:11",
+      "title": "018 - A2 - Stellenangebote تعلم كيف تقرأ إعلانات الوظائف وتتقدم لها"
+    },
+    {
+      "videoId": "4ohw_JaDlJA",
+      "durationSec": 1377,
+      "durationText": "22:57",
+      "title": "019 - A2 - Wie spreche ich über meinen Beruf  كيف اتحدث عن مهنتي باللغة الالمانية"
+    },
+    {
+      "videoId": "ec49I68x-PI",
+      "durationSec": 1804,
+      "durationText": "30:04",
+      "title": "020 - A2 - Das Präteritum ( Imperfekt ) الماضي البرتيريتوم في اللغة الالمانية"
+    },
+    {
+      "videoId": "_ZBAnxlbkbM",
+      "durationSec": 903,
+      "durationText": "15:03",
+      "title": "021 - A2 - Das Präteritum (Mein Lieblingslehrer) اتكلم عن ذكريات المدرسة"
+    },
+    {
+      "videoId": "RMajceyqOGY",
+      "durationSec": 1583,
+      "durationText": "26:23",
+      "title": "022 - A2 - Nebensätze mit (dass und ob) درس الجمل الجانبية في اللغة الألمانية"
+    },
+    {
+      "videoId": "bKf3llIO1rQ",
+      "durationSec": 900,
+      "durationText": "15:00",
+      "title": "023 - A2 - Modalverben im Präteritum درس الافعال الناقصة في الماضي البراتيرتوم"
+    },
+    {
+      "videoId": "Yrjgjh26FoE",
+      "durationSec": 1418,
+      "durationText": "23:38",
+      "title": "024 - A2 - Der Konjunktiv 2  - درس الكونيكتيف2 - الجزء الأول"
+    },
+    {
+      "videoId": "hbBJyXl-_7w",
+      "durationSec": 1564,
+      "durationText": "26:04",
+      "title": "025 - A2 - Der Konjunktiv 2 - درس الكونيكتيف - الجزء الثاني"
+    },
+    {
+      "videoId": "bUeBeVPNxyk",
+      "durationSec": 1305,
+      "durationText": "21:45",
+      "title": "026 - A2 - Die Reflexiven Verben   الافعال المنعكسة في اللغة الالمانية"
+    },
+    {
+      "videoId": "Yint7O0rG7k",
+      "durationSec": 554,
+      "durationText": "9:14",
+      "title": "027- A2 - Infinitiv mit zu  الصيغة المصدرية  في اللغة الالمانية  جزء 1"
+    },
+    {
+      "videoId": "Pyz6glRQIII",
+      "durationSec": 897,
+      "durationText": "14:57",
+      "title": "028 - A2 - Infinitiv mit zu  الصيغة المصدرية  في اللغة الالمانية  جزء 2"
+    },
+    {
+      "videoId": "F8VRv9iQ5a8",
+      "durationSec": 849,
+      "durationText": "14:09",
+      "title": "029 - A2 - Nebensätze (wenn als) الروابط في اللغة الألمانية"
+    },
+    {
+      "videoId": "60KS7j6fGl0",
+      "durationSec": 289,
+      "durationText": "4:49",
+      "title": "030 - A2 - Ich bin glücklich, wenn  كيف تتكلم عما يسعدك باللغة الألمانية"
+    },
+    {
+      "videoId": "WBjnNk_d40k",
+      "durationSec": 621,
+      "durationText": "10:21",
+      "title": "031 - A2 -  Verb werden als Vollverb | فعل أصبح  في اللغة الالمانية"
+    },
+    {
+      "videoId": "IMQV1SYmSh4",
+      "durationSec": 1093,
+      "durationText": "18:13",
+      "title": "032 - A2 - Das Passiv -درس المبني للمجهول في اللغة الالمانية - جزء 1"
+    },
+    {
+      "videoId": "y6LcGF-ykjI",
+      "durationSec": 628,
+      "durationText": "10:28",
+      "title": "033 - A2 - Der Anfang ist schwer weil درس مهم جدا حول الحياة اليومية  ـ"
+    },
+    {
+      "videoId": "SWfmyk3pBbo",
+      "durationSec": 430,
+      "durationText": "7:10",
+      "title": "034 - A2 - Pannen im Alltag | مواقف سخيفة في الحياة اليومية"
+    },
+    {
+      "videoId": "B9-F2nL20BY",
+      "durationSec": 742,
+      "durationText": "12:22",
+      "title": "035 - A2   Lesen Umzug+Perfekt | مراجعة على الماضي"
+    },
+    {
+      "videoId": "cgxhuqP--xM",
+      "durationSec": 694,
+      "durationText": "11:34",
+      "title": "036 - A2 - Relativsätze im Nominativ -   الجمل الموصولة في حالة المرفوع في اللغة الالمانية"
+    },
+    {
+      "videoId": "sRTPVZovYNY",
+      "durationSec": 360,
+      "durationText": "6:00",
+      "title": "037- A2- Relativsätze im Nominativ und Akkusativ 1 الجمل الموصولة مع الفاعل والمفعول به"
+    },
+    {
+      "videoId": "7yId543Bq-c",
+      "durationSec": 392,
+      "durationText": "6:32",
+      "title": "038 - A2 - Verben mit Akk - Verben mit Dativ Teil (1)  الأفعال مع الاكوزاتبف والداتيف"
+    },
+    {
+      "videoId": "HxR7WK7F6jg",
+      "durationSec": 459,
+      "durationText": "7:39",
+      "title": "039 - A2 - Glück und Zufriedenheit - تكلم عن السعادة والرضا باللغة الالمانية"
+    },
+    {
+      "videoId": "3fD5KVsG2Bg",
+      "durationSec": 672,
+      "durationText": "11:12",
+      "title": "040 - A2 - Hochzeit in Deutschland عادات الزفاف في المانيا"
+    },
+    {
+      "videoId": "EjDXbLdcq88",
+      "durationSec": 296,
+      "durationText": "4:56",
+      "title": "041 - A2 - Die Familie تعرف على افراد العائلة"
+    },
+    {
+      "videoId": "n5y6a-Puk8w",
+      "durationSec": 1055,
+      "durationText": "17:35",
+      "title": "042 - A2 - Hobbys التحدث عن وقت الفراغ والهوايات والتلفزيون"
+    },
+    {
+      "videoId": "cwy1aPeUnBQ",
+      "durationSec": 850,
+      "durationText": "14:10",
+      "title": "043 - A2 - Kausalsätze mit weil, denn, deshalb  الجمل السببية في اللغة الالمانية"
+    },
+    {
+      "videoId": "prwCE9lgbyw",
+      "durationSec": 264,
+      "durationText": "4:24",
+      "title": "044- A2 - auf eine Einladung antworten كيف تكتب دعوة"
+    },
+    {
+      "videoId": "TPl54s_QPgI",
+      "durationSec": 384,
+      "durationText": "6:24",
+      "title": "045 - A2 - Kaufhaus Informationstafel تعرف على اقسام محلات الشراء"
+    },
+    {
+      "videoId": "XrDUvh6tEpM",
+      "durationSec": 566,
+      "durationText": "9:26",
+      "title": "046 - A2 - Das ist mir wichtig im Beruf تكلم عن المهم لك في الوظيفة"
+    },
+    {
+      "videoId": "G9hhi70gkDQ",
+      "durationSec": 235,
+      "durationText": "3:55",
+      "title": "047 - A2 - Computer und Internet تعلم تتكلم عن الكمبيوتر والانترنت"
+    },
+    {
+      "videoId": "_iO7ZGtKHhw",
+      "durationSec": 669,
+      "durationText": "11:09",
+      "title": "048 - A2 - Geschäftsbriefe - تعلم كتابة الخطابات الرسمية"
+    },
+    {
+      "videoId": "i2gXlxbRHtc",
+      "durationSec": 331,
+      "durationText": "5:31",
+      "title": "049 - A2 - Tätigkeiten im Büro  تعلم تتكلم حول المكتب"
+    },
+    {
+      "videoId": "ow3isIhce4E",
+      "durationSec": 1524,
+      "durationText": "25:24",
+      "title": "050 - A2 - Wie spreche ich über Interessen und Sport  كيف اتحدث عن اهتماماتي والرياضة"
+    },
+    {
+      "videoId": "QpXy3qJnDNc",
+      "durationSec": 476,
+      "durationText": "7:56",
+      "title": "051 - A2 -  Temporale Präpositionen  حروف الجر الخاصة بالزمن أو الوقت"
+    },
+    {
+      "videoId": "uP_dLCH1vLQ",
+      "durationSec": 465,
+      "durationText": "7:45",
+      "title": "052- A2 - um... zu = damit - Teil 1 - الروابط لكي أو من أجل في اللغة الالمانية"
+    },
+    {
+      "videoId": "0AhOXXKlV8s",
+      "durationSec": 402,
+      "durationText": "6:42",
+      "title": "053 - A2 - um... zu = damit / Teil 2 الروابط في اللغة الالمانية"
+    },
+    {
+      "videoId": "jSdyJx3pu0s",
+      "durationSec": 1509,
+      "durationText": "25:09",
+      "title": "054 - A2 - Geld und Banken   حوارات مهمة حول التسوق ,المال والبنك"
+    },
+    {
+      "videoId": "SvdsqRP20lI",
+      "durationSec": 655,
+      "durationText": "10:55",
+      "title": "055 - A2 - ein Bank Konto eröffnen | حوار حول فتح حساب بنكي"
+    },
+    {
+      "videoId": "yYWH_gzXSoc",
+      "durationSec": 521,
+      "durationText": "8:41",
+      "title": "056- A2- Kontaktanzeigen كيف تقرا اعلانات التعارف والزواج"
+    },
+    {
+      "videoId": "KZ6O6-H_Ab4",
+      "durationSec": 465,
+      "durationText": "7:45",
+      "title": "057 - A2 - الفرق بين was für - welch"
+    },
+    {
+      "videoId": "37h4HTJIfjg",
+      "durationSec": 492,
+      "durationText": "8:12",
+      "title": "الامتحان الشفوي لمعهد جوته A2 - الجزء الأول | Goethe Zertifikat A2 - Sprechen Teil 1 - شحاتة ألماني"
+    },
+    {
+      "videoId": "FnM9NyBmoQ0",
+      "durationSec": 734,
+      "durationText": "12:14",
+      "title": "Goethe Zertifikat A2 - Sprechen Teil 2 🔴 الامتحان الشفوي لمعهد جوته"
+    },
+    {
+      "videoId": "RPF67knSUpQ",
+      "durationSec": 517,
+      "durationText": "8:37",
+      "title": "Sprechen Überblick - Prüfung Start A2 🔴 نظرة على مكونات إمتحان الشفوي"
+    }
+  ],
+  "B1": [
+    {
+      "videoId": "A_nzwTvVzLY",
+      "durationSec": 173,
+      "durationText": "2:53",
+      "title": "Goethe Zertifikat B1: الدليل الشامل والتحضير لاجتياز امتحان معهد جوته | شحاتة ألماني"
+    },
+    {
+      "videoId": "jePAYPgPm84",
+      "durationSec": 161,
+      "durationText": "2:41",
+      "title": "ابدأ دراسة مستوى الــــB1 في الالماني من هنا"
+    },
+    {
+      "videoId": "Yes2hkPDhbA",
+      "durationSec": 725,
+      "durationText": "12:05",
+      "title": "تعلم الألمانية B1: كيف تعرف بنفسك وبالآخرين في 10 دقائق | Sich vorstellen - شحاتة ألماني"
+    },
+    {
+      "videoId": "HxudQYgC-uE",
+      "durationSec": 663,
+      "durationText": "11:03",
+      "title": "تصريف الأفعال الألمانية في زمن المضارع B1 مع الأنشطة اليومية | Verben im Präsens - شحاتة ألماني"
+    },
+    {
+      "videoId": "QL16FWG-80g",
+      "durationSec": 517,
+      "durationText": "8:37",
+      "title": "#3   B1 عشرون كلمة لوصف الأشخاص بالالماني"
+    },
+    {
+      "videoId": "pkS2WrZYo1U",
+      "durationSec": 574,
+      "durationText": "9:34",
+      "title": "أهم 30 صفة لوصف الشخصية والطابع باللغة الألمانية B1 | Charakter-Eigenschaften - شحاتة ألماني"
+    },
+    {
+      "videoId": "gvGIpx-JM80",
+      "durationSec": 584,
+      "durationText": "9:44",
+      "title": "#4 B1 Verben mit Präpositionen | تعلم الأفعال الألمانية مع حروف الجر في دقائق بكل سهولة"
+    },
+    {
+      "videoId": "X4rq8pKOoR0",
+      "durationSec": 273,
+      "durationText": "4:33",
+      "title": "#5  B1 Verben mit Präpositionen | تعلم الأفعال الألمانية مع حروف الجر في دقائق بكل سهولة"
+    },
+    {
+      "videoId": "Re-N_pkJ25Y",
+      "durationSec": 337,
+      "durationText": "5:37",
+      "title": "#6 B1 Verben mit Präpositionen | تعلم الأفعال الألمانية مع حروف الجر في دقائق بكل سهولة"
+    },
+    {
+      "videoId": "5NaD6GGmx0I",
+      "durationSec": 606,
+      "durationText": "10:06",
+      "title": "#7 B1 Verben mit Präpositionen | تعلم الأفعال الألمانية مع حروف الجر في دقائق بكل سهولة"
+    },
+    {
+      "videoId": "E1cXZvaLl0c",
+      "durationSec": 434,
+      "durationText": "7:14",
+      "title": "#8 B1- هل يمكنك العيش بأقل من 10000 شيء"
+    },
+    {
+      "videoId": "R201Dbw5Yaw",
+      "durationSec": 521,
+      "durationText": "8:41",
+      "title": "#9 B1 Haus beschreiben |  وصف الأشياء المتعلقة بالبيت"
+    },
+    {
+      "videoId": "HemM-X-z8yE",
+      "durationSec": 527,
+      "durationText": "8:47",
+      "title": "#10 B1 Fünf Fragen über den Sinn des Lebens | خمس أسئلة حول معنى الحياة"
+    },
+    {
+      "videoId": "5tCV-TamvUw",
+      "durationSec": 499,
+      "durationText": "8:19",
+      "title": "#11 B1 كيف تكتب نص عن نفسك بالالماني"
+    },
+    {
+      "videoId": "Vfm2Kik3iPk",
+      "durationSec": 288,
+      "durationText": "4:48",
+      "title": "#12 B1- Mein Haus | وصف البيت"
+    },
+    {
+      "videoId": "z2wsnh7fyBM",
+      "durationSec": 601,
+      "durationText": "10:01",
+      "title": "13# B1 │Infinitiv mit zu الصيغة المصدرية"
+    },
+    {
+      "videoId": "hi2eN10Bc8M",
+      "durationSec": 508,
+      "durationText": "8:28",
+      "title": "14# B1 │Infinitiv mit zu │اتكلم عن معنى الحياة"
+    },
+    {
+      "videoId": "UlbhUMPof6A",
+      "durationSec": 740,
+      "durationText": "12:20",
+      "title": "15# B1 - Infinitiv mit zu | إزاي تقول عيب - حرام"
+    },
+    {
+      "videoId": "zglo75OIGNk",
+      "durationSec": 476,
+      "durationText": "7:56",
+      "title": "16#  B1- Infinitiv mit zu | كيف تتكلم عن المدرس المثالي"
+    },
+    {
+      "videoId": "gEvPHTYecw0",
+      "durationSec": 632,
+      "durationText": "10:32",
+      "title": "17# B1- Infinitiv mit zu | كيف تتحدث مع الناس"
+    },
+    {
+      "videoId": "UdMj-3r9DXY",
+      "durationSec": 738,
+      "durationText": "12:18",
+      "title": "#18  B1- Meine Schule |  تكلم عن مدرستك بشكل مبسط جدا بااللغة الالمانية"
+    },
+    {
+      "videoId": "lQc8JyRWVZ8",
+      "durationSec": 155,
+      "durationText": "2:35",
+      "title": "#19   Breif - Email |كيف تكتب ايميل بسهولة"
+    },
+    {
+      "videoId": "pAJVI0LTif8",
+      "durationSec": 606,
+      "durationText": "10:06",
+      "title": "#20  B1 Verschlag machen |  كيف تعمل اقتراح بسهولة باللغة الالمانية"
+    },
+    {
+      "videoId": "cMRDFALWho0",
+      "durationSec": 348,
+      "durationText": "5:48",
+      "title": "#21 B1 Ratschläge geben | كيف تعطي نصائح"
+    },
+    {
+      "videoId": "eiVslSzKSew",
+      "durationSec": 473,
+      "durationText": "7:53",
+      "title": "#22 - Mein Lieblingslehrer B1 كيف تكتب موضوع عن معلمك المفضل"
+    },
+    {
+      "videoId": "B00GrgC4us8",
+      "durationSec": 532,
+      "durationText": "8:52",
+      "title": "#23 B1 - Bildbeschreibung وصف الصورة بالألماني"
+    },
+    {
+      "videoId": "K-3A0w0ufiU",
+      "durationSec": 480,
+      "durationText": "8:00",
+      "title": "#24 - B1 - Bildbeschreibung وصف الصورة بالألماني"
+    },
+    {
+      "videoId": "fWEU1pqBiyU",
+      "durationSec": 445,
+      "durationText": "7:25",
+      "title": "#25 - B1 - Bildbeschreibung وصف الصورة بالألماني"
+    },
+    {
+      "videoId": "WI8EtrnjSnI",
+      "durationSec": 529,
+      "durationText": "8:49",
+      "title": "#26   Redemittel  |  B1-B2  تعبيرات مهمة جدا"
+    },
+    {
+      "videoId": "5Iyf-kueT_w",
+      "durationSec": 396,
+      "durationText": "6:36",
+      "title": "أسرار فعل lassen في اللغة الألمانية للمبتدئين"
+    },
+    {
+      "videoId": "TDb1SOp7o5M",
+      "durationSec": 265,
+      "durationText": "4:25",
+      "title": "#28. Verb lassen Teil 2  معاني الفعل"
+    },
+    {
+      "videoId": "eAMH_86XW0Q",
+      "durationSec": 419,
+      "durationText": "6:59",
+      "title": "#29. Reflexive Verben  الافعال المنعكسة"
+    },
+    {
+      "videoId": "cm_T0KvsY5Y",
+      "durationSec": 242,
+      "durationText": "4:02",
+      "title": "تعلم النفي بالألمانية بسهولة مع أمثلة ممتعة!"
+    },
+    {
+      "videoId": "vVqd3-iAm-s",
+      "durationSec": 264,
+      "durationText": "4:24",
+      "title": "#31 Der Genitiv  | سر الجنتيف"
+    },
+    {
+      "videoId": "uE6ijEkCheo",
+      "durationSec": 223,
+      "durationText": "3:43",
+      "title": "#32 B1 - um zu ، ohne zu ، statt zu  الجمل المصدرية"
+    },
+    {
+      "videoId": "9CYuPQs4qqo",
+      "durationSec": 329,
+      "durationText": "5:29",
+      "title": "#33 B1 - Futur I المستقبل في اللغة الالمانية"
+    },
+    {
+      "videoId": "UT1eJGrHO5A",
+      "durationSec": 239,
+      "durationText": "3:59",
+      "title": "#34  B1 - werden فعل يصبح في الألمانية"
+    },
+    {
+      "videoId": "po8gX9q9d3o",
+      "durationSec": 327,
+      "durationText": "5:27",
+      "title": "#35 Berufsleben  in Deutschland"
+    },
+    {
+      "videoId": "F8ciEI5iLto",
+      "durationSec": 327,
+      "durationText": "5:27",
+      "title": "#36 Konjunktiv II Höflichkeit  الطلب المؤدب باللغة الألمانية"
+    },
+    {
+      "videoId": "K7Gu_W2ZbLE",
+      "durationSec": 590,
+      "durationText": "9:50",
+      "title": "#37 Ersatz für Modalverben بدائل الأفعال الناقصة"
+    },
+    {
+      "videoId": "ltiqUo3-vAE",
+      "durationSec": 183,
+      "durationText": "3:03",
+      "title": "#38 ظروف الزمان في الالماني"
+    },
+    {
+      "videoId": "onwS9GTrh7Y",
+      "durationSec": 561,
+      "durationText": "9:21",
+      "title": "039 - كيف تكتب سيرة ذاتية CV ألمانية بسهولة؟"
+    },
+    {
+      "videoId": "3S0pSNdo9aA",
+      "durationSec": 459,
+      "durationText": "7:39",
+      "title": "#40 امتحان جوته الكتابة الجزء رقم 1"
+    },
+    {
+      "videoId": "HGKDlRoknkY",
+      "durationSec": 464,
+      "durationText": "7:44",
+      "title": "#41  Goethe Zertifikat B1 - Schreiben, Aufgabe 2 |  امتحان الكتابة"
+    },
+    {
+      "videoId": "wCjd0IadNgg",
+      "durationSec": 324,
+      "durationText": "5:24",
+      "title": "#42  Goethe Zertifikat B1 - Schreiben, Aufgabe 3 |  امتحان الكتابة"
+    },
+    {
+      "videoId": "_9Ph6e4A0HI",
+      "durationSec": 411,
+      "durationText": "6:51",
+      "title": "#43 B1 - نص قراءة عن المدارس في المانيا"
+    },
+    {
+      "videoId": "j3-Vg_fEXqs",
+      "durationSec": 421,
+      "durationText": "7:01",
+      "title": "044 - Volkshochschulen im Test – Überraschende Fakten!"
+    },
+    {
+      "videoId": "mtXeTuXA6HY",
+      "durationSec": 311,
+      "durationText": "5:11",
+      "title": "#45 Kausalsätze الجمل السببية في الألماني"
+    },
+    {
+      "videoId": "38KqNUcRLZ4",
+      "durationSec": 236,
+      "durationText": "3:56",
+      "title": "#46 Orte als Attribute استخدام الاماكن كصفات"
+    },
+    {
+      "videoId": "2o0WbdvcQb4",
+      "durationSec": 601,
+      "durationText": "10:01",
+      "title": "#47 Goethe Exam Sprechen B1 - Redemittel اهم العبارات"
+    },
+    {
+      "videoId": "YTT5Z6rRKjA",
+      "durationSec": 385,
+      "durationText": "6:25",
+      "title": "#48  Relativsätze im Dativ und Genitiv  الجمل الموصولة في حالة المفعول به والمضاف اليه"
+    },
+    {
+      "videoId": "FnaKCfocroI",
+      "durationSec": 438,
+      "durationText": "7:18",
+      "title": "#49 Partizip I und Partizip II استخدام اسم الفاعل والمفعول في اللغة الالمانية"
+    },
+    {
+      "videoId": "5vCUtmuL3Ag",
+      "durationSec": 344,
+      "durationText": "5:44",
+      "title": "#50 Lokale Präpositionen   حروف الجر مع المكان"
+    },
+    {
+      "videoId": "dONkw8oazpo",
+      "durationSec": 391,
+      "durationText": "6:31",
+      "title": "#51  B1 Sprechen Teil 1 gemeinsam etwas planen"
+    },
+    {
+      "videoId": "fcFy2P_p7hE",
+      "durationSec": 451,
+      "durationText": "7:31",
+      "title": "#52  Lesen Grüne Flächen in Deutschland ( B1,B2 )"
+    },
+    {
+      "videoId": "QQpJNIV_t3c",
+      "durationSec": 576,
+      "durationText": "9:36",
+      "title": "#53  Power_Nap : Das schläfchen zwischendurch  ( B1, B2 )"
+    },
+    {
+      "videoId": "01uvc_LhfIU",
+      "durationSec": 466,
+      "durationText": "7:46",
+      "title": "#54 Grafik oder Umfrage lesen كيف تقرأ الجرافيك أو الاستبيان بالالماني"
+    },
+    {
+      "videoId": "k4PozpqtkOs",
+      "durationSec": 392,
+      "durationText": "6:32",
+      "title": "#55 Sprechen B1 - Redemittel العبارات المستخدمة في امتحان جوته"
+    },
+    {
+      "videoId": "YY8NqqinJJE",
+      "durationSec": 626,
+      "durationText": "10:26",
+      "title": "#56 Schreibfehler B1 تصحيح الأخطاء الشائعة في كتابة البريف والنصوص"
+    },
+    {
+      "videoId": "cnbnsnPuBH0",
+      "durationSec": 491,
+      "durationText": "8:11",
+      "title": "#57 Wie wir leben Namen نص قرائي عن أصول الأسماء في ألمانيا"
+    },
+    {
+      "videoId": "-w5RzjxQssY",
+      "durationSec": 516,
+      "durationText": "8:36",
+      "title": "#58 Wie wir leben Beruf Geld Wohnen 2"
+    },
+    {
+      "videoId": "eKpsOei118Q",
+      "durationSec": 595,
+      "durationText": "9:55",
+      "title": "#59  Wie wir leben Familie Heimat  Natur نص 3  قراءة عن الاسرة والوطن في المانيا"
+    },
+    {
+      "videoId": "75PbF9oLaTg",
+      "durationSec": 402,
+      "durationText": "6:42",
+      "title": "#60 Verben mit Präpositionen (Kapsel) B1 الأفعال مع حروف الجر في"
+    },
+    {
+      "videoId": "lprwBo5hhxs",
+      "durationSec": 308,
+      "durationText": "5:08",
+      "title": "#61 Verben mit Präpositionen B1 الأفعال مع الحروف في الألمانية للمستوى"
+    },
+    {
+      "videoId": "A6IYDHk8ZzA",
+      "durationSec": 248,
+      "durationText": "4:08",
+      "title": "#62 Verben mit Präpositionen B1 الأفعال مع الحروف في الألمانية للمستوى"
+    },
+    {
+      "videoId": "LPQrjl7p758",
+      "durationSec": 221,
+      "durationText": "3:41",
+      "title": "#63 verben und ihre Ergänzungen { Dativ, Akkusativ }"
+    },
+    {
+      "videoId": "54okrMo3Kvs",
+      "durationSec": 330,
+      "durationText": "5:30",
+      "title": "#64 ازاي تتكلم عن دراستك أو مدرستك بالالماني"
+    },
+    {
+      "videoId": "VqYU9bG4khU",
+      "durationSec": 565,
+      "durationText": "9:25",
+      "title": "#65 - B1 - Lesetext &quot;Power Nap&quot; نص مهم جداً مع شرح المفردات بجمل توضيحية 😍 أكتب تعليق اذا أعجبك"
+    },
+    {
+      "videoId": "nhIkcqlZ1bk",
+      "durationSec": 455,
+      "durationText": "7:35",
+      "title": "#66 - B1 نص قرائي مهم جداً للمستوى الثالث B1 مع شرح اهم الكلمات"
+    },
+    {
+      "videoId": "sk4LhZhszqg",
+      "durationSec": 326,
+      "durationText": "5:26",
+      "title": "#67 - Lokale Präpositionen درس مهم جدا حول - حروف الجر مع المكان"
+    },
+    {
+      "videoId": "DpvvFJ6NkSE",
+      "durationSec": 440,
+      "durationText": "7:20",
+      "title": "#68 B1 - هل تعرف ما هي أكثر مدينة خضراء في ألمانيا؟"
+    },
+    {
+      "videoId": "T-yQUIRg6A4",
+      "durationSec": 600,
+      "durationText": "",
+      "title": ""
+    },
+    {
+      "videoId": "zNgJ-dDzpD8",
+      "durationSec": 498,
+      "durationText": "8:18",
+      "title": "#70_الصفات مع حروف الجر مع ترجمتها للغة العربية  Adjektive mit Präpositionen Teil 1"
+    },
+    {
+      "videoId": "4KP43vKyjyM",
+      "durationSec": 356,
+      "durationText": "5:56",
+      "title": "71#الصفات مع حروف الجر مع ترجمتها للغة العربية  Adjektive mit Präpositionen Teil  2"
+    },
+    {
+      "videoId": "BQsIKD4rojc",
+      "durationSec": 239,
+      "durationText": "3:59",
+      "title": "72#_شرح مواضيع امتحانات - Kinder und Fernsehen _ Learn German Niveau B1"
+    }
+  ]
+};
+
+        // Helper to calculate Skill Breakdown (Watching, Listening, Speaking)
+        // Default ratio: 68.75% Watching (2:45h in 4h), 18.75% Listening (45m), 12.5% Speaking (30m)
+        function calculateSkillBreakdown(totalMinutes, ratios) {
+            const uState = (typeof getCurrentUserState === 'function') ? getCurrentUserState() : null;
+            const r = ratios || (uState ? uState.skillRatios : null) || { watch: 68.75, listen: 18.75, speak: 12.5 };
+            const sum = (parseFloat(r.watch) || 0) + (parseFloat(r.listen) || 0) + (parseFloat(r.speak) || 0) || 100;
+            
+            const watchMin = Math.round((totalMinutes * parseFloat(r.watch)) / sum);
+            const listenMin = Math.round((totalMinutes * parseFloat(r.listen)) / sum);
+            const speakMin = Math.max(0, totalMinutes - watchMin - listenMin);
+
+            return { watch: watchMin, listen: listenMin, speak: speakMin };
+        }
+
+        function formatMinutesToHoursText(minutes) {
+            if (minutes <= 0) return '0 دقيقة';
+            const h = Math.floor(minutes / 60);
+            const m = minutes % 60;
+            if (h === 0) return `${m} دقيقة`;
+            if (m === 0) return `${h} ${h === 1 ? 'ساعة' : h === 2 ? 'ساعتان' : 'ساعات'}`;
+            const hDecimal = (minutes / 60).toFixed(2).replace(/\.00$/, '');
+            return `${hDecimal} ساعة (${minutes} دقيقة)`;
+        }
+
+        const DAYS_ORDER = [
+            { num: 6, name: 'السبت' },
+            { num: 0, name: 'الأحد' },
+            { num: 1, name: 'الإثنين' },
+            { num: 2, name: 'الثلاثاء' },
+            { num: 3, name: 'الأربعاء' },
+            { num: 4, name: 'الخميس' },
+            { num: 5, name: 'الجمعة' }
+        ];
+
+        // Global Per-User App State Storage
+        const DEFAULT_USER_SETTINGS = {
+            mohamed: {
+                activeLevel: 'A1',
+                studyDays: [6, 0, 1, 2, 3, 4, 5],
+                dayMinutes: { 6: 45, 0: 45, 1: 45, 2: 45, 3: 45, 4: 45, 5: 0 },
+                dailyMinutesTarget: 45,
+                skillRatios: { watch: 68.75, listen: 18.75, speak: 12.5 },
+                notifyTime: '21:00',
+                completedVideos: {},
+                completedSkills: {}
+            },
+            assem: {
+                activeLevel: 'A1',
+                studyDays: [6, 0, 1, 2, 3, 4, 5],
+                dayMinutes: { 6: 45, 0: 45, 1: 45, 2: 45, 3: 45, 4: 45, 5: 0 },
+                dailyMinutesTarget: 45,
+                skillRatios: { watch: 68.75, listen: 18.75, speak: 12.5 },
+                notifyTime: '21:00',
+                completedVideos: {},
+                completedSkills: {}
+            },
+            omar: {
+                activeLevel: 'A1',
+                studyDays: [6, 0, 1, 2, 3, 4, 5],
+                dayMinutes: { 6: 45, 0: 45, 1: 45, 2: 45, 3: 45, 4: 45, 5: 0 },
+                dailyMinutesTarget: 45,
+                skillRatios: { watch: 68.75, listen: 18.75, speak: 12.5 },
+                notifyTime: '21:00',
+                completedVideos: {},
+                completedSkills: {}
+            }
+        };
+
+        let appData = {
+            activeUser: 'mohamed',
+            users: JSON.parse(JSON.stringify(DEFAULT_USER_SETTINGS))
+        };
+
+        function loadStateFromStorage() {
+            const savedNew = localStorage.getItem('german_planner_app_data_v2');
+            if (savedNew) {
+                try {
+                    const parsed = JSON.parse(savedNew);
+                    if (parsed.activeUser) appData.activeUser = parsed.activeUser;
+                    if (parsed.users) {
+                        ['mohamed', 'assem', 'omar'].forEach(key => {
+                            if (parsed.users[key]) {
+                                appData.users[key] = {
+                                    ...DEFAULT_USER_SETTINGS[key],
+                                    ...parsed.users[key]
+                                };
+                            }
+                        });
+                    }
+                    return;
+                } catch(e) { console.error('Error parsing german_planner_app_data_v2:', e); }
+            }
+
+            // Legacy migration from old german_planner_state
+            const savedOld = localStorage.getItem('german_planner_state');
+            if (savedOld) {
+                try {
+                    const oldState = JSON.parse(savedOld);
+                    const userKey = oldState.userKey || 'mohamed';
+                    appData.activeUser = userKey;
+                    if (!appData.users[userKey]) {
+                        appData.users[userKey] = JSON.parse(JSON.stringify(DEFAULT_USER_SETTINGS[userKey] || DEFAULT_USER_SETTINGS.mohamed));
+                    }
+                    appData.users[userKey].activeLevel = oldState.activeLevel || 'A1';
+                    appData.users[userKey].studyDays = oldState.studyDays || [6, 0, 1, 2, 3, 4, 5];
+                    appData.users[userKey].dailyMinutesTarget = oldState.dailyMinutesTarget || 45;
+                    appData.users[userKey].notifyTime = oldState.notifyTime || '21:00';
+                    appData.users[userKey].completedVideos = oldState.completedVideos || {};
+                    saveAppDataToStorage();
+                } catch(e) { console.error('Error migrating old state:', e); }
+            }
+        }
+
+        function saveAppDataToStorage() {
+            localStorage.setItem('german_planner_app_data_v2', JSON.stringify(appData));
+            localStorage.setItem('german_planner_installed', 'true');
+        }
+
+        function getCurrentUserState() {
+            if (!appData.users[appData.activeUser]) {
+                appData.users[appData.activeUser] = JSON.parse(JSON.stringify(DEFAULT_USER_SETTINGS[appData.activeUser] || DEFAULT_USER_SETTINGS.mohamed));
+            }
+            return appData.users[appData.activeUser];
+        }
+
+        function getUserName(key) {
+            if (key === 'mohamed') return 'محمد أحمد';
+            if (key === 'assem') return 'عاصم أحمد';
+            return 'عمر مهند';
+        }
+
+        function isVideoCompleted(userKey, level, videoNum) {
+            const uState = appData.users[userKey];
+            if (!uState || !uState.completedVideos) return false;
+            const keyNew = `${level}_${videoNum}`;
+            const keyOld = `${userKey}_${level}_${videoNum}`;
+            return !!(uState.completedVideos[keyNew] || uState.completedVideos[keyOld]);
+        }
+
+        function switchUser(userKey) {
+            if (!appData.users[userKey]) return;
+            appData.activeUser = userKey;
+            saveAppDataToStorage();
+            closeUserDropdown();
+            renderApp();
+            showToast(`تم التبديل إلى حساب ${getUserName(userKey)} 👍`);
+        }
+
+        function toggleUserDropdown(e) {
+            if (e) e.stopPropagation();
+            const dropdown = document.getElementById('userDropdownMenu');
+            if (dropdown) dropdown.classList.toggle('show');
+        }
+
+        function closeUserDropdown() {
+            const dropdown = document.getElementById('userDropdownMenu');
+            if (dropdown) dropdown.classList.remove('show');
+        }
+
+        document.addEventListener('click', (e) => {
+            const wrapper = document.querySelector('.user-dropdown-wrapper');
+            if (wrapper && !wrapper.contains(e.target)) {
+                closeUserDropdown();
+            }
+        });
+
+        function renderApp() {
+            const userKey = appData.activeUser;
+            const uState = getCurrentUserState();
+            const activeLevel = uState.activeLevel || 'A1';
+
+            // Update Header user display
+            document.getElementById('headerUserName').textContent = getUserName(userKey);
+            document.getElementById('userAvatarCircle').textContent = getUserName(userKey).charAt(0);
+            document.getElementById('headerUserStatus').textContent = `خطة ${activeLevel} المخصصة`;
+
+            // Update Dropdown active states & subtitle text
+            ['mohamed', 'assem', 'omar'].forEach(k => {
+                const item = document.getElementById(`item-user-${k}`);
+                const sub = document.getElementById(`sub-${k}`);
+                if (item) {
+                    item.classList.toggle('active', k === userKey);
+                }
+                if (sub && appData.users[k]) {
+                    const uDaysCount = appData.users[k].studyDays ? appData.users[k].studyDays.length : 7;
+                    sub.textContent = `مستوى ${appData.users[k].activeLevel || 'A1'} (${uDaysCount} أيام/أسبوع)`;
+                }
+            });
+
+            // Update Level Tabs active class
+            document.querySelectorAll('.level-tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.classList.contains(activeLevel.toLowerCase())) {
+                    btn.classList.add('active');
+                }
+            });
+
+            const allLevelVideos = buildFullPlaylistVideos(activeLevel);
+            let userRequiredVideos = allLevelVideos;
+
+            if (activeLevel === 'A1') {
+                const missingNumbers = USER_A1_MISSING_VIDEOS[userKey] || generateRange(1, 96);
+                userRequiredVideos = allLevelVideos.filter(v => missingNumbers.includes(v.num));
+            }
+
+            let completedCount = 0;
+            userRequiredVideos.forEach(v => {
+                if (isVideoCompleted(userKey, activeLevel, v.num)) completedCount++;
+            });
+
+            const totalRequired = userRequiredVideos.length;
+            const remainingCount = totalRequired - completedCount;
+            const percent = totalRequired > 0 ? Math.round((completedCount / totalRequired) * 100) : 0;
+
+            document.getElementById('sidebarLevelBadge').textContent = activeLevel;
+            document.getElementById('progressPercentText').textContent = `${percent}%`;
+            document.getElementById('progressBarFill').style.width = `${percent}%`;
+            document.getElementById('statCompletedCount').textContent = completedCount;
+            document.getElementById('statRemainingCount').textContent = remainingCount;
+
+            const todayDayNum = new Date().getDay();
+            let todayMinsTarget = 45;
+            if (uState.dayMinutes && uState.dayMinutes[todayDayNum] !== undefined) {
+                todayMinsTarget = uState.dayMinutes[todayDayNum];
+            } else {
+                todayMinsTarget = uState.dailyMinutesTarget || 45;
+            }
+            document.getElementById('statDailyTargetMin').textContent = `${todayMinsTarget} م`;
+
+            const totalRemainingMinutes = userRequiredVideos
+                .filter(v => !isVideoCompleted(userKey, activeLevel, v.num))
+                .reduce((acc, v) => acc + v.duration, 0);
+
+            // Compute total weekly target minutes
+            let weeklyMins = 0;
+            if (uState.dayMinutes) {
+                Object.values(uState.dayMinutes).forEach(m => weeklyMins += m);
+            } else {
+                weeklyMins = (uState.studyDays ? uState.studyDays.length : 7) * (uState.dailyMinutesTarget || 45);
+            }
+            const weeklyHoursAvg = weeklyMins > 0 ? (weeklyMins / 60) : 5;
+            const weeksNeeded = Math.ceil((totalRemainingMinutes / 60) / (weeklyHoursAvg || 1));
+            const daysNeededEstimate = Math.ceil(totalRemainingMinutes / (todayMinsTarget || 45));
+
+            document.getElementById('statDaysEstimate').textContent = `${daysNeededEstimate} أيام مذاكرة (~${weeksNeeded} أسابيع)`;
+
+            renderTodaySchedule(userRequiredVideos);
+            renderAllLessons(userRequiredVideos);
+        }
+
+        function selectLevel(level) {
+            const uState = getCurrentUserState();
+            uState.activeLevel = level;
+            uState.dailyPlanState = null; // Reset daily batch when switching level
+            saveAppDataToStorage();
+            renderApp();
+        }
+
+        function renderTodaySchedule(requiredVideos) {
+            const container = document.getElementById('todayVideosContainer');
+            const skillsContainer = document.getElementById('todaySkillsCardsContainer');
+            container.innerHTML = '';
+            skillsContainer.innerHTML = '';
+
+            const userKey = appData.activeUser;
+            const uState = getCurrentUserState();
+            const activeLevel = uState.activeLevel || 'A1';
+
+            const todayDayNum = new Date().getDay(); // 0=Sun, 1=Mon...
+            const dayNames = { 6: 'السبت', 0: 'الأحد', 1: 'الإثنين', 2: 'الثلاثاء', 3: 'الأربعاء', 4: 'الخميس', 5: 'الجمعة' };
+
+            let todayTargetMinutes = 45;
+            if (uState.dayMinutes && uState.dayMinutes[todayDayNum] !== undefined) {
+                todayTargetMinutes = uState.dayMinutes[todayDayNum];
+            } else {
+                const isStudyDay = uState.studyDays ? uState.studyDays.includes(todayDayNum) : true;
+                todayTargetMinutes = isStudyDay ? (uState.dailyMinutesTarget || 45) : 0;
+            }
+
+            const isStudyDay = todayTargetMinutes > 0;
+            const todayBreakdown = calculateSkillBreakdown(todayTargetMinutes, uState.skillRatios);
+
+            let weeklyTotalMins = 0;
+            if (uState.dayMinutes) {
+                Object.values(uState.dayMinutes).forEach(m => weeklyTotalMins += m);
+            } else {
+                weeklyTotalMins = (uState.studyDays ? uState.studyDays.length : 7) * (uState.dailyMinutesTarget || 45);
+            }
+            const weeklyBreakdown = calculateSkillBreakdown(weeklyTotalMins, uState.skillRatios);
+
+            const todayStr = new Date().toISOString().split('T')[0];
+            const completedSkills = uState.completedSkills || {};
+            const listenDone = !!completedSkills[`${todayStr}_listen`];
+            const speakDone = !!completedSkills[`${todayStr}_speak`];
+
+            skillsContainer.innerHTML = `
+                <div class="today-skill-card" style="border-right: 3px solid #ec4899;">
+                    <div class="today-skill-header">
+                        <span style="color:#ec4899;"><i class="fa-solid fa-file-video"></i> دروس مستر شحاتة (يوتيوب)</span>
+                        <span style="font-size:0.72rem; color:var(--text-secondary);">~${weeklyBreakdown.watch}د أسبوعياً</span>
+                    </div>
+                    <div class="today-skill-time">${todayBreakdown.watch} دقيقة اليوم</div>
+                    <div style="font-size:0.75rem; color:var(--text-secondary);">مخصص لمشاهدة وتدوين فيديوهات مستر شحاتة</div>
+                </div>
+
+                <div class="today-skill-card" style="border-right: 3px solid #3b82f6;">
+                    <div class="today-skill-header">
+                        <span style="color:#3b82f6;"><i class="fa-solid fa-headphones"></i> وقت السماع (Listening)</span>
+                        <span style="font-size:0.72rem; color:var(--text-secondary);">~${weeklyBreakdown.listen}د أسبوعياً</span>
+                    </div>
+                    <div class="today-skill-time">${todayBreakdown.listen} دقيقة اليوم</div>
+                    <button class="btn-skill-check ${listenDone ? 'completed' : ''}" onclick="toggleSkillDone('${todayStr}_listen', 'السماع')">
+                        <i class="fa-solid ${listenDone ? 'fa-circle-check' : 'fa-circle'}"></i>
+                        ${listenDone ? 'تم إنجاز السماع اليوم!' : 'تعليم السماع كمكتمل'}
+                    </button>
+                </div>
+
+                <div class="today-skill-card" style="border-right: 3px solid #10b981;">
+                    <div class="today-skill-header">
+                        <span style="color:#10b981;"><i class="fa-solid fa-comments"></i> وقت التحدث (Speaking)</span>
+                        <span style="font-size:0.72rem; color:var(--text-secondary);">~${weeklyBreakdown.speak}د أسبوعياً</span>
+                    </div>
+                    <div class="today-skill-time">${todayBreakdown.speak} دقيقة اليوم</div>
+                    <button class="btn-skill-check ${speakDone ? 'completed' : ''}" onclick="toggleSkillDone('${todayStr}_speak', 'التحدث')">
+                        <i class="fa-solid ${speakDone ? 'fa-circle-check' : 'fa-circle'}"></i>
+                        ${speakDone ? 'تم إنجاز التحدث اليوم!' : 'تعليم التحدث كمكتمل'}
+                    </button>
+                </div>
+            `;
+
+            document.getElementById('todayTotalDurationLabel').textContent = `${todayTargetMinutes} دقيقة اليوم (${(weeklyTotalMins/60).toFixed(1)} س/أسبوع)`;
+            document.getElementById('todayTargetHeading').textContent = `خطة يوم ${dayNames[todayDayNum]} (إجمالي ${todayTargetMinutes}د • مستر شحاتة ${todayBreakdown.watch}د)`;
+
+            if (!isStudyDay) {
+                const restNote = document.createElement('div');
+                restNote.style.cssText = 'grid-column: 1/-1; background: rgba(59, 130, 246, 0.1); border: 1px solid var(--border-highlight); border-radius: var(--radius-md); padding: 16px; margin-bottom: 12px; color: #93c5fd; font-size: 0.9rem; font-weight: 600; text-align: center;';
+                restNote.innerHTML = `<i class="fa-solid fa-mug-hot" style="margin-left:8px; font-size:1.1rem;"></i> اليوم (${dayNames[todayDayNum]}) هو يوم عطلة مخصص في جدولك! يمكنك أخذ استراحة أو متابعة الدروس التالية أدناه إن أردت.`;
+                container.appendChild(restNote);
+            }
+
+            const uncompletedTotal = requiredVideos.filter(v => !isVideoCompleted(userKey, activeLevel, v.num));
+            if (uncompletedTotal.length === 0) {
+                container.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 24px; color: var(--level-b1); font-weight:700;">
+                        <i class="fa-solid fa-trophy" style="font-size:2.5rem; margin-bottom:10px; display:block;"></i>
+                        أحسنت صنعاً! لقد أكملت جميع الدروس المطلوبة في هذا المستوى (${activeLevel})! 🎉
+                    </div>
+                `;
+                return;
+            }
+
+            // DAILY BATCH PERSISTENCE LOGIC: Keep same batch fixed for the whole day!
+            let todayBatch = [];
+            const savedPlan = uState.dailyPlanState;
+
+            if (savedPlan && savedPlan.date === todayStr && savedPlan.level === activeLevel && Array.isArray(savedPlan.videoNums) && savedPlan.videoNums.length > 0) {
+                // Same day! Retrieve saved videos for today
+                todayBatch = requiredVideos.filter(v => savedPlan.videoNums.includes(v.num));
+            }
+
+            // If no saved batch, or day changed, calculate new batch from first UNCOMPLETED videos
+            if (!todayBatch || todayBatch.length === 0) {
+                const uncompleted = requiredVideos.filter(v => !isVideoCompleted(userKey, activeLevel, v.num));
+                let videoMinsSum = 0;
+                const targetVideoMin = todayBreakdown.watch;
+
+                for (let v of uncompleted) {
+                    if (todayBatch.length > 0) {
+                        const currentDiff = Math.abs(targetVideoMin - videoMinsSum);
+                        const nextDiff = Math.abs(targetVideoMin - (videoMinsSum + v.duration));
+                        if (nextDiff > currentDiff) break;
+                    }
+                    todayBatch.push(v);
+                    videoMinsSum += v.duration;
+                }
+
+                uState.dailyPlanState = {
+                    date: todayStr,
+                    level: activeLevel,
+                    videoNums: todayBatch.map(v => v.num)
+                };
+                saveAppDataToStorage();
+            }
+
+            // Check if ALL videos in today's batch are completed
+            const allTodayVideosCompleted = todayBatch.length > 0 && todayBatch.every(v => isVideoCompleted(userKey, activeLevel, v.num));
+
+            if (allTodayVideosCompleted) {
+                const congratsBanner = document.createElement('div');
+                congratsBanner.className = 'today-congrats-banner';
+                congratsBanner.innerHTML = `
+                    <i class="fa-solid fa-crown" style="font-size:2.2rem; color:#f59e0b;"></i>
+                    <h3>🎉 أحسنت يا بطل! تم إنجاز جميع دروس مستر شحاتة لهذا اليوم بنجاح!</h3>
+                    <p>أتممت خطة الفيديوهات اليومية بكفاءة عالية. استرح الآن واستعد ليوم جديد 🇩🇪💪</p>
+                `;
+                container.appendChild(congratsBanner);
+            }
+
+            // Render Today's fixed batch
+            todayBatch.forEach(video => {
+                const isDone = isVideoCompleted(userKey, activeLevel, video.num);
+                const card = createVideoCardHTML(video, isDone);
+                container.appendChild(card);
+            });
+        }
+
+        function toggleSkillDone(skillKey, skillName) {
+            const uState = getCurrentUserState();
+            if (!uState.completedSkills) uState.completedSkills = {};
+            uState.completedSkills[skillKey] = !uState.completedSkills[skillKey];
+            saveAppDataToStorage();
+            renderApp();
+            if (uState.completedSkills[skillKey]) {
+                showToast(`تم إنجاز تدريب ${skillName} لهذا اليوم! 👏`);
+            }
+        }
+
+        let cachedCurrentVideos = [];
+
+        function renderAllLessons(videos) {
+            cachedCurrentVideos = videos;
+            filterLessons();
+        }
+
+        function filterLessons() {
+            const query = (document.getElementById('searchInput').value || '').toLowerCase();
+            const container = document.getElementById('allLessonsContainer');
+            container.innerHTML = '';
+            const userKey = appData.activeUser;
+            const uState = getCurrentUserState();
+            const activeLevel = uState.activeLevel || 'A1';
+
+            const filtered = cachedCurrentVideos.filter(v => v.title.toLowerCase().includes(query) || v.num.toString().includes(query));
+            document.getElementById('allLessonsCountLabel').textContent = filtered.length;
+
+            filtered.forEach(video => {
+                const isDone = isVideoCompleted(userKey, activeLevel, video.num);
+                const card = createVideoCardHTML(video, isDone);
+                container.appendChild(card);
+            });
+        }
+
+        function buildFullPlaylistVideos(level) {
+            const list = [];
+            const detailsList = REAL_EXACT_DETAILS[level] || [];
+            
+            const offset = (level === 'A1') ? 4 : 0;
+            const maxLessons = (level === 'A1') ? 96 : detailsList.length;
+            
+            for (let i = 1; i <= maxLessons; i++) {
+                const playlistIndex = i + offset;
+                const arrayIndex = playlistIndex - 1;
+                const details = detailsList[arrayIndex] || {};
+                
+                const videoId = details.videoId || PLAYLISTS[level].firstVideoId;
+                const durationSec = details.durationSec || 900;
+                const durationMin = Math.max(1, Math.round(durationSec / 60));
+                const durationText = details.durationText || `${durationMin} دقيقة`;
+                const cleanTitle = (details.title && details.title.length > 5) 
+                    ? details.title 
+                    : `الدرس ${i} - ألماني ${level}`;
+
+                list.push({
+                    num: i,
+                    level: level,
+                    title: cleanTitle,
+                    duration: durationMin,
+                    durationText: durationText,
+                    videoId: videoId,
+                    playlistId: PLAYLISTS[level].id,
+                    playlistIndex: playlistIndex
+                });
+            }
+            return list;
+        }
+
+        function createVideoCardHTML(video, isDone) {
+            const div = document.createElement('div');
+            div.className = `video-card ${isDone ? 'completed' : ''}`;
+            
+            const directYoutubeUrl = `https://www.youtube.com/watch?v=${video.videoId}&list=${video.playlistId}&index=${video.playlistIndex}`;
+
+            div.innerHTML = `
+                <div class="video-top-meta">
+                    <span class="video-number-badge">الدرس #${video.num}</span>
+                    <span class="video-duration"><i class="fa-regular fa-clock"></i> ${video.durationText} (${video.duration} دقيقة)</span>
+                </div>
+                <div class="video-title"></div>
+                <div class="video-card-actions">
+                    <button class="btn-play-video" onclick="playVideo('${video.level}', ${video.num})">
+                        <i class="fa-solid fa-play"></i> مشاهدة في التطبيق
+                    </button>
+                    <a class="btn-youtube-direct" href="${directYoutubeUrl}" target="_blank" title="فتح الفيديو المباشر في يوتيوب">
+                        <i class="fa-brands fa-youtube"></i> يوتيوب
+                    </a>
+                    <button class="btn-check-complete" title="تعليم كمكتمل" onclick="toggleComplete('${video.level}', ${video.num})">
+                        <i class="fa-solid ${isDone ? 'fa-circle-check' : 'fa-check'}"></i>
+                    </button>
+                </div>
+            `;
+            
+            div.querySelector('.video-title').textContent = video.title;
+            return div;
+        }
+
+        function toggleComplete(level, videoNum) {
+            const uState = getCurrentUserState();
+            if (!uState.completedVideos) uState.completedVideos = {};
+            const key = `${level}_${videoNum}`;
+            const keyOld = `${appData.activeUser}_${level}_${videoNum}`;
+
+            const currentState = !!(uState.completedVideos[key] || uState.completedVideos[keyOld]);
+            uState.completedVideos[key] = !currentState;
+            if (uState.completedVideos[keyOld]) delete uState.completedVideos[keyOld];
+
+            saveAppDataToStorage();
+            renderApp();
+
+            if (uState.completedVideos[key]) {
+                showToast(`تم إنجاز الدرس #${videoNum}! 👍`);
+            }
+        }
+
+        function playVideo(level, num) {
+            const list = buildFullPlaylistVideos(level);
+            const video = list.find(v => v.num === num);
+            if (!video) return;
+
+            document.getElementById('modalVideoTitle').textContent = video.title;
+            const embedUrl = `https://www.youtube.com/embed/${video.videoId}?autoplay=1&list=${video.playlistId}`;
+            const directUrl = `https://www.youtube.com/watch?v=${video.videoId}&list=${video.playlistId}&index=${video.playlistIndex}`;
+
+            document.getElementById('youtubeIframe').src = embedUrl;
+            document.getElementById('modalDirectYoutubeBtn').href = directUrl;
+            document.getElementById('playerModal').style.display = 'flex';
+        }
+
+        function closePlayerModal() {
+            document.getElementById('youtubeIframe').src = '';
+            document.getElementById('playerModal').style.display = 'none';
+        }
+
+        let wizardTempUser = 'mohamed';
+        let wizardDayMinutes = {};
+        let wizardSkillRatios = { watch: 68.75, listen: 18.75, speak: 12.5 };
+
+        function openWizardModal() {
+            wizardTempUser = appData.activeUser;
+            selectUserInWizard(wizardTempUser);
+            document.getElementById('wizardModal').style.display = 'flex';
+        }
+
+        function selectUserInWizard(userKey) {
+            wizardTempUser = userKey;
+            document.querySelectorAll('.user-option-card').forEach(el => el.classList.remove('selected'));
+            document.getElementById(`opt-${userKey}`)?.classList.add('selected');
+            updateWizardFieldsForUser(userKey);
+        }
+
+        function updateWizardFieldsForUser(userKey) {
+            const uState = appData.users[userKey] || DEFAULT_USER_SETTINGS[userKey] || DEFAULT_USER_SETTINGS.mohamed;
+            document.getElementById('notifyTimeInput').value = uState.notifyTime || '21:00';
+
+            wizardDayMinutes = {};
+            const defaultMins = uState.dailyMinutesTarget || 45;
+            DAYS_ORDER.forEach(d => {
+                if (uState.dayMinutes && uState.dayMinutes[d.num] !== undefined) {
+                    wizardDayMinutes[d.num] = uState.dayMinutes[d.num];
+                } else {
+                    const isDaysArr = uState.studyDays || [6, 0, 1, 2, 3, 4, 5];
+                    wizardDayMinutes[d.num] = isDaysArr.includes(d.num) ? defaultMins : 0;
+                }
+            });
+
+            wizardSkillRatios = uState.skillRatios ? { ...uState.skillRatios } : { watch: 68.75, listen: 18.75, speak: 12.5 };
+            
+            // Set ratio fields
+            const watchInput = document.getElementById('ratioWatchInput');
+            const listenInput = document.getElementById('ratioListenInput');
+            const speakInput = document.getElementById('ratioSpeakInput');
+            if (watchInput) watchInput.value = wizardSkillRatios.watch;
+            if (listenInput) listenInput.value = wizardSkillRatios.listen;
+            if (speakInput) speakInput.value = wizardSkillRatios.speak;
+
+            renderWizardPerDayGrid();
+        }
+
+        function applyRatioPreset(type) {
+            document.querySelectorAll('#btnRatioPresetDefault, #btnRatioPresetLegacy, #btnRatioPresetCustom').forEach(b => b.classList.remove('active'));
+
+            if (type === 'default') {
+                // 2:45h watching in 4h = 68.75%, 45m listening = 18.75%, 30m speaking = 12.5%
+                wizardSkillRatios = { watch: 68.75, listen: 18.75, speak: 12.5 };
+                document.getElementById('btnRatioPresetDefault')?.classList.add('active');
+            } else if (type === 'legacy') {
+                // 1:45h watching in 3h = 58.33%, 45m listening = 25%, 30m speaking = 16.67%
+                wizardSkillRatios = { watch: 58.33, listen: 25.0, speak: 16.67 };
+                document.getElementById('btnRatioPresetLegacy')?.classList.add('active');
+            } else {
+                document.getElementById('btnRatioPresetCustom')?.classList.add('active');
+            }
+
+            const watchInput = document.getElementById('ratioWatchInput');
+            const listenInput = document.getElementById('ratioListenInput');
+            const speakInput = document.getElementById('ratioSpeakInput');
+            if (watchInput) watchInput.value = wizardSkillRatios.watch;
+            if (listenInput) listenInput.value = wizardSkillRatios.listen;
+            if (speakInput) speakInput.value = wizardSkillRatios.speak;
+
+            recalculateWizardWeeklyTotal();
+        }
+
+        function onWizardRatioChange() {
+            wizardSkillRatios.watch = parseFloat(document.getElementById('ratioWatchInput').value) || 0;
+            wizardSkillRatios.listen = parseFloat(document.getElementById('ratioListenInput').value) || 0;
+            wizardSkillRatios.speak = parseFloat(document.getElementById('ratioSpeakInput').value) || 0;
+
+            document.querySelectorAll('#btnRatioPresetDefault, #btnRatioPresetLegacy, #btnRatioPresetCustom').forEach(b => b.classList.remove('active'));
+            document.getElementById('btnRatioPresetCustom')?.classList.add('active');
+            recalculateWizardWeeklyTotal();
+        }
+
+        function renderWizardPerDayGrid() {
+            const grid = document.getElementById('perDayGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            DAYS_ORDER.forEach(d => {
+                const mins = wizardDayMinutes[d.num] || 0;
+                const isActive = mins > 0;
+
+                const card = document.createElement('div');
+                card.className = `day-setting-card ${isActive ? 'active-day' : ''}`;
+                card.innerHTML = `
+                    <div class="day-header-toggle">
+                        <span>${d.name}</span>
+                        <input type="checkbox" class="day-toggle-checkbox" ${isActive ? 'checked' : ''} onchange="onWizardDayToggle(${d.num}, this.checked)">
+                    </div>
+                    <div class="day-minutes-input-wrap">
+                        <input type="number" class="day-minutes-input" value="${mins}" min="0" max="360" step="5" ${!isActive ? 'disabled' : ''} oninput="onWizardDayMinutesChange(${d.num}, this.value)">
+                        <span style="font-size:0.75rem; color:var(--text-secondary);">دقيقة</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            recalculateWizardWeeklyTotal();
+        }
+
+        function onWizardDayToggle(dayNum, isChecked) {
+            if (isChecked) {
+                wizardDayMinutes[dayNum] = wizardDayMinutes[dayNum] > 0 ? wizardDayMinutes[dayNum] : 45;
+            } else {
+                wizardDayMinutes[dayNum] = 0;
+            }
+            renderWizardPerDayGrid();
+        }
+
+        function onWizardDayMinutesChange(dayNum, val) {
+            const parsed = parseInt(val) || 0;
+            wizardDayMinutes[dayNum] = Math.max(0, parsed);
+            recalculateWizardWeeklyTotal();
+        }
+
+        function applyPresetHours(hours) {
+            const totalMins = hours * 60;
+            let activeDays = DAYS_ORDER.filter(d => wizardDayMinutes[d.num] > 0);
+            if (activeDays.length === 0) {
+                [6, 0, 1, 2].forEach(dNum => wizardDayMinutes[dNum] = 45);
+                activeDays = DAYS_ORDER.filter(d => wizardDayMinutes[d.num] > 0);
+            }
+
+            const perDayMins = Math.round(totalMins / activeDays.length);
+            activeDays.forEach(d => {
+                wizardDayMinutes[d.num] = perDayMins;
+            });
+
+            renderWizardPerDayGrid();
+        }
+
+        function recalculateWizardWeeklyTotal() {
+            let totalWeeklyMins = 0;
+            DAYS_ORDER.forEach(d => {
+                totalWeeklyMins += (wizardDayMinutes[d.num] || 0);
+            });
+
+            const weeklyHours = (totalWeeklyMins / 60).toFixed(1).replace(/\.0$/, '');
+            const label = document.getElementById('wizardWeeklyTotalLabel');
+            if (label) {
+                label.textContent = `إجمالي ${weeklyHours} ساعة (${totalWeeklyMins} دقيقة) أسبوعياً`;
+            }
+
+            const breakdown = calculateSkillBreakdown(totalWeeklyMins, wizardSkillRatios);
+            document.getElementById('wizardWatchSkillTime').textContent = formatMinutesToHoursText(breakdown.watch);
+            document.getElementById('wizardListenSkillTime').textContent = formatMinutesToHoursText(breakdown.listen);
+            document.getElementById('wizardSpeakSkillTime').textContent = formatMinutesToHoursText(breakdown.speak);
+        }
+
+        function saveWizardSettings() {
+            appData.activeUser = wizardTempUser;
+            if (!appData.users[wizardTempUser]) {
+                appData.users[wizardTempUser] = JSON.parse(JSON.stringify(DEFAULT_USER_SETTINGS[wizardTempUser] || DEFAULT_USER_SETTINGS.mohamed));
+            }
+
+            const newDayMinutes = { ...wizardDayMinutes };
+            const activeDays = [];
+            let totalMins = 0;
+            let countActive = 0;
+
+            DAYS_ORDER.forEach(d => {
+                const m = newDayMinutes[d.num] || 0;
+                if (m > 0) {
+                    activeDays.push(d.num);
+                    totalMins += m;
+                    countActive++;
+                }
+            });
+
+            if (activeDays.length === 0) {
+                showToast('يرجى تحديد يوم واحد على الأقل للمذاكرة!', 'fa-exclamation-triangle');
+                return;
+            }
+
+            appData.users[wizardTempUser].studyDays = activeDays;
+            appData.users[wizardTempUser].dayMinutes = newDayMinutes;
+            appData.users[wizardTempUser].dailyMinutesTarget = countActive > 0 ? Math.round(totalMins / countActive) : 45;
+            appData.users[wizardTempUser].skillRatios = { ...wizardSkillRatios };
+            appData.users[wizardTempUser].dailyPlanState = null; // Reset daily plan batch for new settings
+            appData.users[wizardTempUser].notifyTime = document.getElementById('notifyTimeInput').value || '21:00';
+
+            saveAppDataToStorage();
+            document.getElementById('wizardModal').style.display = 'none';
+            closeUserDropdown();
+            renderApp();
+            showToast(`تم حفظ وتطبيق إعدادات وقت وخطة ${getUserName(wizardTempUser)} بنجاح! 🎉`);
+        }
+
+        function toggleNotificationsPermission() {
+            if (!("Notification" in window)) {
+                showToast("المتصفح لا يدعم التنبيهات المباشرة.");
+                return;
+            }
+            Notification.requestPermission().then(permission => {
+                if (permission === "granted") {
+                    showToast("التنبيهات اليومية مفعلة بنجاح! 🔔");
+                }
+            });
+        }
+
+        function setupNotificationAlarmCheck() {
+            setInterval(() => {
+                if (!("Notification" in window) || Notification.permission !== "granted") return;
+                const now = new Date();
+                const hours = String(now.getHours()).padStart(2, '0');
+                const mins = String(now.getMinutes()).padStart(2, '0');
+                const currentTime = `${hours}:${mins}`;
+
+                const uState = getCurrentUserState();
+                if (currentTime === uState.notifyTime) {
+                    new Notification("منظم الألماني الذكي 🇩🇪", {
+                        body: `حان وقت جلسة المذاكرة اليومية لـ ${getUserName(appData.activeUser)}!`,
+                        icon: "https://cdn-icons-png.flaticon.com/512/2991/2991148.png"
+                    });
+                }
+            }, 60000);
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toastNotify');
+            document.getElementById('toastMessage').textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 3500);
+        }
+
+        /* INITIALIZATION / BOOT */
+        function init() {
+            loadStateFromStorage();
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('sw.js').catch(console.error);
+            }
+            renderApp();
+            setupNotificationAlarmCheck();
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    </script>
+</body>
+</html>
