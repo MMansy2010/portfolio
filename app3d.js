@@ -6,6 +6,115 @@
 (function () {
   'use strict';
 
+  // --- 0. DYNAMIC PROFILE DATA (AUTO AGE & ACADEMIC STAGE) ---
+  const BIRTH_YEAR = 2010;
+  const BIRTH_MONTH = 7; // July (1-indexed)
+  const BIRTH_DAY = 1;
+
+  function calculateAge(date = new Date()) {
+    const currentYear = date.getFullYear();
+    const currentMonth = date.getMonth() + 1; // 1-12
+    const currentDay = date.getDate();
+
+    let age = currentYear - BIRTH_YEAR;
+    if (currentMonth < BIRTH_MONTH || (currentMonth === BIRTH_MONTH && currentDay < BIRTH_DAY)) {
+      age--;
+    }
+    return age;
+  }
+
+  function getAcademicStage(date = new Date()) {
+    const currentYear = date.getFullYear();
+    const currentMonth = date.getMonth() + 1; // 1-12
+
+    // Egyptian academic year starts in September (month 9).
+    // September-December belongs to the academic year starting this year.
+    // January-August belongs to the academic year that started previous year.
+    const academicStartYear = currentMonth >= 9 ? currentYear : currentYear - 1;
+    const stageIndex = academicStartYear - 2026; // Academic year 2026-2027 is 1st Secondary (Sec 1)
+
+    let stageText = 'high school (Sec 1)';
+    let arabicText = 'الصف الأول الثانوي';
+
+    switch (stageIndex) {
+      case 0:
+        stageText = 'high school (Sec 1)';
+        arabicText = 'الصف الأول الثانوي';
+        break;
+      case 1:
+        stageText = 'high school (Sec 2)';
+        arabicText = 'الصف الثاني الثانوي';
+        break;
+      case 2:
+        stageText = 'high school (Sec 3)';
+        arabicText = 'الصف الثالث الثانوي (الثانوية العامة)';
+        break;
+      case 3:
+        stageText = 'university (Freshman Year)';
+        arabicText = 'الفرقة الأولى - المرحلة الجامعية';
+        break;
+      case 4:
+        stageText = 'university (Sophomore Year)';
+        arabicText = 'الفرقة الثانية - المرحلة الجامعية';
+        break;
+      case 5:
+        stageText = 'university (Junior Year)';
+        arabicText = 'الفرقة الثالثة - المرحلة الجامعية';
+        break;
+      case 6:
+        stageText = 'university (Senior Year)';
+        arabicText = 'الفرقة الرابعة / التخرج';
+        break;
+      default:
+        if (stageIndex < 0) {
+          stageText = 'preparatory school (Prep 3)';
+          arabicText = 'الشهادة الإعدادية';
+        } else {
+          stageText = 'university graduate';
+          arabicText = 'خريج جامعي';
+        }
+        break;
+    }
+
+    return { stageText, arabicText };
+  }
+
+  function updateDynamicProfile() {
+    const age = calculateAge();
+    const { stageText, arabicText } = getAcademicStage();
+    const currentYear = new Date().getFullYear();
+
+    // 1. Update Age everywhere marked with .dynamic-age
+    document.querySelectorAll('.dynamic-age').forEach((el) => {
+      el.textContent = age;
+    });
+
+    // 2. Update Academic Stage
+    const stageEl = document.getElementById('academic-stage');
+    if (stageEl) {
+      stageEl.textContent = stageText;
+      stageEl.setAttribute('title', arabicText);
+    }
+
+    // 3. Update Meta Description tag
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute(
+        'content',
+        `Mohamed Mansy - ${age}-Year-Old Front End & Full Stack Web Developer based in Egypt. Specializing in 3D WebGL Web Experiences, React, Python, Godot, and Modern UI/UX.`
+      );
+    }
+
+    // 4. Update Copyright Year
+    const yearEl = document.getElementById('current-year');
+    if (yearEl) {
+      yearEl.textContent = currentYear;
+    }
+  }
+
+  // Run update immediately upon script execution
+  updateDynamicProfile();
+
   // --- 1. THREE.JS 3D SCENE SETUP ---
   let scene, camera, renderer;
   let mainGroup, wireframeMesh, innerCoreMesh, outerParticles;
@@ -415,6 +524,7 @@
 
   // --- 7. INITIALIZE EVERYTHING ON DOM READY ---
   document.addEventListener('DOMContentLoaded', () => {
+    updateDynamicProfile();
     init3D();
     initAudio();
     init3DTilt();
