@@ -437,8 +437,8 @@
 
         projectCards.forEach((card) => {
           const category = card.getAttribute('data-category');
-          if (filter === 'all' || category.includes(filter)) {
-            card.style.display = 'flex';
+          if (filter === 'all' || (category && category.includes(filter))) {
+            card.style.display = '';
             setTimeout(() => {
               card.style.opacity = '1';
               card.style.transform = 'translateY(0) scale(1)';
